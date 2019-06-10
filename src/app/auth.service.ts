@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import {
 
   Headers,
@@ -22,6 +22,8 @@ import {SuccessDialogComponent} from './dialog/success-dialog/success-dialog.com
   providedIn: 'root'
 })
 export class AuthService {
+  loaderCheck = new EventEmitter<any>();
+
   bsModalRef: BsModalRef;
   BASE_URL = this.WebserModel.Sevice.BASE_URL
      public loading = false;

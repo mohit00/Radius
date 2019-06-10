@@ -37,7 +37,8 @@ export class DeviceDialogComponent implements OnInit {
   cnextDisabled: any;
  cpreDisabled: any;
  cpageCount: any;
-  constructor(private _bsModalRef: BsModalRef, private AuthService: AuthService ) {
+  constructor(private _bsModalRef: BsModalRef,
+              private AuthService: AuthService ) {
     this.apage = 0;
     this.asize = 5;
     this.asort = 0;
@@ -173,24 +174,32 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
        this.eventDetailList = res._embedded.eventTemplates;
 
        this.epageCount =  res.page.totalPages;
-
-       if (this.epageCount == this.epage + 1) {
+       if (this.epageCount === this.epage + 1) {
       this.enextDisabled = true;
     } else {
       this.enextDisabled = false;
-
     }
-
-       if (this.epage   == 0) {
+       if (this.epage   === 0) {
       this.epreDisabled = true;
     } else {
       this.epreDisabled = false;
-
     }
        this.epageCountArray = [];
        for (let i = 0 ; i < this.cpageCount; i++) {
       this.epageCountArray.push(i + 1);
     }
+       if (this.eventselectedList.length > 0) {
+         // tslint:disable-next-line: prefer-for-of
+         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
+        const indexselected =   this.eventDetailList.findIndex(
+           record => record._links.self.href === this.eventselectedList[i]._links.self.href );
+        if (indexselected == -1) {} else {
+            this.eventDetailList[indexselected].check = true;
+
+           }
+      }
+
+     }
     });
   }
 
@@ -200,14 +209,14 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
       this.apageCount =  res.page.totalPages;
 
-      if (this.apageCount == this.apage + 1) {
+      if (this.apageCount === this.apage + 1) {
       this.anextDisabled = true;
     } else {
       this.anextDisabled = false;
 
     }
 
-      if (this.apage   == 0) {
+      if (this.apage   === 0) {
       this.apreDisabled = true;
     } else {
       this.apreDisabled = false;
@@ -217,7 +226,12 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       for (let i = 0 ; i < this.apageCount; i++) {
       this.apageCountArray.push(i + 1);
     }
-
+      if (this.attributeselectedList.length > 0) {
+       const indexselected =   this.attrDetailList.findIndex(
+          record => record._links.self.href === this.attributeselectedList[0]._links.self.href
+           );
+       this.attrDetailList[indexselected].check = true;
+     }
     });
   }
   getcommandList() {
@@ -226,14 +240,14 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
        this.cpageCount =  res.page.totalPages;
 
-       if (this.cpageCount == this.cpage + 1) {
+       if (this.cpageCount === this.cpage + 1) {
       this.cnextDisabled = true;
     } else {
       this.cnextDisabled = false;
 
     }
 
-       if (this.cpage   == 0) {
+       if (this.cpage   === 0) {
       this.cpreDisabled = true;
     } else {
       this.cpreDisabled = false;
@@ -243,6 +257,20 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
        for (let i = 0 ; i < this.cpageCount; i++) {
       this.cpageCountArray.push(i + 1);
     }
+
+       if (this.commandselectedList.length > 0) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
+     const indexselected =   this.commandDetailList.findIndex(
+        record => record._links.self.href === this.commandselectedList[i]._links.self.href );
+     if (indexselected === -1) {} else {
+         this.commandDetailList[indexselected].check = true;
+
+        }
+   }
+
+  }
+
     });
   }
   eventselectedListdata(data) {
@@ -251,17 +279,34 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       this.eventselectedList.push(data);
     } else {
     const index =   this.eventselectedList.findIndex( record => record._links.self.href === data._links.self.href );
+
     this.eventselectedList.splice(index, 1);
   }
   }
-  attributeselectedListdata(data) {
+  attributeselectedListdata(data: { _links: { self: { href: any; }; }; check: boolean; }) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0 ; i < this.attrDetailList.length; i++) {
+      if (this.attrDetailList[i]._links.self.href != data._links.self.href) {
+        this.attrDetailList[i].check =  false;
+        }
+       }
     data.check = ! data.check;
+
+    this.attributeselectedList = [];
+
     if (data.check) {
-      this. attributeselectedList.push(data);
+      this.attributeselectedList.push(data);
     } else {
-    const index =   this. attributeselectedList.findIndex( record => record._links.self.href === data._links.self.href );
-    this. attributeselectedList.splice(index, 1);
+    const index =   this.attributeselectedList.findIndex( record => record._links.self.href === data._links.self.href );
+    this.attributeselectedList.splice(index, 1);
   }
+  //   data.check = ! data.check;
+  //   if (data.check) {
+  //     this. attributeselectedList.push(data);
+  //   } else {
+  //   const index =   this. attributeselectedList.findIndex( record => record._links.self.href === data._links.self.href );
+  //   this. attributeselectedList.splice(index, 1);
+  // }
   }
   commandselectedListdata(data) {
     data.check = ! data.check;
@@ -288,7 +333,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       this.getattriList();
       this.getcommandList();
       this.geteventList();
-      if (this.title == 'false') {
+      if (this.title === 'false') {
 
       } else {
         this.deviceDetail();

@@ -5,6 +5,8 @@ import {CommandDialogComponent} from '../command-template/command-dialog/command
 import {EventDialogComponent} from '../event-template/event-dialog/event-dialog.component';
 import {DeviceDialogComponent} from '../device-template/device-dialog/device-dialog.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import {AuthService } from '../auth.service'
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,7 +14,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class HomeComponent implements OnInit {
   bsModalRef: BsModalRef;
-   constructor(private route: Router, private modalService: BsModalService) { }
+   constructor(private route: Router, private modalService: BsModalService,private Service:AuthService) {
+      this.Service.loaderCheck.emit("show");
+    }
    addFunction(data) {
 // tslint:disable-next-line: triple-equals
 const initialState = {

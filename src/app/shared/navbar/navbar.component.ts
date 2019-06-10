@@ -23,8 +23,7 @@ export class NavbarComponent implements OnInit{
     ngOnInit(){
         this.titleSelected = 0;
       this.listTitles = ROUTES;
-      console.log(JSON.stringify(this.listTitles))
-      const navbar: HTMLElement = this.element.nativeElement;
+       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
     sidebarOpen() {
@@ -55,9 +54,7 @@ export class NavbarComponent implements OnInit{
     getFromChild(title){
         for(var p =0 ;p<this.listTitles.length ;p++){
             for(var l =0 ;l<this.listTitles[p].child.length ;l++){
-                console.log("Child" + this.listTitles[p].child[l].path)
-                console.log("Header Title " + title)
-               if(  this.listTitles[p].child[l].path == title ){
+                if(  this.listTitles[p].child[l].path == title ){
                    return this.listTitles[p].child[l].title ;
                }
             }
@@ -142,8 +139,7 @@ export class NavbarComponent implements OnInit{
  
   
     subscribeToNotifications() {
-        console.log("sending")
-        this.swPush.requestSubscription({
+         this.swPush.requestSubscription({
              serverPublicKey: this.VAPID_PUBLIC_KEY
          })
           .then(sub => this.newsletterService.addPushSubscriber(sub).subscribe())

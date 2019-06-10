@@ -2,9 +2,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-
+import {LoaderInterceptor} from '../app/interceptor/loaderiterceptor'
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { NavbarModule } from './shared/navbar/navbar.module';
@@ -56,7 +56,9 @@ import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.c
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
     EventDialogComponent, CommandDialogComponent, SuccessDialogComponent
   ],
-  providers: [NewsletterService, AuthService, WebserModel,HttpClient],
+  providers: [NewsletterService, AuthService, WebserModel,HttpClient, 
+       { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
