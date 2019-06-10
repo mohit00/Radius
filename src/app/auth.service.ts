@@ -173,6 +173,12 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
+       addThing( data: any): Observable < any > {
+
+        return this._http.get( this.BASE_URL + 'thing-service/createThingFromTemplate/'+data )
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
        private handleError(error: Response) {
         console.log(error);
         this.loading = false;

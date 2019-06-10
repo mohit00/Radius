@@ -4,12 +4,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
 import { DatePipe } from '@angular/common';
-
 declare interface TableData {
   headerRow:  any ;
   dataRows: string[][];
 }
- 
 @Component({
   selector: 'app-device-provisioning',
   templateUrl: '../table/table.html',

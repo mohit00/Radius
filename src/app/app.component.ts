@@ -28,12 +28,18 @@ loaderShow: any;
         });
        this.Router.events.subscribe((event: Event) => {
           if (event instanceof NavigationStart) {
-            this.loaderShow = true;
-
+            if(this.loaderShow){}else{
+              this.loaderShow = true;
+            }
           }
 
           if (event instanceof NavigationEnd) {
-            this.loaderShow = false;
+            if(this.loaderShow) {
+              this.loaderShow = false;
+
+            } else{
+             }
+            
 
           }
 
