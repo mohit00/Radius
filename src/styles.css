@@ -1,0 +1,8 @@
+.modal-header {
+    /* padding: 8px; */
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+}

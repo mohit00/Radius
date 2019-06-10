@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"  >{{headerTitle}}</h4> 
+  
+  <i class="fa fa-info" aria-hidden="true" style ="float: right;
+  font-size: 20px;
+  /* padding: 8px; */
+  padding-top: 10px;
+  cursor: pointer;
+  "></i> 
+</div>
+<div class="modal-body">
+       <div class ="row">
+        <div class ="col-md-6"> 
+            <div class="form-group">
+                <label for="lastname" class="control-label"><span class ="red">*</span> Name</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Name" [(ngModel)] ="data.name">
+            </div> 
+        </div>
+        <div class ="col-md-6">
+            <div class="form-group">
+                <label for="lastname" class="control-label">Description</label>
+                <textarea type="text" class="form-control" id="lastname" placeholder="Description" [(ngModel)] ="data.description" rows="1"></textarea>
+            </div>
+          </div> 
+          <div class ="col-md-12" id ="text" style ="     
+          max-height: 300px;
+          overflow-x: auto;" >
+           <span style ="position: absolute;
+           left: 10%;
+           /* top: 32%; */
+           /* bottom: 70%; */
+           background-color: #e9ecef;
+           z-index: 999;">   
+               <label for="text" class="control-label"><span class ="red">*</span>Attribute template field</label>
+             </span>
+ <div class ="col-md-12"  style ="border:1px solid ;margin-top:10px">
+             <div    *ngFor = "let list of dataList ;let i = index ;"  style ="padding: 13px;"> 
+              <div class ="{{list.class1}}">
+                <div class="form-group">
+                    <label for="lastname" class="control-label" *ngIf ="i == 0 ">Name:</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Key" [(ngModel)] ="list.name" >
+                </div></div> 
+                <div class ="{{list.class}}">
+                  <div class="form-group">
+                      <label for="lastname" class="control-label"  *ngIf ="i == 0 ">Type:</label>
+                       <select class="form-control" id="sel1" [(ngModel)] ="list.type">
+                          <option value ="1" selected>Select Type</option> 
+                        <option value ="STRING" >STRING</option>
+                        <option value ="INTEGER">INTEGER</option>
+                        <option value ="DECIMAL">DECIMAL</option>
+                        <option value ="BOOL">BOOL</option>
+                       </select>
+                    </div></div>
+              <div class ="{{list.class2}}">
+                  <div class="form-group {{list.class3}}">
+                    <div class="form-group">
+                        <label for="sel1" *ngIf ="i == 0 ">Value:</label>
+                        <input type="text" class="form-control" id="lastname" placeholder="Default value" [(ngModel)] ="list.defaultValue" > 
+                      </div> 
+                  </div> 
+                  <button class="btn col-md-2 theme_table_button {{list.class4}}" (click) ="add()" ><i class="fa fa-plus plusIcon"  ></i></button>
+                  <button class="btn col-md-2 theme_table_button  {{list.class4}}" (click) ="remove(i)" *ngIf ="i != 0 " style ="margin-left: 5%;"><i class="fa fa-minus plusIcon"  ></i></button> 
+              </div>
+            </div> 
+        </div> 
+            </div>
+      </div> 
+ <div class="modal-footer">
+  <button type="button" class="btn theme_table_button" (click) ="onCancel();" >Close</button>
+  <button type="button" class="btn theme_table_button"  (click) = "submitCreate()" *ngIf ="title == 'false'">Save</button>
+  <button type="button" class="btn theme_table_button"  (click) = "submitUpdate()" *ngIf ="title == 'true'">Update</button>
+
+</div>

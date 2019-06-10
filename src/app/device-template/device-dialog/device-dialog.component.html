@@ -1,0 +1,237 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Add Things</h4>
+    <i class="fa fa-info" aria-hidden="true" style ="float: right;
+  font-size: 20px;
+  /* padding: 8px; */
+  padding-top: 10px;
+  cursor: pointer;
+  "></i>
+  </div>
+  <div class="modal-body">
+         <div class ="row">
+          <div class ="col-md-6">
+              <div class="form-group">
+                  <label for="lastname" class="control-label">Name</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="Device Id" [(ngModel)] ="data.name">
+              </div>
+            <div class="form-group">
+              <select class="form-control" id="sel1" [(ngModel)] ="data.templateType">
+ 
+              <option value ="Communicable"  >Communicable</option>
+              <option value ="nonCommunicable">Non Communicable</option>
+             </select>
+              
+             </div> 
+             
+          </div>
+          <div class ="col-md-6">
+              <div class="form-group">
+                  <label for="lastname" class="control-label">Description</label>
+                  <textarea type="text" class="form-control" id="lastname" placeholder="Description" [(ngModel)] ="data.description" rows="3"></textarea>
+              </div>
+            </div> 
+          <div class ="clear"></div>
+          <tabset type="pills" *ngIf ="data.templateType =='Communicable'">
+            <tab heading="Attribute Template">
+              <div class ="col-md-12" style ="     padding: 0;
+          max-height: 400px;
+          overflow-x: auto;" >
+                     <hr>
+          <div class ="row" style="    width: 100%;"> 
+              <div class ="col-md-6 tablebutton"> 
+                    <form class="form-horizontal col-md-8" style ="float: right;
+                    margin-right: 15px;">
+                      <div class="form-group"> 
+                          <input type="text" class="form-control" id="email" placeholder="Search" style ="    height: 35px;">
+                      </div>
+      </form>              
+              </div>
+          </div>
+            <div class="row" style="    width: 100%;
+            margin: auto;">
+                <div class="col-md-12">
+
+                  
+                    <div class="card">
+                        <div class="content table-responsive table-full-width">
+                          <table class="table table-hover table-striped"  >
+                            <thead>
+                                <tr>
+                                    <th  width="20%"   > Action</th>
+                                    <th    > Attribute Template</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class ="selecttable"  *ngFor ="let list of attrDetailList ;" (click)="attributeselectedListdata(list)" style ="cursor: pointer">
+                                    <td  ><div class="form-check">
+                                      <label class ="checkboxnew">
+                                        <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                      </label>
+                                    </div> </td>
+                                    <td  > {{list.name}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot *ngIf ="apageCount && apageCountArray">
+                              <tr  ><td [attr.colspan]="8"> 
+                                <div class=" " style="float: left;">
+                                  <ul class="pagination">
+                                    <li  >  
+                                      <button  (click)="aprePage()" [disabled]="apreDisabled">« Prev</button>
+                                    </li>
+                                    <li   *ngFor = "let list of apageCountArray" [ngClass]="agetClass(list)"> 
+                                      <a  (click)="aPage(list)" >{{list}}</a>
+                                    </li>
+                                    <li  >
+                                      <button    (click)="anextPage()"   [disabled]="anextDisabled" >Next »</button>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr></tfoot>
+                      </table> 
+      
+                        </div>
+                    </div>
+                </div>
+                 
+            </div>
+            </div>
+
+            </tab>
+            <tab heading="Event Template"><div class ="col-md-12" style ="     padding: 0;
+              max-height: 400px;
+              overflow-x: auto;" >
+                         <hr>
+              <div class ="row" style="    width: 100%;"> 
+                  <div class ="col-md-6 tablebutton"> 
+                        <form class="form-horizontal col-md-8" style ="float: right;
+                        margin-right: 15px;">
+                          <div class="form-group"> 
+                              <input type="text" class="form-control" id="email" placeholder="Search" style ="    height: 35px;">
+                          </div>
+          </form>              
+                  </div>
+              </div>
+                <div class="row" style="    width: 100%;
+                margin: auto;">
+                    <div class="col-md-12">
+    
+                      
+                        <div class="card">
+                            <div class="content table-responsive table-full-width">
+                              <table class="table table-hover table-striped"  >
+                                <thead>
+                                    <tr>
+                                        <th  width="20%"   > Action</th>
+                                        <th    > Event Template</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class ="selecttable"  *ngFor ="let list of eventDetailList ;" (click)="eventselectedListdata(list)" style ="cursor: pointer">
+                                        <td  ><div class="form-check">
+                                          <label class ="checkboxnew">
+                                            <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                          </label>
+                                        </div> </td>
+                                        <td  > {{list.name}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot *ngIf ="epageCount && epageCountArray">
+                                  <tr  ><td [attr.colspan]="8"> 
+                                    <div class=" " style="float: left;">
+                                      <ul class="pagination">
+                                        <li  >  
+                                          <button  (click)="eprePage()" [disabled]="epreDisabled">« Prev</button>
+                                        </li>
+                                        <li   *ngFor = "let list of epageCountArray" [ngClass]="egetClass(list)"> 
+                                          <a  (click)="ePage(list)" >{{list}}</a>
+                                        </li>
+                                        <li  >
+                                          <button    (click)="enextPage()"   [disabled]="enextDisabled" >Next »</button>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                </tr></tfoot>
+                          </table> 
+          
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+                </div></tab>
+                <tab heading="Commands Template">
+                 <div class ="col-md-12"  >
+                             <hr>
+                  <div class ="row" style="    width: 100%;"> 
+                      <div class ="col-md-6 tablebutton"> 
+                            <form class="form-horizontal col-md-8" style ="float: right;
+                            margin-right: 15px;">
+                              <div class="form-group"> 
+                                  <input type="text" class="form-control" id="email" placeholder="Search" style ="    height: 35px;">
+                              </div>
+              </form>              
+                      </div>
+                  </div>
+                    <div class="row" style="    width: 100%;
+                    margin: auto;padding: 0;
+                  max-height: 400px;
+                  overflow-x: auto;">
+                        <div class="col-md-12"> 
+                            <div class="card">
+                                <div class="content table-responsive table-full-width">
+                                  <table class="table table-hover table-striped"  >
+                                    <thead>
+                                        <tr>
+                                            <th  width="20%"   > Action</th>
+                                            <th    > Command Template</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class ="selecttable"  *ngFor ="let list of commandDetailList ;" (click)="commandselectedListdata(list)" style ="cursor: pointer">
+                                            <td  ><div class="form-check">
+                                              <label class ="checkboxnew">
+                                                <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                              </label>
+                                            </div> </td>
+                                            <td  > {{list.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot *ngIf ="cpageCount && cpageCountArray">
+                                      <tr  ><td [attr.colspan]="8"> 
+                                        <div class=" " style="float: left;">
+                                          <ul class="pagination">
+                                            <li  >  
+                                              <button  (click)="cprePage()" [disabled]="cpreDisabled">« Prev</button>
+                                            </li>
+                                            <li   *ngFor = "let list of cpageCountArray" [ngClass]="cgetClass(list)"> 
+                                              <a  (click)="cPage(list)" >{{list}}</a>
+                                            </li>
+                                            <li  >
+                                              <button    (click)="cnextPage()"   [disabled]="cnextDisabled" >Next »</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </td>
+                                    </tr></tfoot>
+                              </table> 
+                                </div>
+                            </div>
+                        </div>
+                         
+                    </div>
+                    </div>
+
+
+                </tab>
+
+          </tabset>
+          
+        </div>
+           
+   <div class="modal-footer">
+    <button type="button" class="btn theme_table_button" (click) ="onCancel();" >Close</button>
+    <button type="button" class="btn theme_table_button"  (click) = "submitCreate()">Save</button>
+  
+  </div>

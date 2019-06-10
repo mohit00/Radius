@@ -1,0 +1,240 @@
+import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { BsModalRef , BsModalService} from 'ngx-bootstrap/modal';
+import {AuthService} from '../auth.service';
+import {DeviceDialogComponent} from './device-dialog/device-dialog.component';
+import { DatePipe } from '@angular/common';
+
+declare interface TableData {
+  headerRow: any ;
+  dataRows: string[][];
+}
+@Component({
+  selector: 'app-device-template',
+  templateUrl: '../table/table.html',
+  styleUrls: ['../table/table.scss']
+})
+export class DeviceTemplateComponent implements OnInit {
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+  nextDisabled: any;
+  preDisabled: any;
+  pageCountArray: any;
+  selectedPage: any;
+  page: any;
+  size: any;
+  sort: any;
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+constructor(private modalService: BsModalService, private service: AuthService) {
+   this.pageCountArray = [];
+   this.selectedPage = 1;
+   this.page = 0;
+   this.size = 10;
+   this.sort = '';
+   this.header = [{
+    name: 'TEMPLATE ID',
+    width: 10
+  }, {
+    name: 'TEMPLATE NAME',
+    width: 10
+  }, {
+    name: 'TEMPLATE DESCRIPTION',
+    width: 10
+  }, {
+    name: 'IS FREEZE',
+    width: 10
+  }, {
+    name: 'DATE',
+    width: 10
+  },
+  {
+    name: 'ACTION',
+    width: 10
+  }
+ ];
+
+   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+ }
+open() {
+
+   this.bsModalRef = this.modalService.show(DeviceDialogComponent,  { class: 'gray modal-lg' });
+
+   this.bsModalRef.content.onClose.subscribe(result => {
+     this.getComandList();
+     console.log('results', result);
+});
+
+}
+getData(data, key , index) {
+  if (key) {
+    if (key === 'freeze') {
+       if (data[key] === true) {
+        return '<i class="fa fa-check-square" aria-hidden="true"></i>';
+
+      } else {
+        return '<i class="fa fa-window-close" aria-hidden="true"></i>';
+      }
+    } else {
+
+    }
+    if (key === 'action') {
+      this.actionData =  `<i class="fa fa-eyes" aria-hidden="true"></i>
+      <i class="fa fa-eye" aria-hidden="true"></i>
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+      <i class="fa fa-trash" aria-hidden="true"></i>
+
+      `;
+      return this.actionData;
+    } else {}
+    if (data[key]) {
+ // tslint:disable-next-line: triple-equals
+      if ( isNaN(new Date(data[key]).getTime()  ) ) {
+       return data[key];
+     } else {
+
+        if (Number.isInteger((data[key]))) {
+          return data[key];
+          } else {
+            if (typeof data[key] === 'string' || data[key] instanceof String) {
+              if ( typeof data[key].substring( 0 , 1)  === 'string' || data[key] instanceof String ) {
+// tslint:disable-next-line: radix
+                if (Number.isInteger(parseInt(data[key].substring( 0 , 1)) )) {
+                  try {
+                   JSON.parse(data[key]);
+                   return data[key];
+                   } catch (err) {
+                      // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
+                        return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                   }
+
+
+                } else {
+                  return data[key];
+                }
+
+
+              } else if
+              (data[key].substring( 0 , 3 ) == 'ERN' || data[key].substring( 0 , 3 ) == 'MRN' || data[key].substring( 0 , 3 ) == 'SSC' || data[key].substring( 0 , 3 ) == 'Pro' || data[key].substring( 0 , 3 ) == 'Opp' || data[key].substring( 0 , 3 ) == 'Equ' || data[key].substring( 0 , 1 ) == 'C' || data[key].substring( 0 , 1 ) == 'P') {
+                 return data[key];
+              } else {
+                  // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
+                  return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+
+              }
+            } else {
+              if (data[key] == true) {
+                   return 'YES';
+                 } else {
+
+                // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
+                return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+              }
+
+
+            }
+
+          }
+
+
+
+     }
+
+        } else {
+          return '';
+        }
+    // this.pipe.transform(data[key], 'short');
+    return data[key];
+
+  } else {
+    return '';
+  }
+}
+getComandList() {
+  this.service.getdeviceTemplate().subscribe(res => {
+         
+    this.pageCount =  res.page.totalPages;
+     
+    if(this.pageCount == this.page + 1){
+      this.nextDisabled = true;
+    }else{
+      this.nextDisabled = false;
+
+    }
+      
+    if(this.page   == 0){
+      this.preDisabled = true;
+    }else{
+      this.preDisabled = false;
+
+    }
+    this.displayList = res._embedded.thingTemplates;
+    this.pageCountArray =[];
+    for(let i =0 ;i<this.pageCount;i++){
+      this.pageCountArray.push(i+1)
+    }
+  });
+}
+detail(data) {
+
+  this.service.setId(data._links.self.href , 'Device/Template/detail');
+}
+edit(data) {
+// tslint:disable-next-line: max-line-length
+  this.service.setId(data._links.self.href    , 'Device/Template');
+
+  const initialState = {
+    title: 'true',
+    id: this.service.getId
+  };
+  this.bsModalRef = this.modalService.show(DeviceDialogComponent,  { initialState, class: 'gray modal-lg' });
+
+  this.bsModalRef.content.onCloseEdit.subscribe(result => {
+     this.getComandList();
+     console.log('results', result);
+});
+}
+delete(data) {
+  alert('ds');
+}
+ngOnInit() {
+  this.title = 'Add Things';
+  this.getComandList();
+    }
+    
+    prePage(){
+     
+      this.selectedPage = this.selectedPage -1;
+       this.page = this.selectedPage -1 ;
+      this.getComandList();
+     
+   
+  }
+  Page(data){
+     this.selectedPage = data ;
+    this.page = this.selectedPage -1;
+    this.getComandList();
+  }
+    nextPage(){
+       
+        this.selectedPage = this.selectedPage + 1;
+        this.page = this.selectedPage -1;
+        this.getComandList();
+      
+    }
+    getClass(data){
+      if(this.selectedPage === data){
+        return 'active';
+      }else{
+        return '';
+      }
+    }
+
+}

@@ -1,0 +1,53 @@
+import { Routes } from '@angular/router';
+import { HomeComponent } from '../../home/home.component';
+import { UserComponent } from '../../user/user.component';
+import { TablesComponent } from '../../tables/tables.component';
+import { TypographyComponent } from '../../typography/typography.component';
+import { IconsComponent } from '../../icons/icons.component';
+import { MapsComponent } from '../../maps/maps.component';
+import { NotificationsComponent } from '../../notifications/notifications.component';
+import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { AttributeTemplateComponent } from '../../attribute-template/attribute-template.component';
+import { EventTemplateComponent } from '../../event-template/event-template.component';
+import { EventACKTemplateComponent } from '../../event-acktemplate/event-acktemplate.component';
+import { CommandTemplateComponent } from '../../command-template/command-template.component';
+import { CommandACKTemplateComponent } from '../../command-acktemplate/command-acktemplate.component';
+import { DeviceTemplateComponent } from '../../device-template/device-template.component';
+import { QuickHelpComponent } from '../../quick-help/quick-help.component';
+export const AdminLayoutRoutes: Routes = [
+    { path: 'dashboard',      component: HomeComponent },
+    { path: 'user',           component: UserComponent },
+    { path: 'table',          component: TablesComponent },
+    { path: 'typography',     component: TypographyComponent },
+    { path: 'icons',          component: IconsComponent },
+    { path: 'maps',           component: MapsComponent },
+    { path: 'notifications',  component: NotificationsComponent },
+    { path: 'upgrade',        component: UpgradeComponent },
+    {
+        path: 'Attribute/Template',
+        loadChildren: '../../attribute-template/attribute-template.module#AttributeTemplateModule'
+      },{
+        path: 'Event/Template',
+        loadChildren: '../../event-template/event-template.module#EventTemplateModule'
+      },{
+        path: 'Event/ACK/Template',
+        component:EventACKTemplateComponent ,
+      },{
+        path: 'Command/Template',
+        loadChildren: '../../command-template/command-template.module#CommandTemplateModule'
+      },{
+        path: 'Command/ACK/Template',
+        component:CommandACKTemplateComponent ,
+      },{
+        path: 'Device/Template',
+        loadChildren: '../../device-template/device-template.module#DeviceTemplateModule'
+      },{
+        path:'Device/Provisioning',
+        loadChildren: '../../device-provisioning/device-provisioning.module#DeviceProvisioningModule'
+
+
+      },{
+        path:'quickHelp',
+        component:QuickHelpComponent
+      }
+];

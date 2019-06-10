@@ -1,0 +1,18 @@
+$theam-color-client:#1C8AD8;
+
+.modal-header{
+    background-color: $theam-color-client;
+    color:white;
+}
+.modal-body{
+    background: #E9ECEF;
+}
+input{
+    border-radius: 0;
+}
+.red{
+    color:red;
+}
+.form-group {
+    margin-bottom: 5px !important;
+}
