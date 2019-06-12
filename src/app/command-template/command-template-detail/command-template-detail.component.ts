@@ -19,9 +19,11 @@ export class CommandTemplateDetailComponent implements OnInit {
      this.ComandDetail = res;
    });
     }
+    
+    
     changeFreeze() {
       this.ComandDetail.freeze = this.data.check;
-      this.Service.updateCommandTemplate(this.ComandDetail, this.ComandId).subscribe(res => {
+      this.Service.freezeData(this.ComandDetail, this.ComandId).subscribe(res => {
         this.Service.suceesAlertDialog('Command has been successfully Freezed.' );
         this.route.navigate(['Command/Template']);
        });

@@ -243,4 +243,50 @@ ngOnInit() {
         return '';
       }
     }
+    searchresult(name : String,description : String){
+      this.service.getSearchAttribute(name , description).subscribe(res => {
+        console.log(JSON.stringify(res))
+     this.pageCount =  res.page.totalPages;
+    if(this.pageCount == this.page + 1){
+      this.nextDisabled = true;
+    }else{
+      this.nextDisabled = false;
+
+    }
+      
+    if(this.page   == 0){
+      this.preDisabled = true;
+    }else{
+      this.preDisabled = false;
+
+    }
+    this.displayList = res._embedded.attributeTemplates;
+    this.pageCountArray =[];
+    for(var i =0 ;i<this.pageCount;i++){
+      this.pageCountArray.push(i+1)
+    }
+      })
+    }
+    onSearchChange(searchValue : string ,serchdescription : String) {   
+      if(searchValue || serchdescription){
+        console.log(searchValue);
+this.searchresult(searchValue,serchdescription);
+      }else{
+        this.getEventList();
+      }
+    }
+    advanceSearch:boolean = false;
+    toggelSearch(){
+      this.advanceSearch = !this.advanceSearch
+      if(this.advanceSearch){
+
+      }else{
+      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
+      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
+      (<HTMLInputElement>document.getElementById('search')).value = '';  
+
+      this.getEventList();
+
+      }
+    }
 }

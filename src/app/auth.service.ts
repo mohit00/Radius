@@ -23,58 +23,48 @@ import {SuccessDialogComponent} from './dialog/success-dialog/success-dialog.com
 })
 export class AuthService {
   loaderCheck = new EventEmitter<any>();
-
   bsModalRef: BsModalRef;
   BASE_URL = this.WebserModel.Sevice.BASE_URL
-     public loading = false;
-
+  public loading = false;
   private missionAnnouncedSource = new Subject<string>();
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();
   CREATE_ATTRIBUTE_TEMPLATE = this.WebserModel.Sevice.CREATE_ATTRIBUTE_TEMPLATE;
   firstHeaders: any;
-  
 // tslint:disable-next-line: variable-name
   constructor(private _http: HttpClient, private router: Router, private modalService: BsModalService
 // tslint:disable-next-line: no-shadowed-variable
     ,         private WebserModel: WebserModel) {
-
 // tslint:disable-next-line: deprecation
       this.firstHeaders = new Headers();
       this.firstHeaders.append('Content-Type', 'application/json');
-
   }
-
   suceesAlertDialog(data ) {
     const initialState = {
       title: data, 
     };
-
     this.bsModalRef = this.modalService.show(SuccessDialogComponent, {initialState, class: 'modal-confirm  modal-sm' }    );
-
     this.bsModalRef.content.onClose.subscribe(result => {
      console.log('results', result);
       });
-
     }
-
    login( ): Observable < any > {
-
      return this._http.get( '/api/rest/v2/all', {
-
      })
     .map(res => res as any)
     .catch(this.handleError);
-
        }
        addAttributeTemplate(data): Observable < any > {
-
         return this._http.post( this.BASE_URL + 'attributeTemplates', data)
        .map(res => res as any)
        .catch(this.handleError);
        }
        updateAttributeTemplate(data, id): Observable < any > {
-   
         return this._http.put( id, data)
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
+        freezeData(data: { freeze: any; }, id: string): Observable < any > {
+        return this._http.patch( id, data)
        .map(res => res as any)
        .catch(this.handleError);
        }
@@ -178,6 +168,12 @@ export class AuthService {
         return this._http.get( this.BASE_URL + 'thing-service/createThingFromTemplate/'+data )
        .map(res => res as any)
        .catch(this.handleError);
+       }
+       getSearchAttribute(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
        }
        private handleError(error: Response) {
         console.log(error);

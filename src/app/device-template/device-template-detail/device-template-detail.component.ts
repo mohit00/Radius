@@ -15,8 +15,10 @@ export class DeviceTemplateDetailComponent implements OnInit {
       this.data = {};
      }
      changeFreeze() {
-      this.eventDetail.freeze = this.data.check;
-      this.Service.updateEventTemplate(this.eventDetail, this.eventId).subscribe(res => {
+       let dataJson = {
+        freeze : this.data.check
+      }
+      this.Service.freezeData(dataJson, this.eventId).subscribe(res => {
         this.Service.suceesAlertDialog('Device Template has been successfully Freezed.' );
   
         this.route.navigate(['Event/Template']);
