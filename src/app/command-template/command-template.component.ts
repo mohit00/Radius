@@ -232,4 +232,37 @@ this.bsModalRef.content.onCloseEdit.subscribe(result => {
         return '';
       }
     }
+    showpagi:boolean = true;
+    searchresult(name : String,description : String){
+      this.service.getSearchCommand(name , description).subscribe(res => {     
+    this.displayList = res;
+this.showpagi = false
+       })
+    }
+    onSearchChange(searchValue : string ,serchdescription : String) {   
+      if(searchValue || serchdescription){
+        console.log(searchValue);
+this.searchresult(searchValue,serchdescription);
+      }else{
+        this.getComandList();
+        this.showpagi = true
+
+      }
+    }
+    advanceSearch:boolean = false;
+    toggelSearch(){
+      this.advanceSearch = !this.advanceSearch
+      if(this.advanceSearch){
+
+      }else{
+
+      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
+      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
+      (<HTMLInputElement>document.getElementById('search')).value = '';  
+
+      this.getComandList();
+      this.showpagi = true
+
+      }
+    }
 }

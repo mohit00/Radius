@@ -40,12 +40,12 @@
                   <div class ="col-md-5">
                       <div class="form-group">
                           <label for="lastname" class="control-label">Metadata Key:</label>
-                          <input type="text" class="form-control" id="lastname" placeholder="Key">
+                          <input type="text" class="form-control" id="lastname" placeholder="Key" [(ngModel)]  = "data.metadata.model">
                       </div></div>
                       <div class ="col-md-7">
                           <div class="form-group col-md-10">
                               <label for="lastname" class="control-label">Metadata Value:</label>
-                              <input type="text" class="form-control" id="lastname" placeholder="Value" >
+                              <input type="text" class="form-control" id="lastname" placeholder="Value"  [(ngModel)]  = "data.metadata.modelValue" >
       
                           </div>
       
@@ -118,6 +118,7 @@
            
    <div class="modal-footer">
     <button type="button" class="btn theme_table_button"  >Close</button>
-    <button type="button" class="btn theme_table_button"  >Save</button>
+    <button type="button" class="btn theme_table_button"  (click) = "createDevicePro()" *ngIf ="title == 'false'">Save</button>
+    <button type="button" class="btn theme_table_button"  (click) = "updateDevicePro()" *ngIf ="title != 'false'">Update</button>
 
   </div>

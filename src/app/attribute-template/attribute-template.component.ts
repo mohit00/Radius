@@ -167,6 +167,8 @@ preDisabled:any;
 getEventList() {
    
   this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
+    this.showpagi = true
+
     this.pageCount =  res.page.totalPages;
     if(this.pageCount == this.page + 1){
       this.nextDisabled = true;
@@ -214,15 +216,11 @@ ngOnInit() {
       alert('ds');
     }
     selectedPage:any;
-    
-   
     prePage(){
      
       this.selectedPage = this.selectedPage -1;
        this.page = this.selectedPage -1 ;
       this.getEventList();
-     
-   
   }
   Page(data){
      this.selectedPage = data ;
@@ -230,11 +228,9 @@ ngOnInit() {
     this.getEventList();
   }
     nextPage(){
-       
         this.selectedPage = this.selectedPage + 1;
         this.page = this.selectedPage -1;
         this.getEventList();
-      
     }
     getClass(data){
       if(this.selectedPage === data){
@@ -243,29 +239,12 @@ ngOnInit() {
         return '';
       }
     }
+    showpagi:boolean = true;
     searchresult(name : String,description : String){
-      this.service.getSearchAttribute(name , description).subscribe(res => {
-        console.log(JSON.stringify(res))
-     this.pageCount =  res.page.totalPages;
-    if(this.pageCount == this.page + 1){
-      this.nextDisabled = true;
-    }else{
-      this.nextDisabled = false;
-
-    }
-      
-    if(this.page   == 0){
-      this.preDisabled = true;
-    }else{
-      this.preDisabled = false;
-
-    }
-    this.displayList = res._embedded.attributeTemplates;
-    this.pageCountArray =[];
-    for(var i =0 ;i<this.pageCount;i++){
-      this.pageCountArray.push(i+1)
-    }
-      })
+      this.service.getSearchAttribute(name , description).subscribe(res => {     
+    this.displayList = res;
+this.showpagi = false
+       })
     }
     onSearchChange(searchValue : string ,serchdescription : String) {   
       if(searchValue || serchdescription){
@@ -273,6 +252,8 @@ ngOnInit() {
 this.searchresult(searchValue,serchdescription);
       }else{
         this.getEventList();
+        this.showpagi = true
+
       }
     }
     advanceSearch:boolean = false;
@@ -281,11 +262,13 @@ this.searchresult(searchValue,serchdescription);
       if(this.advanceSearch){
 
       }else{
+
       (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
       (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
       (<HTMLInputElement>document.getElementById('search')).value = '';  
 
       this.getEventList();
+      this.showpagi = true
 
       }
     }

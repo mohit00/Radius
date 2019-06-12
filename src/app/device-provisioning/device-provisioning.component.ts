@@ -14,6 +14,11 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class DeviceProvisioningComponent implements OnInit {
+  page: any;
+   pageCountArray: any;
+   last:any;
+size: any;
+sort: any;
   public tableData1: TableData;
   pipe = new DatePipe('en-US');
   bsModalRef: BsModalRef;
@@ -25,10 +30,13 @@ rowSpan: number;
 header: any;
 keyData: any;
 actionData: any;
-pageCountArray:any;
 constructor(private modalService: BsModalService, private service: AuthService) {
   this.pageCountArray = [];
-
+  this.selectedPage = 1;
+  this.page = 0;
+  this.size = 10;
+  this.sort = 0;
+  
   this.header = [{
     name: 'TEMPLATE ID',
     width: 10
@@ -62,8 +70,7 @@ open() {
     this.bsModalRef.content.onClose.subscribe(result => {
      this.getEventList();
      console.log('results', result);
-});
-
+}); 
 }
 
 getData(data, key , index) {
@@ -154,21 +161,41 @@ getData(data, key , index) {
     return '';
   }
 }
+
+nextDisabled:any;
+preDisabled:any;
 getEventList() {
-  this.service.getthingList().subscribe(res => {
-  this.displayList = res._embedded.things;
+  this.service.getthingList(this.page, this.size, this.sort).subscribe(res => {
+     this.showpagi = true
+    this.pageCount =  res.page.totalPages;
+    if(this.pageCount == this.page + 1){
+      this.nextDisabled = true;
+    }else{
+      this.nextDisabled = false;
+    }
+    if(this.page   == 0){
+      this.preDisabled = true;
+    }else{
+      this.preDisabled = false;
+
+    }
+    this.displayList = res._embedded.things;
+    this.pageCountArray =[];
+    for(var i =0 ;i<this.pageCount;i++){
+      this.pageCountArray.push(i+1)
+    }
   });
 }
 ngOnInit() {
-  this.title = 'Add Attribute';
+  this.title = 'Add Things';
   this.getEventList();
     }
     detail(data) {
-      this.service.setId(data._links.self.href , 'Attribute/Template/detail');
+      this.service.setId(data._links.self.href , 'Device/Provisioning/Detail');
     }
     edit(data) {
 
-      this.service.setId(data._links.self.href   , 'Attribute/Template');
+      this.service.setId(data._links.self.href   , 'Device/Provisioning');
       const initialState = {
         title: 'true',
         id: this.service.getId
@@ -184,6 +211,61 @@ ngOnInit() {
     delete(data) {
       alert('ds');
     }
+    selectedPage:any;
+    prePage(){
+     
+      this.selectedPage = this.selectedPage -1;
+       this.page = this.selectedPage -1 ;
+      this.getEventList();
+  }
+  Page(data){
+     this.selectedPage = data ;
+    this.page = this.selectedPage -1;
+    this.getEventList();
+  }
+    nextPage(){
+        this.selectedPage = this.selectedPage + 1;
+        this.page = this.selectedPage -1;
+        this.getEventList();
+    }
+    getClass(data){
+      if(this.selectedPage === data){
+        return 'active';
+      }else{
+        return '';
+      }
+    }
+    showpagi:boolean = true;
+    searchresult(name : String,description : String){
+      this.service.getSearchThings(name , description).subscribe(res => {     
+    this.displayList = res;
+this.showpagi = false
+       })
+    }
+    onSearchChange(searchValue : string ,serchdescription : String) {   
+      if(searchValue || serchdescription){
+        console.log(searchValue);
+this.searchresult(searchValue,serchdescription);
+      }else{
+        this.getEventList();
+        this.showpagi = true
 
+      }
+    }
+    advanceSearch:boolean = false;
+    toggelSearch(){
+      this.advanceSearch = !this.advanceSearch
+      if(this.advanceSearch){
 
+      }else{
+
+      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
+      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
+      (<HTMLInputElement>document.getElementById('search')).value = '';  
+
+      this.getEventList();
+      this.showpagi = true
+
+      }
+    }
 }

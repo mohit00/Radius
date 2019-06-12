@@ -23,6 +23,7 @@ eventTemplateList:any;
 data:any;
 size:any;
 sort:any;
+title:any;
  geteventTemplate(){
    this.Service.getdeviceTemplate().subscribe(res => {
      this.eventTemplateList = res._embedded.thingTemplates;
@@ -57,22 +58,60 @@ sort:any;
 
    });
  }
+ updateDevicePro(){
+   
+  if(this.selectedList.length > 0 ){
+    this.Service.updateThing( this.selectedList[0]._links.self.href.substr(this.selectedList[0]._links.self.href.length -2),this.data).subscribe(res=>{
+      this.onClose.next(true);
+this._bsModalRef.hide();
+      this.Service.suceesAlertDialog('Device/Provisioning')
+
+    })
+
+       }else{
+      alert("Please Select Things Template");
+   }
+ }
+ createDevicePro(){
+    if(this.selectedList.length > 0 ){
+    this.Service.addThing( this.selectedList[0]._links.self.href.substr(this.selectedList[0]._links.self.href.length -2),this.data).subscribe(res=>{
+      this.onClose.next(true);
+this._bsModalRef.hide();
+      this.Service.suceesAlertDialog('Device/Provisioning')
+
+    })
+
+       }else{
+      alert("Please Select Things Template");
+   }
+ }
+ id:any;
   constructor(private Service:AuthService,
               private _bsModalRef: BsModalRef,
    ) {
 
     this.selectedList = [];
-    this.data = {};
+    this.data = {metadata:{}}
     this.page = 0;
     this.size = 5;
     this.sort = '';
     this.selectedPage = 1;
    }
-
+getDetailDeviceProvisioning(){
+ this.Service.getDetail(this.id).subscribe(res =>{
+  console.log(res)
+  this.data = res;
+})
+}
   ngOnInit() {
     this.onClose = new Subject();
 
     this.geteventTemplate();
+    if(this.title == 'false'){
+
+    }else{
+      this.getDetailDeviceProvisioning();
+    }
 
   }
   prePage() {
