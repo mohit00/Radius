@@ -1,35 +1,20 @@
-import { Component, OnInit,SecurityContext  } from '@angular/core';
- import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit, SecurityContext  } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
 import { DatePipe } from '@angular/common';
 
 declare interface TableData {
-  headerRow:  any ;
+  headerRow: any ;
   dataRows: string[][];
 }
 @Component({
   selector: 'app-event-acktemplate',
   templateUrl: '../table/table.html',
   styleUrls: ['../table/table.scss']
- 
+
 })
 export class EventACKTemplateComponent implements OnInit {
-  public tableData1: TableData;
-  pipe = new DatePipe('en-US');
-  bsModalRef: BsModalRef;
-  pageCount: any;
-  displayList: any;
-  pageCountArray:any;
-
-// tslint:disable-next-line: ban-types
-  title: String;
-rowSpan: number;
-header: any;
-keyData: any;
-actionData: any;
-// tslint:disable-next-line: ban-types
- substring: String;
 
 constructor(private modalService: BsModalService, private service: AuthService) {
   this.pageCountArray = [];
@@ -57,6 +42,23 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+  pageCountArray:any;
+
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+// tslint:disable-next-line: ban-types
+ substring: String;
+    showpagi:boolean = true;
+    advanceSearch:boolean = false;
 open() {
 
  }
@@ -148,5 +150,36 @@ getEventList() {
 ngOnInit() {
   this.title = 'Add Event';
   this.getEventList();
+    }
+    searchresult(name : String,description : String){
+      this.service.getSearchThings(name , description).subscribe(res => {     
+    this.displayList = res;
+this.showpagi = false
+       })
+    }
+    onSearchChange(searchValue : string ,serchdescription : String) {   
+      if(searchValue || serchdescription){
+        console.log(searchValue);
+this.searchresult(searchValue,serchdescription);
+      }else{
+        this.getEventList();
+        this.showpagi = true
+
+      }
+    }
+    toggelSearch(){
+      this.advanceSearch = !this.advanceSearch
+      if(this.advanceSearch){
+
+      }else{
+
+      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
+      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
+      (<HTMLInputElement>document.getElementById('search')).value = '';  
+
+      this.getEventList();
+      this.showpagi = true
+
+      }
     }
 }

@@ -38,13 +38,13 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.sort = 0;
   
   this.header = [{
-    name: 'TEMPLATE ID',
+    name: 'Things ID',
     width: 10
   }, {
-    name: 'TEMPLATE NAME',
+    name: 'Things NAME',
     width: 10
   }, {
-    name: 'TEMPLATE DESCRIPTION',
+    name: 'Things DESCRIPTION',
     width: 10
   }, {
     name: 'IS FREEZE',

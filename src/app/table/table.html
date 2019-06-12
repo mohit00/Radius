@@ -13,7 +13,7 @@
                 <form class="form-horizontal col-md-8" action="/action_page.php">
                   <div class="form-group">
                      
-                      <input type="text" class="form-control" id="search"  (input)="onSearchChange($event.target.value)" placeholder="Search">
+                      <input type="text" class="form-control" id="search"  (input)="onSearchChange($event.target.value,'')" placeholder="Search">
                      
                   </div>
   </form>              
@@ -25,7 +25,7 @@
           <div class ="col-md-6">
                <div class="form-group">
                  
-                  <input type="text" class="form-control" id="searchName" placeholder="Name" (input)="onSearchChange($event.target.value)">
+                  <input type="text" class="form-control" id="searchName" placeholder="Name" (input)="onSearchChange($event.target.value,'')">
                  
               </div>
               
