@@ -16,14 +16,16 @@ export class DeviceProvisioningDialogComponent implements OnInit {
    ) {
 
     this.selectedList = [];
-    this.data = {metadata: {}};
+    this.data = {metadata: []};
     this.page = 0;
     this.size = 5;
     this.sort = '';
     this.selectedPage = 1;
    }
   public onClose: Subject<boolean>;
+  public onCloseEdit: Subject<boolean>;
 
+  
   pageCountArray: any;
   selectedPage: any;
   nextDisabled: any;
@@ -37,6 +39,8 @@ size: any;
 sort: any;
 title: any;
  id: any;
+ dataList: any;
+
  geteventTemplate() {
    this.Service.getdeviceTemplate().subscribe(res => {
      this.eventTemplateList = res._embedded.thingTemplates;
@@ -72,7 +76,7 @@ title: any;
   if (this.selectedList.length > 0 ) {
     this.Service.updateThing( this.selectedList[0].
       _links.self.href.substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
-      this.onClose.next(true);
+      this.onCloseEdit.next(true);
       this._bsModalRef.hide();
       this.Service.suceesAlertDialog('Device/Provisioning');
 
@@ -83,30 +87,100 @@ title: any;
    }
  }
  createDevicePro() {
-    if (this.selectedList.length > 0 ) {
-    this.Service.addThing( this.selectedList[0]._links.self.href
-      .substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
-      this.onClose.next(true);
-      this._bsModalRef.hide();
-      this.Service.suceesAlertDialog('Device/Provisioning');
+  this.data.metadata ={};
+  if (this.dataList.length > 0 ) {
 
-    });
+// tslint:disable-next-line: prefer-for-of
+  for (let i = 0 ; i < this.dataList.length ; i++) {
+    if(this.dataList[i].name){
+       this.data.metadata[this.dataList[i].name] = this.dataList[i].value;
+      alert(this.dataList[i].name);
+      alert( this.data.metadata[this.dataList[i].name])
+    }
+    
 
-       } else {
-      alert('Please Select Things Template');
-   }
+  }
+}
+
+console.log(JSON.stringify(this.data));
+ 
+
+  if (this.selectedList.length > 0 ) {
+     this.Service.addThing( this.selectedList[0]._links.self.href
+        .substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
+       this.onClose.next(true);
+       this._bsModalRef.hide();
+       this.Service.suceesAlertDialog('Device/Provisioning');
+
+     });
+
+        } else {
+       alert('Please Select Things Template');
+    }
  }
 getDetailDeviceProvisioning() {
  this.Service.getDetail(this.id).subscribe(res => {
-  console.log(JSON.stringify(res));
-  this.data = res;
+   this.data = res;
+  
+this.dataList = [];
+ if(this.data.metadata){
+  let j =0 ;
+  for(let i in this.data.metadata){
+    if(j == 0){
+      this.dataList.push({
+        class : 'col-md-6',
+        class1: 'col-md-6',
+        class5: 'col-md-2',
+    
+        type: '1',
+        class2: 'col-md-6',
+        class3: 'col-md-10',
+        class4: 'plustbutton',
+        name:i,
+        value:this.data.metadata[i]
+      })
+    }else{
+      this.dataList.push({
+        type: '1',
+        class : 'col-md-6',
+        class1: 'col-md-6',
+        class2: 'col-md-6',
+        class3: 'col-md-8' ,
+        class4: 'plusbutonafter',
+        class5: 'col-md-2',
+        name:i,
+        value:this.data.metadata[i]
+      })
+    
+    }
+    
+    j++;
+  }
+}
+
+
 });
 }
+
   ngOnInit() {
     this.onClose = new Subject();
+    this.onCloseEdit = new Subject();
+      this.data = {};
 
+    
     this.geteventTemplate();
     if (this.title === 'false') {
+      this.dataList = [{
+        class : 'col-md-6',
+        class1: 'col-md-6',
+        class5: 'col-md-2',
+
+        type: '1',
+        class2: 'col-md-6',
+        class3: 'col-md-10',
+        class4: 'plustbutton'
+         }
+    ];
 
     } else {
       this.getDetailDeviceProvisioning();
@@ -120,6 +194,20 @@ getDetailDeviceProvisioning() {
     this.geteventTemplate();
 
 
+}
+add() {
+  this.dataList.push({
+    type: '1',
+    class : 'col-md-6',
+    class1: 'col-md-6',
+    class2: 'col-md-6',
+    class3: 'col-md-8' ,
+    class4: 'plusbutonafter',
+    class5: 'col-md-2',
+   } );
+ }
+remove(index) {
+  this.dataList.splice(index, 1);
 }
 selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
 // tslint:disable-next-line: prefer-for-of
