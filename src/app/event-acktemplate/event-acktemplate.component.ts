@@ -47,7 +47,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   bsModalRef: BsModalRef;
   pageCount: any;
   displayList: any;
-  pageCountArray:any;
+  pageCountArray: any;
 
 // tslint:disable-next-line: ban-types
   title: String;
@@ -57,14 +57,15 @@ keyData: any;
 actionData: any;
 // tslint:disable-next-line: ban-types
  substring: String;
-    showpagi:boolean = true;
-    advanceSearch:boolean = false;
+    showpagi = true;
+    advanceSearch = false;
 open() {
 
  }
 detail(data) {
- 
-  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length ) , 'Event/Template/detail');
+
+  this.service.setId(data._links.self.href.
+    substring(data._links.self.href.length - 2, data._links.self.href.length ) , 'Event/Template/detail');
 }
 edit(data) {
   alert('ds');
@@ -116,14 +117,21 @@ getData(data, key , index) {
                   return data[key];
                 }
               } else if
-              (data[key].substring( 0 , 3 ) == 'ERN' || data[key].substring( 0 , 3 ) == 'MRN' || data[key].substring( 0 , 3 ) == 'SSC' || data[key].substring( 0 , 3 ) == 'Pro' || data[key].substring( 0 , 3 ) == 'Opp' || data[key].substring( 0 , 3 ) == 'Equ' || data[key].substring( 0 , 1 ) == 'C' || data[key].substring( 0 , 1 ) == 'P') {
+              (data[key].substring( 0 , 3 ) === 'ERN' ||
+               data[key].substring( 0 , 3 ) === 'MRN' ||
+                data[key].substring( 0 , 3 ) === 'SSC' ||
+                 data[key].substring( 0 , 3 ) === 'Pro' ||
+                  data[key].substring( 0 , 3 ) === 'Opp' ||
+                   data[key].substring( 0 , 3 ) === 'Equ' ||
+                    data[key].substring( 0 , 1 ) === 'C' ||
+                     data[key].substring( 0 , 1 ) === 'P') {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
                   return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
               }
             } else {
-              if (data[key] == true) {
+              if (data[key] === true) {
                    return 'YES';
                  } else {
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
@@ -151,34 +159,36 @@ ngOnInit() {
   this.title = 'Add Event';
   this.getEventList();
     }
-    searchresult(name : String,description : String){
-      this.service.getSearchThings(name , description).subscribe(res => {     
+// tslint:disable-next-line: ban-types
+    searchresult(name: String, description: String) {
+      this.service.getSearchThings(name , description).subscribe(res => {
     this.displayList = res;
-this.showpagi = false
-       })
+    this.showpagi = false;
+       });
     }
-    onSearchChange(searchValue : string ,serchdescription : String) {   
-      if(searchValue || serchdescription){
+// tslint:disable-next-line: ban-types
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
         console.log(searchValue);
-this.searchresult(searchValue,serchdescription);
-      }else{
+        this.searchresult(searchValue, serchdescription);
+      } else {
         this.getEventList();
-        this.showpagi = true
+        this.showpagi = true;
 
       }
     }
-    toggelSearch(){
-      this.advanceSearch = !this.advanceSearch
-      if(this.advanceSearch){
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
 
-      }else{
+      } else {
 
-      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
-      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
-      (<HTMLInputElement>document.getElementById('search')).value = '';  
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
 
       this.getEventList();
-      this.showpagi = true
+      this.showpagi = true;
 
       }
     }

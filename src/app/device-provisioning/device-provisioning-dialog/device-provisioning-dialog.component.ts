@@ -70,7 +70,8 @@ title: any;
  updateDevicePro() {
 
   if (this.selectedList.length > 0 ) {
-    this.Service.updateThing( this.selectedList[0]._links.self.href.substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
+    this.Service.updateThing( this.selectedList[0].
+      _links.self.href.substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
       this.onClose.next(true);
       this._bsModalRef.hide();
       this.Service.suceesAlertDialog('Device/Provisioning');
@@ -83,7 +84,8 @@ title: any;
  }
  createDevicePro() {
     if (this.selectedList.length > 0 ) {
-    this.Service.addThing( this.selectedList[0]._links.self.href.substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
+    this.Service.addThing( this.selectedList[0]._links.self.href
+      .substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
       this.onClose.next(true);
       this._bsModalRef.hide();
       this.Service.suceesAlertDialog('Device/Provisioning');
@@ -120,8 +122,9 @@ getDetailDeviceProvisioning() {
 
 }
 selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
+// tslint:disable-next-line: prefer-for-of
   for (let i = 0 ; i < this.eventTemplateList.length; i++) {
-    if (this.eventTemplateList[i]._links.self.href != data._links.self.href) {
+    if (this.eventTemplateList[i]._links.self.href !== data._links.self.href) {
       this.eventTemplateList[i].check =  false;
       }
      }

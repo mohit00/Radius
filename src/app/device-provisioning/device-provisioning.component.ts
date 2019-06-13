@@ -1,11 +1,11 @@
-import { Component, OnInit,SecurityContext  } from '@angular/core';
-import {DeviceProvisioningDialogComponent} from './device-provisioning-dialog/device-provisioning-dialog.component'
+import { Component, OnInit, SecurityContext  } from '@angular/core';
+import {DeviceProvisioningDialogComponent} from './device-provisioning-dialog/device-provisioning-dialog.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
 import { DatePipe } from '@angular/common';
 declare interface TableData {
-  headerRow:  any ;
+  headerRow: any ;
   dataRows: string[][];
 }
 @Component({
@@ -14,29 +14,13 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class DeviceProvisioningComponent implements OnInit {
-  page: any;
-   pageCountArray: any;
-   last:any;
-size: any;
-sort: any;
-  public tableData1: TableData;
-  pipe = new DatePipe('en-US');
-  bsModalRef: BsModalRef;
-  pageCount: any;
-  displayList: any;
-// tslint:disable-next-line: ban-types
-  title: String;
-rowSpan: number;
-header: any;
-keyData: any;
-actionData: any;
 constructor(private modalService: BsModalService, private service: AuthService) {
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
   this.size = 10;
   this.sort = 0;
-  
+
   this.header = [{
     name: 'Things ID',
     width: 10
@@ -61,6 +45,28 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+  page: any;
+   pageCountArray: any;
+   last: any;
+size: any;
+sort: any;
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+
+nextDisabled: any;
+preDisabled: any;
+    selectedPage: any;
+    showpagi = true;
+    advanceSearch = false;
 open() {
     const initialState = {
       title: 'false',
@@ -70,7 +76,7 @@ open() {
     this.bsModalRef.content.onClose.subscribe(result => {
      this.getEventList();
      console.log('results', result);
-}); 
+});
 }
 
 getData(data, key , index) {
@@ -137,7 +143,7 @@ getData(data, key , index) {
 
               }
             } else {
-              if (data[key] == true) {
+              if (data[key] === true) {
                    return 'YES';
                  } else {
 
@@ -161,28 +167,25 @@ getData(data, key , index) {
     return '';
   }
 }
-
-nextDisabled:any;
-preDisabled:any;
 getEventList() {
   this.service.getthingList(this.page, this.size, this.sort).subscribe(res => {
-     this.showpagi = true
-    this.pageCount =  res.page.totalPages;
-    if(this.pageCount == this.page + 1){
+     this.showpagi = true;
+     this.pageCount =  res.page.totalPages;
+     if (this.pageCount === this.page + 1) {
       this.nextDisabled = true;
-    }else{
+    } else {
       this.nextDisabled = false;
     }
-    if(this.page   == 0){
+     if (this.page   === 0) {
       this.preDisabled = true;
-    }else{
+    } else {
       this.preDisabled = false;
 
     }
-    this.displayList = res._embedded.things;
-    this.pageCountArray =[];
-    for(var i =0 ;i<this.pageCount;i++){
-      this.pageCountArray.push(i+1)
+     this.displayList = res._embedded.things;
+     this.pageCountArray = [];
+     for (let i = 0 ; i < this.pageCount; i++) {
+      this.pageCountArray.push(i + 1);
     }
   });
 }
@@ -211,60 +214,59 @@ ngOnInit() {
     delete(data) {
       alert('ds');
     }
-    selectedPage:any;
-    prePage(){
-     
-      this.selectedPage = this.selectedPage -1;
-       this.page = this.selectedPage -1 ;
+    prePage() {
+
+      this.selectedPage = this.selectedPage - 1;
+      this.page = this.selectedPage - 1 ;
       this.getEventList();
   }
-  Page(data){
+  Page(data) {
      this.selectedPage = data ;
-    this.page = this.selectedPage -1;
-    this.getEventList();
+     this.page = this.selectedPage - 1;
+     this.getEventList();
   }
-    nextPage(){
+    nextPage() {
         this.selectedPage = this.selectedPage + 1;
-        this.page = this.selectedPage -1;
+        this.page = this.selectedPage - 1;
         this.getEventList();
     }
-    getClass(data){
-      if(this.selectedPage === data){
+    getClass(data) {
+      if (this.selectedPage === data) {
         return 'active';
-      }else{
+      } else {
         return '';
       }
     }
-    showpagi:boolean = true;
-    searchresult(name : String,description : String){
-      this.service.getSearchThings(name , description).subscribe(res => {     
+// tslint:disable-next-line: ban-types
+    searchresult(name: String, description: String) {
+      this.service.getSearchThings(name , description).subscribe(res => {
     this.displayList = res;
-this.showpagi = false
-       })
+    this.showpagi = false;
+       });
     }
-    onSearchChange(searchValue : string ,serchdescription : String) {   
-      if(searchValue || serchdescription){
+// tslint:disable-next-line: ban-types
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
         console.log(searchValue);
-this.searchresult(searchValue,serchdescription);
-      }else{
+        this.searchresult(searchValue, serchdescription);
+      } else {
         this.getEventList();
-        this.showpagi = true
+        this.showpagi = true;
 
       }
     }
-    advanceSearch:boolean = false;
-    toggelSearch(){
-      this.advanceSearch = !this.advanceSearch
-      if(this.advanceSearch){
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
 
-      }else{
+      } else {
 
-      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
-      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
-      (<HTMLInputElement>document.getElementById('search')).value = '';  
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
 
       this.getEventList();
-      this.showpagi = true
+      this.showpagi = true;
 
       }
     }

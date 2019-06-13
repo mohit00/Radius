@@ -159,6 +159,7 @@ ngOnInit() {
     this.showpagi = false;
        });
     }
+// tslint:disable-next-line: ban-types
     onSearchChange(searchValue: string , serchdescription: String) {
       if (searchValue || serchdescription) {
         console.log(searchValue);
