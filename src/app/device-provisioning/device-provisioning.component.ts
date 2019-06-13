@@ -19,6 +19,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
+  ;
   this.sort = 0;
 
   this.header = [{
