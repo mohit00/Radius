@@ -14,9 +14,11 @@ data:any;
   constructor(private  Service: AuthService,private route:Router) {
     this.data = {};
    }
+   
    changeFreeze() {
+    
     this.eventDetail.freeze = this.data.check;
-    this.Service.updateEventTemplate(this.eventDetail, this.eventId).subscribe(res => {
+    this.Service.freezeData(this.eventDetail, this.eventId).subscribe(res => {
       this.Service.suceesAlertDialog('Event has been successfully Freezed.' );
 
       this.route.navigate(['Event/Template']);

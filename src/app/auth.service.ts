@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import {
 
   Headers,
@@ -22,57 +22,52 @@ import {SuccessDialogComponent} from './dialog/success-dialog/success-dialog.com
   providedIn: 'root'
 })
 export class AuthService {
+  loaderCheck = new EventEmitter<any>();
   bsModalRef: BsModalRef;
   BASE_URL = this.WebserModel.Sevice.BASE_URL
-     public loading = false;
-
+  public loading = false;
   private missionAnnouncedSource = new Subject<string>();
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();
   CREATE_ATTRIBUTE_TEMPLATE = this.WebserModel.Sevice.CREATE_ATTRIBUTE_TEMPLATE;
   firstHeaders: any;
-  
+  get sizetable (){
+    return 9;
+  }
 // tslint:disable-next-line: variable-name
   constructor(private _http: HttpClient, private router: Router, private modalService: BsModalService
 // tslint:disable-next-line: no-shadowed-variable
     ,         private WebserModel: WebserModel) {
-
 // tslint:disable-next-line: deprecation
       this.firstHeaders = new Headers();
       this.firstHeaders.append('Content-Type', 'application/json');
-
   }
-
   suceesAlertDialog(data ) {
     const initialState = {
       title: data, 
     };
-
     this.bsModalRef = this.modalService.show(SuccessDialogComponent, {initialState, class: 'modal-confirm  modal-sm' }    );
-
     this.bsModalRef.content.onClose.subscribe(result => {
      console.log('results', result);
       });
-
     }
-
    login( ): Observable < any > {
-
      return this._http.get( '/api/rest/v2/all', {
-
      })
     .map(res => res as any)
     .catch(this.handleError);
-
        }
        addAttributeTemplate(data): Observable < any > {
-
         return this._http.post( this.BASE_URL + 'attributeTemplates', data)
        .map(res => res as any)
        .catch(this.handleError);
        }
        updateAttributeTemplate(data, id): Observable < any > {
-   
         return this._http.put( id, data)
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
+        freezeData(data: { freeze: any; }, id: string): Observable < any > {
+        return this._http.patch( id, data)
        .map(res => res as any)
        .catch(this.handleError);
        }
@@ -165,11 +160,55 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
-       getthingList( ): Observable < any > {
+       getthingList( page: string, size: string, sort: string ): Observable < any > {
 
-        return this._http.get( this.BASE_URL + 'things' )
+      
+        return this._http.get( this.BASE_URL + 'things?page=' + page + '&size=' + size + '&sort=' + sort )
        .map(res => res as any)
        .catch(this.handleError);
+       }
+       
+       addThing( id: any,data: any): Observable < any > {
+
+        return this._http.post( this.BASE_URL + 'thing-service/createThingFromTemplate/'+id,data )
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
+       updateThing( id: any,data: any): Observable < any > {
+
+        return this._http.put( this.BASE_URL + 'thing-service/createThingFromTemplate/'+id,data )
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
+       getSearchAttribute(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchEvent(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchCommand(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchThingsTemplate(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchThings(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/things/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
        }
        private handleError(error: Response) {
         console.log(error);

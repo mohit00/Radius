@@ -34,7 +34,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
-  this.size = 10;
+  this.size = this.service.sizetable;
   this.sort = 0;
   
   this.header = [{
@@ -167,6 +167,8 @@ preDisabled:any;
 getEventList() {
    
   this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
+    this.showpagi = true
+
     this.pageCount =  res.page.totalPages;
     if(this.pageCount == this.page + 1){
       this.nextDisabled = true;
@@ -214,15 +216,11 @@ ngOnInit() {
       alert('ds');
     }
     selectedPage:any;
-    
-   
     prePage(){
      
       this.selectedPage = this.selectedPage -1;
        this.page = this.selectedPage -1 ;
       this.getEventList();
-     
-   
   }
   Page(data){
      this.selectedPage = data ;
@@ -230,17 +228,48 @@ ngOnInit() {
     this.getEventList();
   }
     nextPage(){
-       
         this.selectedPage = this.selectedPage + 1;
         this.page = this.selectedPage -1;
         this.getEventList();
-      
     }
     getClass(data){
       if(this.selectedPage === data){
         return 'active';
       }else{
         return '';
+      }
+    }
+    showpagi:boolean = true;
+    searchresult(name : String,description : String){
+      this.service.getSearchAttribute(name , description).subscribe(res => {     
+    this.displayList = res;
+this.showpagi = false
+       })
+    }
+    onSearchChange(searchValue : string ,serchdescription : String) {   
+      if(searchValue || serchdescription){
+        console.log(searchValue);
+this.searchresult(searchValue,serchdescription);
+      }else{
+        this.getEventList();
+        this.showpagi = true
+
+      }
+    }
+    advanceSearch:boolean = false;
+    toggelSearch(){
+      this.advanceSearch = !this.advanceSearch
+      if(this.advanceSearch){
+
+      }else{
+
+      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
+      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
+      (<HTMLInputElement>document.getElementById('search')).value = '';  
+
+      this.getEventList();
+      this.showpagi = true
+
       }
     }
 }

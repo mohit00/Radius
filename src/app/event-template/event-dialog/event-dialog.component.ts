@@ -50,7 +50,7 @@ page: any;
     for (let i = 0 ; i < this.displayList.length; i++) {
       if(this.displayList[i]._links.self.href != data._links.self.href){
         this.displayList[i].check =  false;
-        }   
+        }
        }
     data.check = ! data.check;
 
@@ -147,7 +147,11 @@ page: any;
     }
       if (this.selectedList.length > 0) {
      const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
-     this.displayList[indexselected].check = true;
+ 
+    
+    this.displayList[indexselected].check = true;
+
+  
     }
 
     });

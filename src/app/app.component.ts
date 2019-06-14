@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import {NewsletterService} from './newsletterService';
 import { environment } from './../environments/environment';
+import {AuthService } from '../app/auth.service';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,43 @@ import { environment } from './../environments/environment';
 })
 export class AppComponent {
   title = 'Radius';
-
-  readonly VAPID_PUBLIC_KEY = "BEGbsELIrNOEWo833QxzGALIVU8uDwpaVWMDbK5UFD4qtz0lTGzmmFm0A3GArS_qAbb3jU_TNL7ujr3i2anYdeA";
+loaderShow: any;
+  readonly VAPID_PUBLIC_KEY = 'BEGbsELIrNOEWo833QxzGALIVU8uDwpaVWMDbK5UFD4qtz0lTGzmmFm0A3GArS_qAbb3jU_TNL7ujr3i2anYdeA';
 
   constructor(
-      private swPush: SwPush, private newsletterService: NewsletterService ) {
-        
-        console.log(environment.production); // Logs false for default environment
+      private swPush: SwPush, private newsletterService: NewsletterService , private Service: AuthService, private Router: Router ) {
+       this.loaderShow = false;
+       this.Service.loaderCheck.subscribe(res => {
+           if (res == 'show') {
+            this.loaderShow = true;
+           } else {
+            this.loaderShow = false;
+
+           }
+        });
+       this.Router.events.subscribe((event: Event) => {
+          if (event instanceof NavigationStart) {
+            if(this.loaderShow){}else{
+              this.loaderShow = true;
+            }
+          }
+
+          if (event instanceof NavigationEnd) {
+            if(this.loaderShow) {
+              this.loaderShow = false;
+
+            } else{
+             }
+            
+
+          }
+
+          if (event instanceof NavigationError) {
+            this.loaderShow = false;
+
+          }
+      });
+       console.log(environment.production); // Logs false for default environment
 
       }
 
@@ -26,6 +58,6 @@ export class AppComponent {
            serverPublicKey: this.VAPID_PUBLIC_KEY
        })
         .then(sub => this.newsletterService.addPushSubscriber(sub).subscribe())
-       .catch(err => console.error("Could not subscribe to notifications", err));
+       .catch(err => console.error('Could not subscribe to notifications', err));
   }
 }

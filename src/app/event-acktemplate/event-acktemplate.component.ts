@@ -1,35 +1,20 @@
-import { Component, OnInit,SecurityContext  } from '@angular/core';
- import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit, SecurityContext  } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthService} from '../auth.service';
 import { DatePipe } from '@angular/common';
 
 declare interface TableData {
-  headerRow:  any ;
+  headerRow: any ;
   dataRows: string[][];
 }
 @Component({
   selector: 'app-event-acktemplate',
   templateUrl: '../table/table.html',
   styleUrls: ['../table/table.scss']
- 
+
 })
 export class EventACKTemplateComponent implements OnInit {
-  public tableData1: TableData;
-  pipe = new DatePipe('en-US');
-  bsModalRef: BsModalRef;
-  pageCount: any;
-  displayList: any;
-  pageCountArray:any;
-
-// tslint:disable-next-line: ban-types
-  title: String;
-rowSpan: number;
-header: any;
-keyData: any;
-actionData: any;
-// tslint:disable-next-line: ban-types
- substring: String;
 
 constructor(private modalService: BsModalService, private service: AuthService) {
   this.pageCountArray = [];
@@ -57,12 +42,30 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+  pageCountArray: any;
+
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+// tslint:disable-next-line: ban-types
+ substring: String;
+    showpagi = true;
+    advanceSearch = false;
 open() {
 
  }
 detail(data) {
- 
-  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length ) , 'Event/Template/detail');
+
+  this.service.setId(data._links.self.href.
+    substring(data._links.self.href.length - 2, data._links.self.href.length ) , 'Event/Template/detail');
 }
 edit(data) {
   alert('ds');
@@ -114,14 +117,21 @@ getData(data, key , index) {
                   return data[key];
                 }
               } else if
-              (data[key].substring( 0 , 3 ) == 'ERN' || data[key].substring( 0 , 3 ) == 'MRN' || data[key].substring( 0 , 3 ) == 'SSC' || data[key].substring( 0 , 3 ) == 'Pro' || data[key].substring( 0 , 3 ) == 'Opp' || data[key].substring( 0 , 3 ) == 'Equ' || data[key].substring( 0 , 1 ) == 'C' || data[key].substring( 0 , 1 ) == 'P') {
+              (data[key].substring( 0 , 3 ) === 'ERN' ||
+               data[key].substring( 0 , 3 ) === 'MRN' ||
+                data[key].substring( 0 , 3 ) === 'SSC' ||
+                 data[key].substring( 0 , 3 ) === 'Pro' ||
+                  data[key].substring( 0 , 3 ) === 'Opp' ||
+                   data[key].substring( 0 , 3 ) === 'Equ' ||
+                    data[key].substring( 0 , 1 ) === 'C' ||
+                     data[key].substring( 0 , 1 ) === 'P') {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
                   return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
               }
             } else {
-              if (data[key] == true) {
+              if (data[key] === true) {
                    return 'YES';
                  } else {
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
@@ -148,5 +158,38 @@ getEventList() {
 ngOnInit() {
   this.title = 'Add Event';
   this.getEventList();
+    }
+// tslint:disable-next-line: ban-types
+    searchresult(name: String, description: String) {
+      this.service.getSearchThings(name , description).subscribe(res => {
+    this.displayList = res;
+    this.showpagi = false;
+       });
+    }
+// tslint:disable-next-line: ban-types
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
+        console.log(searchValue);
+        this.searchresult(searchValue, serchdescription);
+      } else {
+        this.getEventList();
+        this.showpagi = true;
+
+      }
+    }
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
+
+      } else {
+
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
+
+      this.getEventList();
+      this.showpagi = true;
+
+      }
     }
 }

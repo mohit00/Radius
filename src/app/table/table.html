@@ -3,7 +3,7 @@
       <div class ="row">
      
           <div class ="col-md-2 buttonTheme">
-              <button class="btn   theme_color" type="button">  Advance Search</button>
+              <button class="btn   theme_color" type="button" (click) ="toggelSearch()">  Advance Search</button>
           </div>
           <div class ="col-md-6 tablebutton">
             <div class ="col-md-4">
@@ -13,13 +13,33 @@
                 <form class="form-horizontal col-md-8" action="/action_page.php">
                   <div class="form-group">
                      
-                      <input type="text" class="form-control" id="email" placeholder="Search">
+                      <input type="text" class="form-control" id="search"  (input)="onSearchChange($event.target.value,'')" placeholder="Search">
                      
                   </div>
   </form>              
           </div>
          
       </div>
+      <div class ="row" *ngIf ="advanceSearch" >
+        <div class ="col-md-12">
+          <div class ="col-md-6">
+               <div class="form-group">
+                 
+                  <input type="text" class="form-control" id="searchName" placeholder="Name" (input)="onSearchChange($event.target.value,'')">
+                 
+              </div>
+              
+              </div>
+              <div class ="col-md-6">
+                <div class="form-group">
+                  
+                   <input type="text" class="form-control" id="searchDescription" placeholder="Description" (input)="onSearchChange('',$event.target.value)">
+                  
+               </div>
+               
+               </div>
+              </div>
+            </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -45,7 +65,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoot *ngIf ="pageCount && pageCountArray">
+                                <tfoot *ngIf ="pageCount && pageCountArray && showpagi">
                                     <tr  ><td [attr.colspan]="keyData.length"> 
                                       <div class=" " style="float: left;">
                                         <ul class="pagination">

@@ -8,10 +8,8 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./attribute-dialog.component.scss']
 })
 export class AttributeDialogComponent implements OnInit {
-
   public onClose: Subject<boolean>;
   public onCloseEdit: Subject<boolean>;
-
   data: any;
   dataList: any;
   title: any;
@@ -24,12 +22,12 @@ export class AttributeDialogComponent implements OnInit {
   add() {
     this.dataList.push({
       type: '1',
-
-      class : 'col-md-4',
-      class1: 'col-md-4',
+      class : 'col-md-3',
+      class1: 'col-md-3',
       class2: 'col-md-4',
       class3: 'col-md-7' ,
-      class4: 'plusbutonafter'
+      class4: 'plusbutonafter',
+      class5: 'col-md-2',
      } );
   }
   submitCreate() {
@@ -79,8 +77,10 @@ export class AttributeDialogComponent implements OnInit {
       if (this.title == 'false') {
         this.headerTitle = 'Add Attribute';
         this.dataList = [{
-          class : 'col-md-4',
-          class1: 'col-md-4',
+          class : 'col-md-3',
+          class1: 'col-md-3',
+          class5: 'col-md-2',
+
           type: '1',
           class2: 'col-md-4',
           class3: 'col-md-10',
