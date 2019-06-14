@@ -31,10 +31,10 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   }, {
     name: 'Things DESCRIPTION',
     width: 10
-  }, {
-    name: 'IS FREEZE',
+  },  {
+    name: 'Things Type',
     width: 10
-  }, {
+  },   {
     name: 'DATE',
     width: 10
   },
@@ -44,7 +44,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   }
  ];
 
-  this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+  this.keyData = ['tenantId', 'name', 'description', 'deviceType',  'lastUpdatedOn', 'action'];
  }
   page: any;
    pageCountArray: any;
