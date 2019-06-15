@@ -238,11 +238,18 @@ ngOnInit() {
     }
     showpagi:boolean = true;
     searchresult(name : String,description : String){
+      if(description){
+        this.service.getSearchThingsTemplatedesc(name,description).subscribe(res => {     
+          this.displayList = res;
+      this.showpagi = false
+             })
+      }else{
       this.service.getSearchThingsTemplate(name , description).subscribe(res => {     
     this.displayList = res;
 this.showpagi = false
        })
     }
+  }
     onSearchChange(searchValue : string ,serchdescription : String) {   
       if(searchValue || serchdescription){
         console.log(searchValue);

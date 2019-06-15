@@ -234,10 +234,17 @@ this.bsModalRef.content.onCloseEdit.subscribe(result => {
     }
     showpagi:boolean = true;
     searchresult(name : String,description : String){
+      if(description){
+        this.service.getSearchCommanddesc(name,description).subscribe(res => {     
+          this.displayList = res;
+      this.showpagi = false
+             })
+      }else{
       this.service.getSearchCommand(name , description).subscribe(res => {     
     this.displayList = res;
 this.showpagi = false
        })
+      }
     }
     onSearchChange(searchValue : string ,serchdescription : String) {   
       if(searchValue || serchdescription){

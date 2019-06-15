@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { SwPush } from '@angular/service-worker';
+import { SwPush ,SwUpdate} from '@angular/service-worker';
 import {NewsletterService} from './newsletterService';
 import { environment } from './../environments/environment';
 import {AuthService } from '../app/auth.service';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,8 +16,13 @@ loaderShow: any;
   readonly VAPID_PUBLIC_KEY = 'BEGbsELIrNOEWo833QxzGALIVU8uDwpaVWMDbK5UFD4qtz0lTGzmmFm0A3GArS_qAbb3jU_TNL7ujr3i2anYdeA';
 
   constructor(
-      private swPush: SwPush, private newsletterService: NewsletterService , private Service: AuthService, private Router: Router ) {
+      private swPush: SwPush,private SwUpdate :SwUpdate , private newsletterService: NewsletterService , private Service: AuthService, private Router: Router ) {
        this.loaderShow = false;
+       SwUpdate.available.subscribe(evt => {
+        // an update is available, add some logic here.
+        alert("Update Available");
+      });
+  
        this.Service.loaderCheck.subscribe(res => {
            if (res == 'show') {
             this.loaderShow = true;

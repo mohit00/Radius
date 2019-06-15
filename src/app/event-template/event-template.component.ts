@@ -61,6 +61,8 @@ actionData: any;
  sort: any;
 nextDisabled: any;
 preDisabled: any;
+    showpagi:boolean = true;
+    advanceSearch:boolean = false;
 open() {
   const initialState = {
     title: 'false',
@@ -219,8 +221,13 @@ ngOnInit() {
         return '';
       }
     }
-    showpagi:boolean = true;
     searchresult(name : String,description : String){
+      if(description){
+        this.service.getSearchEventdesc(name,description).subscribe(res => {     
+          this.displayList = res;
+      this.showpagi = false
+             })
+      }else{
       this.service.getSearchEvent(name , description).subscribe(res => {
         console.log(JSON.stringify(res))
      
@@ -228,6 +235,7 @@ ngOnInit() {
 this.showpagi = false
        })
     }
+  }
     onSearchChange(searchValue : string ,serchdescription : String) {   
       if(searchValue || serchdescription){
         console.log(searchValue);
@@ -238,7 +246,6 @@ this.searchresult(searchValue,serchdescription);
 
       }
     }
-    advanceSearch:boolean = false;
     toggelSearch(){
       this.advanceSearch = !this.advanceSearch
       if(this.advanceSearch){

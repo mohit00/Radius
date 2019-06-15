@@ -31,7 +31,7 @@ export class AuthService {
   CREATE_ATTRIBUTE_TEMPLATE = this.WebserModel.Sevice.CREATE_ATTRIBUTE_TEMPLATE;
   firstHeaders: any;
   get sizetable (){
-    return 9;
+    return 7;
   }
 // tslint:disable-next-line: variable-name
   constructor(private _http: HttpClient, private router: Router, private modalService: BsModalService
@@ -181,8 +181,13 @@ export class AuthService {
        .catch(this.handleError);
        }
        getSearchAttribute(data,des): Observable<any> {
-        
+       
         return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchAttributedescript(data,des){
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?description='+des)
         .map(res => res as any)
         .catch(this.handleError);
        }
@@ -192,9 +197,21 @@ export class AuthService {
         .map(res => res as any)
         .catch(this.handleError);
        }
+       getSearchEventdesc(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?description='+des )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
        getSearchCommand(data,des): Observable<any> {
         
         return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchCommanddesc(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?description='+des )
         .map(res => res as any)
         .catch(this.handleError);
        }
@@ -204,9 +221,21 @@ export class AuthService {
         .map(res => res as any)
         .catch(this.handleError);
        }
+       getSearchThingsTemplatedesc(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?description='+des )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
        getSearchThings(data,des): Observable<any> {
         
         return this._http.get( this.BASE_URL + 'thing-service/things/search?name='+data )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchThingsdesc(data,des): Observable<any> {
+        
+        return this._http.get( this.BASE_URL + 'thing-service/things/search?description='+des )
         .map(res => res as any)
         .catch(this.handleError);
        }

@@ -103,7 +103,48 @@
     position: relative; 
     width: 40px;  
 }
+ #snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
 
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+ 
 .material-switch > label::before {
     background: rgb(0, 0, 0);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -278,5 +319,5 @@ input[type="radio"]:disabled + .label-text:before{
 
  </app-root>
  <noscript>Please enable JavaScript to continue using this application.</noscript>
-<script type="text/javascript" src="runtime.bd2acdbc9c29682ac66f.js"></script><script type="text/javascript" src="es2015-polyfills.97acef82ab9e3f500c7a.js" nomodule></script><script type="text/javascript" src="polyfills.2a538d01b523e52a0c0d.js"></script><script type="text/javascript" src="scripts.522ea3a0192cdddabad6.js"></script><script type="text/javascript" src="main.02274bbebb13c034392d.js"></script></body>
+<script type="text/javascript" src="runtime.7e57b44be0922775d792.js"></script><script type="text/javascript" src="es2015-polyfills.97acef82ab9e3f500c7a.js" nomodule></script><script type="text/javascript" src="polyfills.2a538d01b523e52a0c0d.js"></script><script type="text/javascript" src="scripts.522ea3a0192cdddabad6.js"></script><script type="text/javascript" src="main.eee5dcda80aebb1fe3f6.js"></script></body>
 </html>
