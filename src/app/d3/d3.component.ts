@@ -7,17 +7,12 @@ import * as d3 from 'd3';
   styleUrls: ['./d3.component.scss']
 })
 export class D3Component implements OnInit {
-
   constructor() { }
   radius: any = 10;
   ngOnInit() {
   }
 // tslint:disable-next-line: use-life-cycle-interface
   ngAfterContentInit() {
-
-
-
-    
     const data = [{
       name: 'Mohit',
       value : 4
@@ -80,7 +75,7 @@ d3.select(event.target).append('circle').attr(
 
 d3.selectAll('circle').transition()
     .duration(750)
-    .delay(function(d, i) { return i * 10; })
-    .attr('r', function(d) { return Math.sqrt(22 * 22); });
+    .delay( (d, i) => i * 10)
+    .attr('r',  (d) => Math.sqrt(22 * 22));
     }
 }
