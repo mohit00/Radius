@@ -14,22 +14,6 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class AttributeTemplateComponent implements OnInit {
-  page: any;
-   pageCountArray: any;
-   last:any;
-size: any;
-sort: any;
-  public tableData1: TableData;
-  pipe = new DatePipe('en-US');
-  bsModalRef: BsModalRef;
-  pageCount: any;
-  displayList: any;
-// tslint:disable-next-line: ban-types
-  title: String;
-rowSpan: number;
-header: any;
-keyData: any;
-actionData: any;
 constructor(private modalService: BsModalService, private service: AuthService) {
   this.pageCountArray = [];
   this.selectedPage = 1;
@@ -61,6 +45,28 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+  page: any;
+   pageCountArray: any;
+   last:any;
+size: any;
+sort: any;
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+
+nextDisabled:any;
+preDisabled:any;
+    selectedPage:any;
+    showpagi:boolean = true;
+    advanceSearch:boolean = false;
 open() {
     const initialState = {
       title: 'false',
@@ -161,13 +167,9 @@ getData(data, key , index) {
     return '';
   }
 }
-
-nextDisabled:any;
-preDisabled:any;
 getEventList() {
-   
-  this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
-    this.showpagi = true
+   this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
+     this.showpagi = true
 
     this.pageCount =  res.page.totalPages;
     if(this.pageCount == this.page + 1){
@@ -215,7 +217,6 @@ ngOnInit() {
     delete(data) {
       alert('ds');
     }
-    selectedPage:any;
     prePage(){
      
       this.selectedPage = this.selectedPage -1;
@@ -239,7 +240,6 @@ ngOnInit() {
         return '';
       }
     }
-    showpagi:boolean = true;
     searchresult(name : String,description : String){
       if(description){
         this.service.getSearchAttributedescript(name,description).subscribe(res => {     
@@ -264,7 +264,6 @@ this.searchresult(searchValue,serchdescription);
 
       }
     }
-    advanceSearch:boolean = false;
     toggelSearch(){
       this.advanceSearch = !this.advanceSearch
       if(this.advanceSearch){

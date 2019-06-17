@@ -49,7 +49,7 @@ import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.c
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-
+ 
   ],
   entryComponents: [
     DeviceDialogComponent,

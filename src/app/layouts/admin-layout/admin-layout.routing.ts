@@ -14,6 +14,8 @@ import { CommandTemplateComponent } from '../../command-template/command-templat
 import { CommandACKTemplateComponent } from '../../command-acktemplate/command-acktemplate.component';
 import { DeviceTemplateComponent } from '../../device-template/device-template.component';
 import { QuickHelpComponent } from '../../quick-help/quick-help.component';
+import { D3Component } from '../../d3/d3.component';
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
     { path: 'user',           component: UserComponent },
@@ -23,6 +25,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'd3',        component: D3Component },
     {
         path: 'Attribute/Template',
         loadChildren: '../../attribute-template/attribute-template.module#AttributeTemplateModule'
