@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AuthService} from '../../auth.service';
+import {NgForm} from '@angular/forms';
+
 @Component({
   selector: 'app-attribute-dialog',
   templateUrl: './attribute-dialog.component.html',
@@ -30,24 +32,33 @@ export class AttributeDialogComponent implements OnInit {
       class5: 'col-md-2',
      } );
   }
-  submitCreate() {
+  submitCreate(form) {
+    console.log(form)
+ if(form.valid){
 
+}else{
+  form.submitted = true;
+  return false
+}
 // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.dataList.length; i++) {
-      this.dataList[i].isIdentifier = true;
-    }
+  if(this.dataList[0].name && this.dataList[0].type != 1){
+
+  }else{
+    alert("No Attribute added");
+    return false;
+  }
     this.data.attributeFields = this.dataList;
     this.data.lastUpdatedBy = 'admin';
     this.data.tenantId = 'Radius-PF';
 
     this.data.isFreeze = false;
-    console.log(JSON.stringify(this.data));
-    this.AuthService.addAttributeTemplate(this.data).subscribe(res => {
+      console.log(JSON.stringify(this.data));
+     this.AuthService.addAttributeTemplate(this.data).subscribe(res => {
       this.onClose.next(true);
 
-      this._bsModalRef.hide();
-      this.AuthService.suceesAlertDialog('Attribute has been successfully created.' );
-      });
+       this._bsModalRef.hide();
+        this.AuthService.suceesAlertDialog('Attribute has been successfully created.' );
+       });
   }
   submitUpdate(){
     for (let i = 0; i < this.dataList.length; i++) {
@@ -98,16 +109,22 @@ export class AttributeDialogComponent implements OnInit {
           this.dataList = res.attributeFields;
           for(var i =0 ;i< this.dataList.length;i++){
             if(i ==0){
-              this.dataList[i].class = 'col-md-4';
-              this.dataList[i].class1 = 'col-md-4';
+              this.dataList[i].class = 'col-md-3';
+              this.dataList[i].class1 = 'col-md-3';
               this.dataList[i].class2 = 'col-md-4';
               this.dataList[i].class3 = 'col-md-10';
+              this.dataList[i].class5='col-md-2',
+
               this.dataList[i].class4 = 'plustbutton';
             }else{
-              this.dataList[i].class = 'col-md-4';
-              this.dataList[i].class1 = 'col-md-4';
+          
+
+              this.dataList[i].class = 'col-md-3';
+              this.dataList[i].class1 = 'col-md-3';
               this.dataList[i].class2 = 'col-md-4';
               this.dataList[i].class3 = 'col-md-7';
+              this.dataList[i].class5 = 'col-md-2';
+
               this.dataList[i].class4 = 'plusbutonafter';
    
             }

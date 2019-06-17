@@ -72,7 +72,7 @@ export class AuthService {
        .catch(this.handleError);
        }
        getAttributeTemplate( page, size, sort): Observable < any > {
-
+ 
         return this._http.get( this.BASE_URL + 'attributeTemplates?page=' + page + '&size=' + size + '&sort=' + sort )
        .map(res => res as any)
        .catch(this.handleError);
@@ -161,7 +161,6 @@ export class AuthService {
        .catch(this.handleError);
        }
        getthingList( page: string, size: string, sort: string ): Observable < any > {
-
       
         return this._http.get( this.BASE_URL + 'things?page=' + page + '&size=' + size + '&sort=' + sort )
        .map(res => res as any)
