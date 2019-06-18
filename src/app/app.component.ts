@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { SwPush ,SwUpdate} from '@angular/service-worker';
+import { SwPush , SwUpdate} from '@angular/service-worker';
 import {NewsletterService} from './newsletterService';
 import { environment } from './../environments/environment';
 import {AuthService } from '../app/auth.service';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
- 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,13 +16,17 @@ loaderShow: any;
   readonly VAPID_PUBLIC_KEY = 'BEGbsELIrNOEWo833QxzGALIVU8uDwpaVWMDbK5UFD4qtz0lTGzmmFm0A3GArS_qAbb3jU_TNL7ujr3i2anYdeA';
 
   constructor(
-      private swPush: SwPush,private SwUpdate :SwUpdate , private newsletterService: NewsletterService , private Service: AuthService, private Router: Router ) {
+
+    private swPush: SwPush,
+    private SwUpdate1: SwUpdate ,
+    private newsletterService: NewsletterService ,
+    private Service: AuthService, private Router: Router ) {
        this.loaderShow = false;
-       SwUpdate.available.subscribe(evt => {
+       SwUpdate1.available.subscribe(evt => {
         // an update is available, add some logic here.
-        alert("Update Available");
-      });
-  
+        alert('Update Available');
+       });
+
        this.Service.loaderCheck.subscribe(res => {
            if (res == 'show') {
             this.loaderShow = true;
@@ -33,18 +37,18 @@ loaderShow: any;
         });
        this.Router.events.subscribe((event: Event) => {
           if (event instanceof NavigationStart) {
-            if(this.loaderShow){}else{
+            if (this.loaderShow) {} else {
               this.loaderShow = true;
             }
           }
 
           if (event instanceof NavigationEnd) {
-            if(this.loaderShow) {
+            if (this.loaderShow) {
               this.loaderShow = false;
 
-            } else{
+            } else {
              }
-            
+
 
           }
 

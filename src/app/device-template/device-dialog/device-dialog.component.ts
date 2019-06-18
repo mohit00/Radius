@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AuthService} from '../../auth.service';
-
+import {WebserModel} from '../../Service.model';
 @Component({
   selector: 'app-device-dialog',
   templateUrl: './device-dialog.component.html',
@@ -10,6 +10,7 @@ import {AuthService} from '../../auth.service';
 })
 export class DeviceDialogComponent implements OnInit {
   apage: any;
+
   asize: any;
   asort: any;
   aselectedList: any;
@@ -38,7 +39,7 @@ export class DeviceDialogComponent implements OnInit {
  cpreDisabled: any;
  cpageCount: any;
   constructor(private _bsModalRef: BsModalRef,
-              private AuthService: AuthService ) {
+              private AuthService: AuthService, private WebserModel: WebserModel ) {
     this.apage = 0;
     this.asize = 5;
     this.asort = 0;
@@ -135,8 +136,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
   }
   submitUpdate() {
-    this.data.createdBy = 'admin';
-    this.data.lastUpdatedBy = 'admin';
+  
     this.data.isFreeze = false;
     // eventselectedList: any;
     // attributeselectedList: any;
@@ -162,12 +162,16 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
  }
       }
     }
+     
     this.data.tenantId = 'radius-PF';
-    this.AuthService.updatedeviceTemplate(this.data, this.id).subscribe(res => {
+    this.AuthService.updatedeviceTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + this.id).subscribe(res => {
       this.onCloseEdit.next(true);
+
       this._bsModalRef.hide();
-      this.AuthService.suceesAlertDialog('Things Template has been successfully Updated.');
+      this.AuthService.suceesAlertDialog('Things Template has been successfully Updated.' );
+
       });
+
   }
   geteventList() {
     this.AuthService.getEventTemplate(this.epage, this.esize, this.esort).subscribe(res => {
@@ -322,19 +326,88 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     this.dataList.splice(index, 1);
   }
   deviceDetail() {
+    this.eventselectedList = [];
+    this.commandselectedList = [];
+    this.attributeselectedList = [];
+    this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/thingTemplates/' + this.id).subscribe(res => {
+      this.getattriList();
+      this.getcommandList();
+      this.geteventList();
+      this.data = res;
+      if (res.eventTemplate) {
+// tslint:disable-next-line: prefer-for-of
+       for (let i = 0 ; i < res.eventTemplate.length; i++) {
+        this.eventselectedList.push({
+          _links: {
+            self: {
+              href: this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + res.eventTemplate[i].id
+            }
+          }
+        });
+       }
 
-    this.AuthService.getDetail(this.id).subscribe(res => {
-     this.data = res;
+     }
+      if (res.commandTemplate) {
+      // tslint:disable-next-line: prefer-for-of
+             for (let i = 0 ; i < res.commandTemplate.length; i++) {
+              this.commandselectedList.push({
+                _links: {
+                  self: {
+                    href: this.WebserModel.Sevice.BASE_URL + 'commandTemplates/' + res.commandTemplate[i].id
+                  }
+                }
+              });
+             }
+           }
+      if (res.attributeTemplate) {
+      this.attributeselectedList.push({
+        _links: {
+          self: {
+            href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.attributeTemplate[0].id
+          }
+        }
+      });
+           }
+      if (this.commandselectedList.length > 0 ) {
+            // tslint:disable-next-line: prefer-for-of
+            for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
+           const indexselected =   this.commandDetailList.findIndex(
+              record => record._links.self.href === this.commandselectedList[i]._links.self.href );
+           if (indexselected === -1) {} else {
+               this.commandDetailList[indexselected].check = true;
+
+              }
+         }
+
+        }
+      if (this.eventselectedList.length > 0 ) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
+     const indexselected =   this.eventDetailList.findIndex(
+        record => record._links.self.href === this.eventselectedList[i]._links.self.href );
+     if (indexselected == -1) {} else {
+         this.eventDetailList[indexselected].check = true;
+        }
+   }
+  }
+
+      if (this.attributeselectedList.length > 0) {
+    const indexselected =   this.attrDetailList.findIndex(
+       record => record._links.self.href === this.attributeselectedList[0]._links.self.href
+        );
+    this.attrDetailList[indexselected].check = true;
+  }
+
     });
   }
   public ngOnInit(): void {
       this.onClose = new Subject();
       this.onCloseEdit = new Subject();
-      this.getattriList();
-      this.getcommandList();
-      this.geteventList();
-      if (this.title === 'false') {
 
+      if (this.title === 'false') {
+        this.getattriList();
+        this.getcommandList();
+        this.geteventList();
       } else {
         this.deviceDetail();
       }

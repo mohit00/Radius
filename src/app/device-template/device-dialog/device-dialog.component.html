@@ -232,6 +232,8 @@
            
    <div class="modal-footer">
     <button type="button" class="btn theme_table_button" (click) ="onCancel();" >Close</button>
-    <button type="button" class="btn theme_table_button"  (click) = "submitCreate()">Save</button>
+    <button type="button" class="btn theme_table_button"  (click) = "submitCreate()" *ngIf="title === 'false'">Save</button>
+    <button type="button" class="btn theme_table_button"  (click) = "submitUpdate()"  *ngIf="title !== 'false'">Update</button>
+
   
   </div>

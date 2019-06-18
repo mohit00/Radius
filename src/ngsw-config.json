@@ -23,5 +23,18 @@
         ]
       }
     }
+  ],"dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+        "http://13.126.31.198:8080/attributeTemplates"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "timeout":"10s",
+        "maxAge": "3d"
+      }
+    }
   ]
 }

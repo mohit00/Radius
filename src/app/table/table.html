@@ -80,6 +80,13 @@
                                           </li>
                                         </ul>
                                       </div>
+                                      <div style ="float: right  ;  float: right;
+                                      font-size: 13px;
+                                      margin-right: 57px;margin-top:26px" *ngIf ="pageInfo">
+                                      <span style ="font-weight: 600;">Page Size :</span>{{pageInfo.size}} 
+                                      <span style ="font-weight: 600;">Total Record :{{pageInfo.totalElements}}</span> 
+
+                                      </div>
                                     </td>
                                   </tr></tfoot>
                           </table>

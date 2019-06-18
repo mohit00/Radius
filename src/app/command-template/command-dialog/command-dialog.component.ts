@@ -2,32 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AuthService} from '../../auth.service';
-
+import {WebserModel} from '../../Service.model';
 @Component({
   selector: 'app-command-dialog',
   templateUrl: './command-dialog.component.html',
   styleUrls: ['./command-dialog.component.scss']
 })
 export class CommandDialogComponent implements OnInit {
-
-  public onClose: Subject<boolean>;
-  public onCloseEdit: Subject<boolean>;
-  
-  title: any;
-  id: any;
-  data: any;
-  dataList: any;
-  displayList: any;
-  selectedList: any;
-  pageCountArray: any;
-  selectedPage: any;
-  nextDisabled: any;
- preDisabled: any;
- pageCount: any;
- page: any;
-   size: any;
-   sort: any;
-  constructor(private _bsModalRef: BsModalRef, private AuthService: AuthService ) {
+  constructor(private _bsModalRef: BsModalRef, private AuthService: AuthService, private WebserModel: WebserModel) {
     this.selectedList = [];
     this.data = {};
     this.page = 0;
@@ -47,6 +29,25 @@ export class CommandDialogComponent implements OnInit {
   ];
     this.data = {};
   }
+
+  public onClose: Subject<boolean>;
+  public onCloseEdit: Subject<boolean>;
+
+  title: any;
+  id: any;
+  data: any;
+  dataList: any;
+  displayList: any;
+  selectedList: any;
+  pageCountArray: any;
+  selectedPage: any;
+  nextDisabled: any;
+ preDisabled: any;
+ pageCount: any;
+ page: any;
+   size: any;
+   sort: any;
+  headerTitle: any;
   add() {
     this.dataList.push({
       class : 'col-md-4',
@@ -101,13 +102,13 @@ export class CommandDialogComponent implements OnInit {
      }
  
    }
-    this.AuthService.updateCommandTemplate(this.data,this.id).subscribe(res => {
+   console.log(JSON.stringify(this.data));
+    this.AuthService.updateCommandTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'commandTemplates/' + this.id).subscribe(res => {
       this._bsModalRef.hide();
-     this.onCloseEdit.next(true);
- 
-     this.AuthService.suceesAlertDialog('Command has been successfully Updated.' );
+      this.onCloseEdit.next(true);
+      this.AuthService.suceesAlertDialog('Command has been successfully Updated.' );
    });
- 
+
    }
   remove(index) {
     this.dataList.splice(index, 1);
@@ -140,10 +141,10 @@ export class CommandDialogComponent implements OnInit {
     }
     });
 
-  } 
+  }
    selectedListdata(data) {
     for (let i = 0 ; i < this.displayList.length; i++) {
-      if(this.displayList[i]._links.self.href != data._links.self.href){
+      if (this.displayList[i]._links.self.href != data._links.self.href) {
       this.displayList[i].check =  false;
       }
     }
@@ -152,31 +153,46 @@ export class CommandDialogComponent implements OnInit {
     this.selectedList = [];
 
     if (data.check) {
-      this.selectedList.push(data);
-    } else {
+      this.selectedList.push({
+        _links: {
+          self: {
+            href: data._links.self.href
+          }
+        }
+      });    } else {
     const index =   this.selectedList.findIndex( record => record._links.self.href === data._links.self.href );
     this.selectedList.splice(index, 1);
   }
-
   }
-  headerTitle: any;
   commandDetail() {
-
-    this.AuthService.getDetail(this.id).subscribe(res => {
+    this.selectedList = [];
+    this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/commandTemplates/' + this.id).subscribe(res => {
        this.data = res;
+       if (res.commandFields.id) {
+        this.selectedList.push({
+          _links: {
+            self: {
+              href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.commandFields.id
+            }
+          }
+        });
+      }
+
+       this.getAttributeList();
+
     });
   }
   public ngOnInit(): void {
     this.onClose = new Subject();
     this.onCloseEdit = new Subject();
 
-    
-    this.getAttributeList();
-    if(this.title == 'true'){
+    if (this.title == 'true') {
       this.headerTitle = 'Update Event';
       this.commandDetail();
+     
 
-    }else{
+    } else {
+      this.getAttributeList();
       this.data.templateType = 'Schemafree';
       this.headerTitle = 'Add Event';
 

@@ -168,8 +168,11 @@ getData(data, key , index) {
     return '';
   }
 }
+pageInfo:any;
 getEventList() {
   this.service.getthingList(this.page, this.size, this.sort).subscribe(res => {
+    this.pageInfo = res.page;
+
      this.showpagi = true;
      this.pageCount =  res.page.totalPages;
      if (this.pageCount === this.page + 1) {

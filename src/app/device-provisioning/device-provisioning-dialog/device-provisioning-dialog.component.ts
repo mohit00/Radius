@@ -42,7 +42,7 @@ title: any;
  dataList: any;
 
  geteventTemplate() {
-   this.Service.getdeviceTemplate().subscribe(res => {
+   this.Service.getdeviceTemplate(this.page, this.size, this.sort).subscribe(res => {
      this.eventTemplateList = res._embedded.thingTemplates;
      this.pageCount =  res.page.totalPages;
 

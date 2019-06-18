@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {AttributeDialogComponent} from './attribute-dialog/attribute-dialog.component';
 import {AuthService} from '../auth.service';
 import { DatePipe } from '@angular/common';
+import {WebserModel} from '../Service.model';
 declare interface TableData {
   headerRow: any ;
   dataRows: string[][];
@@ -14,13 +15,13 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class AttributeTemplateComponent implements OnInit {
-constructor(private modalService: BsModalService, private service: AuthService) {
+constructor(private modalService: BsModalService, private service: AuthService,private WebserModel : WebserModel) {
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
   this.sort = 0;
-  
+
   this.header = [{
     name: 'TEMPLATE ID',
     width: 10
@@ -45,9 +46,11 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+ pageInfo: any;
+
   page: any;
    pageCountArray: any;
-   last:any;
+   last: any;
 size: any;
 sort: any;
   public tableData1: TableData;
@@ -62,11 +65,11 @@ header: any;
 keyData: any;
 actionData: any;
 
-nextDisabled:any;
-preDisabled:any;
-    selectedPage:any;
-    showpagi:boolean = true;
-    advanceSearch:boolean = false;
+nextDisabled: any;
+preDisabled: any;
+    selectedPage: any;
+    showpagi = true;
+    advanceSearch = false;
 open() {
     const initialState = {
       title: 'false',
@@ -76,7 +79,7 @@ open() {
     this.bsModalRef.content.onClose.subscribe(result => {
      this.getEventList();
      console.log('results', result);
-}); 
+});
 }
 
 getData(data, key , index) {
@@ -169,26 +172,26 @@ getData(data, key , index) {
 }
 getEventList() {
    this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
-     this.showpagi = true
-
-    this.pageCount =  res.page.totalPages;
-    if(this.pageCount == this.page + 1){
+     this.showpagi = true;
+     this.pageInfo = res.page;
+     this.pageCount =  res.page.totalPages;
+     if (this.pageCount == this.page + 1) {
       this.nextDisabled = true;
-    }else{
+    } else {
       this.nextDisabled = false;
 
     }
-      
-    if(this.page   == 0){
+
+     if (this.page   == 0) {
       this.preDisabled = true;
-    }else{
+    } else {
       this.preDisabled = false;
 
     }
-    this.displayList = res._embedded.attributeTemplates;
-    this.pageCountArray =[];
-    for(var i =0 ;i<this.pageCount;i++){
-      this.pageCountArray.push(i+1)
+     this.displayList = res._embedded.attributeTemplates;
+     this.pageCountArray = [];
+     for (let i = 0 ; i < this.pageCount; i++) {
+      this.pageCountArray.push(i + 1);
     }
   });
 }
@@ -197,18 +200,29 @@ ngOnInit() {
   this.getEventList();
     }
     detail(data) {
-      this.service.setId(data._links.self.href , 'Attribute/Template/detail');
+       if(this.showpagi){
+        this.service.setId(data._links.self.href , 'Attribute/Template/detail');
+
+      }else{
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template/detail');
+
+      }
     }
     edit(data) {
+      if(this.showpagi){
+        this.service.setId(data._links.self.href , 'Attribute/Template/detail');
 
-      this.service.setId(data._links.self.href   , 'Attribute/Template');
-      const initialState = {
+      }else{
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template');
+
+      }
+       const initialState = {
         title: 'true',
         id: this.service.getId
       };
       this.bsModalRef = this.modalService.show(AttributeDialogComponent,  {initialState, class: 'gray modal-lg' });
 
-      this.bsModalRef.content.onCloseEdit.subscribe(result => {
+      this.bsModalRef.content.onCloseEdit.subscribe((result: any) => {
         this.getEventList();
         console.log('results', result);
    });
@@ -217,65 +231,65 @@ ngOnInit() {
     delete(data) {
       alert('ds');
     }
-    prePage(){
-     
-      this.selectedPage = this.selectedPage -1;
-       this.page = this.selectedPage -1 ;
+    prePage() {
+
+      this.selectedPage = this.selectedPage - 1;
+      this.page = this.selectedPage - 1 ;
       this.getEventList();
   }
-  Page(data){
+  Page(data) {
      this.selectedPage = data ;
-    this.page = this.selectedPage -1;
-    this.getEventList();
+     this.page = this.selectedPage - 1;
+     this.getEventList();
   }
-    nextPage(){
+    nextPage() {
         this.selectedPage = this.selectedPage + 1;
-        this.page = this.selectedPage -1;
+        this.page = this.selectedPage - 1;
         this.getEventList();
     }
-    getClass(data){
-      if(this.selectedPage === data){
+    getClass(data) {
+      if (this.selectedPage === data) {
         return 'active';
-      }else{
+      } else {
         return '';
       }
     }
-    searchresult(name : String,description : String){
-      if(description){
-        this.service.getSearchAttributedescript(name,description).subscribe(res => {     
+    searchresult(name: String, description: String) {
+      if (description) {
+        this.service.getSearchAttributedescript(name, description).subscribe(res => {
           this.displayList = res;
-      this.showpagi = false
-             })
-      }else{
-        this.service.getSearchAttribute(name , description).subscribe(res => {     
+          this.showpagi = false;
+             });
+      } else {
+        this.service.getSearchAttribute(name , description).subscribe(res => {
           this.displayList = res;
-      this.showpagi = false
-             })
+          this.showpagi = false;
+             });
       }
-     
+
     }
-    onSearchChange(searchValue : string ,serchdescription : String) {   
-      if(searchValue || serchdescription){
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
         console.log(searchValue);
-this.searchresult(searchValue,serchdescription);
-      }else{
+        this.searchresult(searchValue, serchdescription);
+      } else {
         this.getEventList();
-        this.showpagi = true
+        this.showpagi = true;
 
       }
     }
-    toggelSearch(){
-      this.advanceSearch = !this.advanceSearch
-      if(this.advanceSearch){
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
 
-      }else{
+      } else {
 
-      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
-      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
-      (<HTMLInputElement>document.getElementById('search')).value = '';  
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
 
       this.getEventList();
-      this.showpagi = true
+      this.showpagi = true;
 
       }
     }

@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AuthService} from '../../auth.service';
-
+import {WebserModel} from '../../Service.model';
 @Component({
   selector: 'app-event-dialog',
   templateUrl: './event-dialog.component.html',
   styleUrls: ['./event-dialog.component.scss']
 })
 export class EventDialogComponent implements OnInit {
-  
+
   public onClose: Subject<boolean>;
   public onCloseEdit: Subject<boolean>;
 
@@ -28,7 +28,7 @@ pageCount: any;
 page: any;
   size: any;
   sort: any;
-  constructor(private _bsModalRef: BsModalRef, private AuthService: AuthService ) {
+  constructor(private WebserModel: WebserModel, private _bsModalRef: BsModalRef, private AuthService: AuthService ) {
     this.selectedList = [];
     this.data = {};
     this.page = 0;
@@ -48,7 +48,7 @@ page: any;
   }
   selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
     for (let i = 0 ; i < this.displayList.length; i++) {
-      if(this.displayList[i]._links.self.href != data._links.self.href){
+      if (this.displayList[i]._links.self.href != data._links.self.href) {
         this.displayList[i].check =  false;
         }
        }
@@ -57,16 +57,19 @@ page: any;
     this.selectedList = [];
 
     if (data.check) {
-      this.selectedList.push(data);
+      this.selectedList.push({
+        _links: {
+          self: {
+            href: data._links.self.href
+          }
+        }
+      });
     } else {
     const index =   this.selectedList.findIndex( record => record._links.self.href === data._links.self.href );
     this.selectedList.splice(index, 1);
   }
-   }
+    }
   submitUpdate() {
-
-
-
     this.data.createdBy = 'admin';
     this.data.lastUpdatedBy = 'admin';
     this.data.tenantId = 'Radius-PF';
@@ -74,9 +77,8 @@ page: any;
     if (this.data.templateType === 'schemaDefine') {
       if (this.selectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
-        for (let i = 0 ; i < this.selectedList.length ; i ++) {
-          console.log(JSON.stringify(this.selectedList[i]));
-          this.data.eventFields = this.selectedList[i]._links.self.href ;
+         for (let i = 0 ; i < this.selectedList.length ; i ++) {
+           this.data.eventFields = this.selectedList[i]._links.self.href ;
          }
       } else {
         alert('No Attribute selected');
@@ -84,10 +86,10 @@ page: any;
       }
 
     }
-    console.log(JSON.stringify(this.data));
-    this.AuthService.updateEventTemplate(this.data, this.id).subscribe(res => {
+    alert(JSON.stringify(this.data))
+     this.AuthService.updateEventTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + this.id).subscribe(res => {
       this._bsModalRef.hide();
-      this.onClose.next(true);
+      this.onCloseEdit.next(true);
 
       this.AuthService.suceesAlertDialog('Event has been successfully created.' );
     });
@@ -147,27 +149,38 @@ page: any;
     }
       if (this.selectedList.length > 0) {
      const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
- 
-    
-    this.displayList[indexselected].check = true;
 
-  
+
+     this.displayList[indexselected].check = true;
+
+
     }
 
     });
 
   }
   eventDetail() {
-    this.AuthService.getDetail(this.id).subscribe(res => {
+    this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/eventTemplates/' + this.id).subscribe(res => {
       console.log(JSON.stringify(res));
+
       this.data = res;
+      this.selectedList.push({
+        _links: {
+          self: {
+            href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.eventFields.id
+          }
+        }
+      });
+      this.getAttributeList();
+
     });
   }
   public ngOnInit(): void {
       this.onClose = new Subject();
       this.onCloseEdit = new Subject();
-      this.getAttributeList();
       if (this.title === 'false') {
+        this.getAttributeList();
+
         this.headerTitle = 'Add Event';
         this.data = {templateType: 'Schemafree'};
   } else {

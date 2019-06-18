@@ -4,6 +4,7 @@
  import {EventDialogComponent} from './event-dialog/event-dialog.component';
  import {AuthService} from '../auth.service';
  import { DatePipe } from '@angular/common';
+ import {WebserModel} from '../Service.model'
  declare interface TableData {
  }
  @Component({
@@ -12,7 +13,7 @@
   styleUrls: ['../table/table.scss']
 })
 export class EventTemplateComponent implements OnInit {
-constructor(private modalService: BsModalService, private service: AuthService) {
+constructor(private modalService: BsModalService, private service: AuthService,private WebserModel:WebserModel) {
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
@@ -69,18 +70,30 @@ open() {
   };
   this.bsModalRef = this.modalService.show(EventDialogComponent,  { initialState, class: 'gray modal-lg' });
 
-  this.bsModalRef.content.onClose.subscribe(result => {
+  this.bsModalRef.content.onClose.subscribe((result: any) => {
      this.getEventList();
      console.log('results', result);
 });
 }
-detail(data) {
-
-  this.service.setId(data._links.self.href  , 'Event/Template/detail');
+detail(data:  any) {
+  if(this.showpagi){
+    this.service.setId(data._links.self.href , 'Event/Template/detail');
+  
+  }else{
+    this.service.setId( this.WebserModel.Sevice.BASE_URL+'eventTemplates/'+ data.id  , 'Event/Template/detail');
+  
+  }
 }
-edit(data) {
+edit(data:any ) {
+  console.log(JSON.stringify(data));
 // tslint:disable-next-line: max-line-length
-  this.service.setId(data._links.self.href  , 'Event/Template');
+if(this.showpagi){
+  this.service.setId(data._links.self.href.substring(data._links.self.href.length-2,data._links.self.href.length)   , 'Event/Template');
+
+}else{
+  this.service.setId( data.id  , 'Event/Template');
+
+}
 
   const initialState = {
     title: 'true',
@@ -88,15 +101,15 @@ edit(data) {
   };
   this.bsModalRef = this.modalService.show(EventDialogComponent,  { initialState, class: 'gray modal-lg' });
 
-  this.bsModalRef.content.onCloseEdit.subscribe(result => {
+  this.bsModalRef.content.onCloseEdit.subscribe((result: any) => {
      this.getEventList();
      console.log('results', result);
 });
 }
-delete(data) {
+delete(data: any) {
   alert('ds');
 }
-getData(data, key , index) {
+getData(data: { [x: string]: any; }, key: string , index: any) {
   if (key) {
     if (key === 'freeze') {
        if (data[key] === true) {
@@ -165,9 +178,12 @@ getData(data, key , index) {
     return '';
   }
 }
+pageInfo:any;
 getEventList() {
   this.service.getEventTemplate(this.page, this.size, this.sort).subscribe(res => {
     // console.log(JSON.stringify(res))
+    this.pageInfo = res.page;
+
     this.pageCount =  res.page.totalPages;
 
     if (this.pageCount == this.page + 1) {
@@ -202,7 +218,7 @@ ngOnInit() {
 
 
   }
-  Page(data) {
+  Page(data: any) {
      this.selectedPage = data ;
      this.page = this.selectedPage - 1;
      this.getEventList();
@@ -214,7 +230,7 @@ ngOnInit() {
         this.getEventList();
 
     }
-    getClass(data) {
+    getClass(data: any) {
       if (this.selectedPage === data) {
         return 'active';
       } else {

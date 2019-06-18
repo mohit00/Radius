@@ -4,7 +4,7 @@ import { BsModalRef , BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../auth.service';
 import {DeviceDialogComponent} from './device-dialog/device-dialog.component';
 import { DatePipe } from '@angular/common';
-
+import {WebserModel} from '../Service.model';
 declare interface TableData {
   headerRow: any ;
   dataRows: string[][];
@@ -15,25 +15,7 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class DeviceTemplateComponent implements OnInit {
-  public tableData1: TableData;
-  pipe = new DatePipe('en-US');
-  bsModalRef: BsModalRef;
-  pageCount: any;
-  displayList: any;
-  nextDisabled: any;
-  preDisabled: any;
-  pageCountArray: any;
-  selectedPage: any;
-  page: any;
-  size: any;
-  sort: any;
-// tslint:disable-next-line: ban-types
-  title: String;
-rowSpan: number;
-header: any;
-keyData: any;
-actionData: any;
-constructor(private modalService: BsModalService, private service: AuthService) {
+constructor(private WebserModel: WebserModel, private modalService: BsModalService, private service: AuthService) {
    this.pageCountArray = [];
    this.selectedPage = 1;
    this.page = 0;
@@ -63,11 +45,35 @@ constructor(private modalService: BsModalService, private service: AuthService) 
 
    this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
+  public tableData1: TableData;
+  pipe = new DatePipe('en-US');
+  bsModalRef: BsModalRef;
+  pageCount: any;
+  displayList: any;
+  nextDisabled: any;
+  preDisabled: any;
+  pageCountArray: any;
+  selectedPage: any;
+  page: any;
+  size: any;
+  sort: any;
+// tslint:disable-next-line: ban-types
+  title: String;
+rowSpan: number;
+header: any;
+keyData: any;
+actionData: any;
+pageInfo: any;
+    showpagi = true;
+    advanceSearch = false;
 open() {
+  const initialState = {
+    title: 'false',
 
-   this.bsModalRef = this.modalService.show(DeviceDialogComponent,  { class: 'gray modal-lg' });
+  };
+  this.bsModalRef = this.modalService.show(DeviceDialogComponent,  {initialState, class: 'gray modal-lg' });
 
-   this.bsModalRef.content.onClose.subscribe(result => {
+  this.bsModalRef.content.onClose.subscribe(result => {
      this.getComandList();
      console.log('results', result);
 });
@@ -158,45 +164,55 @@ getData(data, key , index) {
   }
 }
 getComandList() {
-  this.service.getdeviceTemplate().subscribe(res => {
-         
+  this.service.getdeviceTemplate(this.page, this.size, this.sort).subscribe(res => {
+    this.pageInfo = res.page;
+
     this.pageCount =  res.page.totalPages;
-     
-    if(this.pageCount == this.page + 1){
+
+    if (this.pageCount == this.page + 1) {
       this.nextDisabled = true;
-    }else{
+    } else {
       this.nextDisabled = false;
 
     }
-      
-    if(this.page   == 0){
+
+    if (this.page   == 0) {
       this.preDisabled = true;
-    }else{
+    } else {
       this.preDisabled = false;
 
     }
     this.displayList = res._embedded.thingTemplates;
-    this.pageCountArray =[];
-    for(let i =0 ;i<this.pageCount;i++){
-      this.pageCountArray.push(i+1)
+    this.pageCountArray = [];
+    for (let i = 0 ; i < this.pageCount; i++) {
+      this.pageCountArray.push(i + 1);
     }
   });
 }
 detail(data) {
+   if (this.showpagi) {
+    this.service.setId(data._links.self.href , 'Device/Template/detail');
+   } else {
+    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + data.id , 'Device/Template/detail');
 
-  this.service.setId(data._links.self.href , 'Device/Template/detail');
-}
+  }
+ }
 edit(data) {
 // tslint:disable-next-line: max-line-length
-  this.service.setId(data._links.self.href    , 'Device/Template');
+if (this.showpagi) {
+  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length)   , 'Device/Template');
+} else {
+  this.service.setId( data.id  , 'Device/Template');
 
-  const initialState = {
+}
+
+const initialState = {
     title: 'true',
     id: this.service.getId
   };
-  this.bsModalRef = this.modalService.show(DeviceDialogComponent,  { initialState, class: 'gray modal-lg' });
+this.bsModalRef = this.modalService.show(DeviceDialogComponent,  { initialState, class: 'gray modal-lg' });
 
-  this.bsModalRef.content.onCloseEdit.subscribe(result => {
+this.bsModalRef.content.onCloseEdit.subscribe(result => {
      this.getComandList();
      console.log('results', result);
 });
@@ -208,71 +224,69 @@ ngOnInit() {
   this.title = 'Add Things';
   this.getComandList();
     }
-    
-    prePage(){
-     
-      this.selectedPage = this.selectedPage -1;
-       this.page = this.selectedPage -1 ;
+
+    prePage() {
+
+      this.selectedPage = this.selectedPage - 1;
+      this.page = this.selectedPage - 1 ;
       this.getComandList();
-     
-   
+
+
   }
-  Page(data){
+  Page(data) {
      this.selectedPage = data ;
-    this.page = this.selectedPage -1;
-    this.getComandList();
+     this.page = this.selectedPage - 1;
+     this.getComandList();
   }
-    nextPage(){
-       
+    nextPage() {
+
         this.selectedPage = this.selectedPage + 1;
-        this.page = this.selectedPage -1;
+        this.page = this.selectedPage - 1;
         this.getComandList();
-      
+
     }
-    getClass(data){
-      if(this.selectedPage === data){
+    getClass(data) {
+      if (this.selectedPage === data) {
         return 'active';
-      }else{
+      } else {
         return '';
       }
     }
-    showpagi:boolean = true;
-    searchresult(name : String,description : String){
-      if(description){
-        this.service.getSearchThingsTemplatedesc(name,description).subscribe(res => {     
+    searchresult(name: String, description: String) {
+      if (description) {
+        this.service.getSearchThingsTemplatedesc(name, description).subscribe(res => {
           this.displayList = res;
-      this.showpagi = false
-             })
-      }else{
-      this.service.getSearchThingsTemplate(name , description).subscribe(res => {     
+          this.showpagi = false;
+             });
+      } else {
+      this.service.getSearchThingsTemplate(name , description).subscribe(res => {
     this.displayList = res;
-this.showpagi = false
-       })
+    this.showpagi = false;
+       });
     }
   }
-    onSearchChange(searchValue : string ,serchdescription : String) {   
-      if(searchValue || serchdescription){
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
         console.log(searchValue);
-this.searchresult(searchValue,serchdescription);
-      }else{
+        this.searchresult(searchValue, serchdescription);
+      } else {
         this.getComandList();
-        this.showpagi = true
+        this.showpagi = true;
 
       }
     }
-    advanceSearch:boolean = false;
-    toggelSearch(){
-      this.advanceSearch = !this.advanceSearch
-      if(this.advanceSearch){
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
 
-      }else{
+      } else {
 
-      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
-      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
-      (<HTMLInputElement>document.getElementById('search')).value = '';  
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
 
       this.getComandList();
-      this.showpagi = true
+      this.showpagi = true;
 
       }
     }
