@@ -20,7 +20,7 @@ import { EventACKTemplateComponent } from '../../event-acktemplate/event-acktemp
 import { CommandACKTemplateComponent } from '../../command-acktemplate/command-acktemplate.component';
 import { QuickHelpComponent } from '../../quick-help/quick-help.component';
 import { D3Component } from '../../d3/d3.component';
-
+import {VideoConferenceComponent} from '../../video-conference/video-conference.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -33,7 +33,7 @@ import { D3Component } from '../../d3/d3.component';
     HomeComponent,D3Component,
     UserComponent,
     TablesComponent,
-    TypographyComponent,
+    TypographyComponent,VideoConferenceComponent,
     IconsComponent,
     MapsComponent,
     NotificationsComponent,

@@ -86,7 +86,6 @@ page: any;
       }
 
     }
-    alert(JSON.stringify(this.data))
      this.AuthService.updateEventTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + this.id).subscribe(res => {
       this._bsModalRef.hide();
       this.onCloseEdit.next(true);

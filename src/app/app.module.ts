@@ -25,7 +25,7 @@ import { EventDialogComponent } from './event-template/event-dialog/event-dialog
 import { CommandDialogComponent } from './command-template/command-dialog/command-dialog.component';
 import { DeviceDialogComponent } from './device-template/device-dialog/device-dialog.component';
 import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.component';
-
+ 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
@@ -49,7 +49,7 @@ import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.c
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
- 
+  
   ],
   entryComponents: [
     DeviceDialogComponent,
