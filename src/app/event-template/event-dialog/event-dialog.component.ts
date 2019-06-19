@@ -9,25 +9,6 @@ import {WebserModel} from '../../Service.model';
   styleUrls: ['./event-dialog.component.scss']
 })
 export class EventDialogComponent implements OnInit {
-
-  public onClose: Subject<boolean>;
-  public onCloseEdit: Subject<boolean>;
-
-  headerTitle: String;
-  data: any;
-  dataList: any;
-  displayList: any;
-  selectedList: any;
-  title: any;
-  id: any;
-  pageCountArray: any;
- selectedPage: any;
- nextDisabled: any;
-preDisabled: any;
-pageCount: any;
-page: any;
-  size: any;
-  sort: any;
   constructor(private WebserModel: WebserModel, private _bsModalRef: BsModalRef, private AuthService: AuthService ) {
     this.selectedList = [];
     this.data = {};
@@ -36,6 +17,27 @@ page: any;
     this.sort = '';
     this.selectedPage = 1;
   }
+
+  public onClose: Subject<boolean>;
+  public onCloseEdit: Subject<boolean>;
+
+  headerTitle: String;
+  data: any;
+  dataList: any;
+  displayList: any = [];
+  selectedList: any;
+  title: any;
+  id: any;
+  pageCountArray: any = [];
+ selectedPage: any;
+ nextDisabled: any;
+preDisabled: any;
+pageCount: any;
+page: any;
+  size: any;
+  sort: any;
+  alldata: any = [];
+  pagenew: any = 0;
   add() {
     this.dataList.push({
       class : 'col-md-4',
@@ -84,19 +86,14 @@ page: any;
         alert('No Attribute selected');
         return false;
       }
-
     }
-     this.AuthService.updateEventTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + this.id).subscribe(res => {
+    this.AuthService.updateEventTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + this.id).subscribe(res => {
       this._bsModalRef.hide();
       this.onCloseEdit.next(true);
-
       this.AuthService.suceesAlertDialog('Event has been successfully created.' );
     });
-
   }
   submitCreate() {
-
-
     this.data.createdBy = 'admin';
     this.data.lastUpdatedBy = 'admin';
     this.data.tenantId = 'Radius-PF';
@@ -111,7 +108,6 @@ page: any;
         alert('No Attribute selected');
         return false;
       }
-
     }
     this.AuthService.addEventTemplate(this.data).subscribe(res => {
       this._bsModalRef.hide();
@@ -119,41 +115,122 @@ page: any;
 
       this.AuthService.suceesAlertDialog('Event has been successfully created.' );
     });
-
   }
   remove(index) {
     this.dataList.splice(index, 1);
   }
+  intialize() {
+    if (this.displayList.length > 0) {
+
+    } else {
+      for (let i = 0; i < 5; i++) {
+        this.displayList.push(this.alldata[i]);
+      }
+      if (this.alldata.length < 6 ) {
+
+      } else {
+
+        for ( let i = 0 ; i < this.alldata.length / 5 ; i++) {
+          this.pageCountArray.push(i + 1);
+
+        }
+       }
+    }
+  }
+  prePage() {
+    if (this.page != 0) {
+      this.page--;
+      this.selectedPage = this.page  + 1;
+      alert(this.page)
+      this.displayList = [];
+      if ( this.page * 5   + 5 <  this.alldata.length ) {
+                 for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
+                 this.displayList.push(this.alldata[i]);
+                }
+              } else {
+                for (let i = this.page * 5; i < this.alldata.length ; i++  ) {
+                  this.displayList.push(this.alldata[i]);
+                }
+              }
+
+    }
+}
+Page(data) { 
+  this.page = data - 1;
+  this.selectedPage = this.page + 1 ;
+   this.displayList = [];
+  if ( this.page * 5   + 5 <  this.alldata.length ) {
+             for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
+             this.displayList.push(this.alldata[i]);
+            }
+          } else {
+            for (let i = this.page * 5; i < this.alldata.length ; i++  ) {
+              this.displayList.push(this.alldata[i]);
+            }
+          }
+
+
+}
+ 
+  nextPage() {
+    this.page  = this.page +1;
+    this.selectedPage = this.page + 1 ;
+   
+    if (this.page % 5 == 0) {
+  this.getAttributeList();
+} else {
+        this.displayList = [];
+           
+        if ( this.page * 5   + 5 <  this.alldata.length ) {
+           for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
+           this.displayList.push(this.alldata[i]);
+          }
+        } else {
+          for (let i = this.page * 5; i < this.alldata.length ; i++  ) {
+            this.displayList.push(this.alldata[i]);
+          }
+        }
+}
+
+
+  }
   getAttributeList() {
-    this.AuthService.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
-      this.pageCount =  res.page.totalPages;
 
-      if (this.pageCount == this.page + 1) {
-        this.nextDisabled = true;
-      } else {
-        this.nextDisabled = false;
+      this.pagenew =   this.page / 5;
 
+
+      this.AuthService.getAttributeTemplatefreeze(this.pagenew, 20, this.sort).subscribe(res => {
+// tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < res.length; i++) {
+        this.alldata.push(res[i]);
       }
+      this.intialize();
+    //   if (res.page) {
+    //     this.pageCount =  res.page.totalPages;
 
-      if (this.page   == 0) {
-        this.preDisabled = true;
-      } else {
-        this.preDisabled = false;
+    //     if (this.pageCount == this.page + 1) {
+    //       this.nextDisabled = true;
+    //     } else {
+    //       this.nextDisabled = false;
+    //     }
+    //     if (this.page   == 0) {
+    //       this.preDisabled = true;
+    //     } else {
+    //       this.preDisabled = false;
 
-      }
-      this.displayList = res._embedded.attributeTemplates;
-      this.pageCountArray = [];
-      for (let i = 0 ; i < this.pageCount; i++) {
-      this.pageCountArray.push(i + 1);
-    }
-      if (this.selectedList.length > 0) {
-     const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
+    //     }
+    //   }
+    //   this.pageCountArray = [];
+    //   for (let i = 0 ; i < this.pageCount; i++) {
+    //   this.pageCountArray.push(i + 1);
+    // }
+    //   if (this.selectedList.length > 0) {
+    //  const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
+
+    //  this.displayList[indexselected].check = true;
 
 
-     this.displayList[indexselected].check = true;
-
-
-    }
+    // }
 
     });
 
@@ -197,26 +274,7 @@ page: any;
       this.onClose.next(false);
       this._bsModalRef.hide();
   }
-  prePage() {
 
-    this.selectedPage = this.selectedPage - 1;
-    this.page = this.selectedPage - 1 ;
-    this.getAttributeList();
-
-
-}
-Page(data) {
-   this.selectedPage = data ;
-   this.page = this.selectedPage - 1;
-   this.getAttributeList();
-}
-  nextPage() {
-
-      this.selectedPage = this.selectedPage + 1;
-      this.page = this.selectedPage - 1;
-      this.getAttributeList();
-
-  }
   getClass(data) {
     if (this.selectedPage === data) {
       return 'active';
