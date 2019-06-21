@@ -78,9 +78,9 @@ open() {
 }
 detail(data: any) {
   if (this.showpagi) {
-    this.service.setId(data._links.self.href , 'Event/Template/detail');
+    this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length) , 'Event/Template/detail');
   } else {
-    this.service.setId( this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + data.id  , 'Event/Template/detail');
+    this.service.setId(  data.id  , 'Event/Template/detail');
   }
 }
 edit(data: any ) {

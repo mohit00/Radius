@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import { Router } from '@angular/router';
-   
+  import {WebserModel} from '../../Service.model'
 @Component({
   selector: 'app-event-template-detail',
   templateUrl: './event-template-detail.component.html',
@@ -11,7 +11,7 @@ export class EventTemplateDetailComponent implements OnInit {
 eventId: any;
 eventDetail: any;
 data:any;
-  constructor(private  Service: AuthService,private route:Router) {
+  constructor(private  Service: AuthService,private route:Router,private WebserModel:WebserModel) {
     this.data = {};
    }
    
@@ -26,7 +26,7 @@ data:any;
   }
   getDetailEvent() {
  this.eventId  =  this.Service.getId;
- this.Service.getDetail(this.eventId).subscribe(res=>{
+ this.Service.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/eventTemplates/'+this.eventId).subscribe(res=>{
    console.log(JSON.stringify(res))
    this.eventDetail = res;
    this.data.check = this.eventDetail.freeze

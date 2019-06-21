@@ -192,16 +192,17 @@ ngOnInit() {
 // tslint:disable-next-line: max-line-length
 // WebserModel
 if (this.showpagi) {
-  this.service.setId(data._links.self.href , 'Command/Template/detail');
+  this.service.setId(data._links.self.href.substring(
+    data._links.self.href.length - 2, data._links.self.href.length) , 'Command/Template/detail');
  } else {
-  this.service.setId(this.WebserModel.Sevice.BASE_URL + 'commandTemplates/' + data.id , 'Command/Template/detail');
+  this.service.setId( data.id , 'Command/Template/detail');
 
 }
      }
     edit(data: any) {
       if (this.showpagi) {
         this.service.setId(data._links.self.href.substring(
-          data._links.self.href.length - 3, data._links.self.href.length
+          data._links.self.href.length - 2, data._links.self.href.length
           )   , 'Command/Template');
       } else {
         this.service.setId( data.id  , 'Command/Template');

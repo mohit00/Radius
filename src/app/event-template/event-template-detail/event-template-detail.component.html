@@ -73,7 +73,7 @@
             </div>
           </div>
   
-  <div class ="col-md-6 "   style ="padding-right: 6px;" >
+  <div class ="col-md-12 "   style ="padding-right: 6px;"  *ngIf ="eventDetail.eventFields">
     <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
     padding-right: 0px;">
         <div class ="header">
@@ -84,38 +84,34 @@
           
            <div class ="col-md-12">
               <div class ="col-md-4 detailheader"   >
-                  <div >Event Field Name</div>
+                  <div ><strong>Event Field Type</strong></div>
               </div>
-                <div class ="col-md-8 detailheader ">
-                      <div >Event Field Value</div>  
+              <div class ="col-md-4 detailheader"   >
+                  <div ><strong>Event Field Name</strong></div>
+              </div>
+                <div class ="col-md-4 detailheader ">
+                      <div ><strong>Event Field Value</strong></div>  
                     <div> 
                     </div>
                 </div>
           </div>
            
-          
+          <div class ="col-md-12" *ngFor ="let list of eventDetail.eventFields.attributeFields">
+              <div class ="col-md-4 detailKey"   >
+                  <div >{{list.type}}</div>
+              </div>
+                <div class ="col-md-4 detailKey ">
+                    <div>{{list.name}}</div>
+                </div>
+                <div class ="col-md-4 detailKey ">
+                    <div>{{list.defaultValue}}</div>
+                </div>
+          </div>
   
          
       </div>
   
     </div>
   </div>
-  <div class ="col-md-6 " style ="padding-left: 6px;"  >
-      <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
-      padding-right: 0px;">
-          <div class ="header">
-                Event Tags
-              
-          </div>
-          <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">
-            
-            
-             
-            
   
-           
-        </div>
-  
-      </div>
-    </div>
           </div></div></div>
