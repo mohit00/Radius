@@ -210,7 +210,7 @@ ngOnInit() {
     }
     edit(data) {
       if(this.showpagi){
-        this.service.setId(data._links.self.href , 'Attribute/Template/detail');
+        this.service.setId(data._links.self.href , 'Attribute/Template');
 
       }else{
         this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template');

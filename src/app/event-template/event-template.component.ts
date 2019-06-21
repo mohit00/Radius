@@ -4,7 +4,7 @@
  import {EventDialogComponent} from './event-dialog/event-dialog.component';
  import {AuthService} from '../auth.service';
  import { DatePipe } from '@angular/common';
- import {WebserModel} from '../Service.model'
+ import {WebserModel} from '../Service.model';
  declare interface TableData {
  }
  @Component({
@@ -13,7 +13,7 @@
   styleUrls: ['../table/table.scss']
 })
 export class EventTemplateComponent implements OnInit {
-constructor(private modalService: BsModalService, private service: AuthService,private WebserModel:WebserModel) {
+constructor(private modalService: BsModalService, private service: AuthService, private WebserModel: WebserModel) {
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
@@ -62,8 +62,9 @@ actionData: any;
  sort: any;
 nextDisabled: any;
 preDisabled: any;
-    showpagi:boolean = true;
-    advanceSearch:boolean = false;
+    showpagi = true;
+    advanceSearch = false;
+pageInfo: any;
 open() {
   const initialState = {
     title: 'false',
@@ -75,22 +76,20 @@ open() {
      console.log('results', result);
 });
 }
-detail(data:  any) {
-  if(this.showpagi){
+detail(data: any) {
+  if (this.showpagi) {
     this.service.setId(data._links.self.href , 'Event/Template/detail');
-  
-  }else{
-    this.service.setId( this.WebserModel.Sevice.BASE_URL+'eventTemplates/'+ data.id  , 'Event/Template/detail');
-  
+  } else {
+    this.service.setId( this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + data.id  , 'Event/Template/detail');
   }
 }
-edit(data:any ) {
+edit(data: any ) {
   console.log(JSON.stringify(data));
 // tslint:disable-next-line: max-line-length
-if(this.showpagi){
-  this.service.setId(data._links.self.href.substring(data._links.self.href.length-2,data._links.self.href.length)   , 'Event/Template');
+  if (this.showpagi) {
+  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length)   , 'Event/Template');
 
-}else{
+} else {
   this.service.setId( data.id  , 'Event/Template');
 
 }
@@ -178,7 +177,6 @@ getData(data: { [x: string]: any; }, key: string , index: any) {
     return '';
   }
 }
-pageInfo:any;
 getEventList() {
   this.service.getEventTemplate(this.page, this.size, this.sort).subscribe(res => {
     // console.log(JSON.stringify(res))
@@ -237,43 +235,43 @@ ngOnInit() {
         return '';
       }
     }
-    searchresult(name : String,description : String){
-      if(description){
-        this.service.getSearchEventdesc(name,description).subscribe(res => {     
+    searchresult(name: String, description: String) {
+      if (description) {
+        this.service.getSearchEventdesc(name, description).subscribe(res => {
           this.displayList = res;
-      this.showpagi = false
-             })
-      }else{
+          this.showpagi = false;
+             });
+      } else {
       this.service.getSearchEvent(name , description).subscribe(res => {
-        console.log(JSON.stringify(res))
-     
-    this.displayList = res;
-this.showpagi = false
-       })
+        console.log(JSON.stringify(res));
+
+        this.displayList = res;
+        this.showpagi = false;
+       });
     }
   }
-    onSearchChange(searchValue : string ,serchdescription : String) {   
-      if(searchValue || serchdescription){
+    onSearchChange(searchValue: string , serchdescription: String) {
+      if (searchValue || serchdescription) {
         console.log(searchValue);
-this.searchresult(searchValue,serchdescription);
-      }else{
+        this.searchresult(searchValue, serchdescription);
+      } else {
         this.getEventList();
-        this.showpagi = true
+        this.showpagi = true;
 
       }
     }
-    toggelSearch(){
-      this.advanceSearch = !this.advanceSearch
-      if(this.advanceSearch){
+    toggelSearch() {
+      this.advanceSearch = !this.advanceSearch;
+      if (this.advanceSearch) {
 
-      }else{
+      } else {
 
-      (<HTMLInputElement>document.getElementById('searchName')).value = ''; 
-      (<HTMLInputElement>document.getElementById('searchDescription')).value = '';  
-      (<HTMLInputElement>document.getElementById('search')).value = '';  
+      ( document.getElementById('searchName') as HTMLInputElement).value = '';
+      ( document.getElementById('searchDescription') as HTMLInputElement).value = '';
+      ( document.getElementById('search') as HTMLInputElement).value = '';
 
       this.getEventList();
-      this.showpagi = true
+      this.showpagi = true;
 
       }
     }

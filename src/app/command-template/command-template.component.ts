@@ -198,9 +198,11 @@ if (this.showpagi) {
 
 }
      }
-    edit(data) {
+    edit(data: any) {
       if (this.showpagi) {
-        this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length)   , 'Command/Template');
+        this.service.setId(data._links.self.href.substring(
+          data._links.self.href.length - 3, data._links.self.href.length
+          )   , 'Command/Template');
       } else {
         this.service.setId( data.id  , 'Command/Template');
       }
@@ -215,7 +217,7 @@ if (this.showpagi) {
    this.getComandList();
    console.log('results', result);
 });    }
-    delete(data) {
+    delete(data: any) {
       alert('ds');
     }
 
@@ -227,7 +229,7 @@ if (this.showpagi) {
 
 
   }
-  Page(data) {
+  Page(data: any) {
      this.selectedPage = data ;
      this.page = this.selectedPage - 1;
      this.getComandList();
@@ -239,13 +241,14 @@ if (this.showpagi) {
         this.getComandList();
 
     }
-    getClass(data) {
+    getClass(data :any) {
       if (this.selectedPage === data) {
         return 'active';
       } else {
         return '';
       }
     }
+// tslint:disable-next-line: ban-types
     searchresult(name: String, description: String) {
       if (description) {
         this.service.getSearchCommanddesc(name, description).subscribe(res => {

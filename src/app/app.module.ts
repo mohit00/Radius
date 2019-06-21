@@ -25,6 +25,7 @@ import { EventDialogComponent } from './event-template/event-dialog/event-dialog
 import { CommandDialogComponent } from './command-template/command-dialog/command-dialog.component';
 import { DeviceDialogComponent } from './device-template/device-dialog/device-dialog.component';
 import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.component';
+import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.component';
  
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -49,6 +50,7 @@ import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.c
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
+    ArrtibuteSelectComponent,
   
   ],
   entryComponents: [

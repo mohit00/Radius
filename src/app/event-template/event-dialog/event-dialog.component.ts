@@ -48,26 +48,20 @@ page: any;
       class4: 'plusbutonafter'
      } );
   }
-  selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
-    for (let i = 0 ; i < this.displayList.length; i++) {
-      if (this.displayList[i]._links.self.href != data._links.self.href) {
-        this.displayList[i].check =  false;
+  selectedListdata(data: any) {
+// tslint:disable-next-line: prefer-for-of
+    for (let i = 0 ; i < this.alldata.length; i++) {
+      if (this.alldata[i].id !== data.id) {
+        this.alldata[i].check =  false;
         }
        }
     data.check = ! data.check;
-
     this.selectedList = [];
-
     if (data.check) {
-      this.selectedList.push({
-        _links: {
-          self: {
-            href: data._links.self.href
-          }
-        }
+      this.selectedList.push({id: data.id
       });
     } else {
-    const index =   this.selectedList.findIndex( record => record._links.self.href === data._links.self.href );
+    const index =   this.selectedList.findIndex( record => record.id === data.id );
     this.selectedList.splice(index, 1);
   }
     }
@@ -80,7 +74,7 @@ page: any;
       if (this.selectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
          for (let i = 0 ; i < this.selectedList.length ; i ++) {
-           this.data.eventFields = this.selectedList[i]._links.self.href ;
+           this.data.eventFields = this.WebserModel.Sevice.BASE_URL+'attributeTemplates/' +  this.selectedList[i].id ;
          }
       } else {
         alert('No Attribute selected');
@@ -102,7 +96,7 @@ page: any;
       if (this.selectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
         for (let i = 0 ; i < this.selectedList.length ; i ++) {
-           this.data.eventFields = this.selectedList[i]._links.self.href ;
+           this.data.eventFields = this.WebserModel.Sevice.BASE_URL+'attributeTemplates/' + this.selectedList[i].id ;
          }
       } else {
         alert('No Attribute selected');
@@ -138,10 +132,9 @@ page: any;
     }
   }
   prePage() {
-    if (this.page != 0) {
+    if (this.page !== 0) {
       this.page--;
       this.selectedPage = this.page  + 1;
-      alert(this.page)
       this.displayList = [];
       if ( this.page * 5   + 5 <  this.alldata.length ) {
                  for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
@@ -155,10 +148,10 @@ page: any;
 
     }
 }
-Page(data) { 
+Page(data) {
   this.page = data - 1;
   this.selectedPage = this.page + 1 ;
-   this.displayList = [];
+  this.displayList = [];
   if ( this.page * 5   + 5 <  this.alldata.length ) {
              for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
              this.displayList.push(this.alldata[i]);
@@ -171,16 +164,16 @@ Page(data) {
 
 
 }
- 
+
   nextPage() {
-    this.page  = this.page +1;
+    this.page  = this.page + 1;
     this.selectedPage = this.page + 1 ;
-   
+
     if (this.page % 5 == 0) {
   this.getAttributeList();
 } else {
         this.displayList = [];
-           
+
         if ( this.page * 5   + 5 <  this.alldata.length ) {
            for (let i = this.page * 5; i < this.page * 5   + 5 ; i++  ) {
            this.displayList.push(this.alldata[i]);
@@ -205,6 +198,13 @@ Page(data) {
         this.alldata.push(res[i]);
       }
       this.intialize();
+      if (this.selectedList.length > 0) {
+           const indexselected =   this.alldata.findIndex( record => record.id === this.selectedList[0].id );
+    
+           this.alldata[indexselected].check = true;
+    
+    
+          }
     //   if (res.page) {
     //     this.pageCount =  res.page.totalPages;
 
@@ -236,16 +236,10 @@ Page(data) {
 
   }
   eventDetail() {
-    this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/eventTemplates/' + this.id).subscribe(res => {
-      console.log(JSON.stringify(res));
-
+     this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/eventTemplates/' + this.id).subscribe(res => {
       this.data = res;
       this.selectedList.push({
-        _links: {
-          self: {
-            href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.eventFields.id
-          }
-        }
+        id : res.eventFields.id
       });
       this.getAttributeList();
 

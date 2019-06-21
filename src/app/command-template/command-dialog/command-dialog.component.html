@@ -72,18 +72,18 @@
                                     <td  > {{list.name}}</td>
                                 </tr>
                             </tbody>
-                            <tfoot *ngIf ="pageCount && pageCountArray">
+                            <tfoot>
                               <tr  ><td [attr.colspan]="8"> 
                                 <div class=" " style="float: left;">
                                   <ul class="pagination">
-                                    <li  >  
-                                      <button  (click)="prePage()" [disabled]="preDisabled">« Prev</button>
+                                    <li  >   
+                                      <button  (click)="prePage()" [disabled]="selectedPage == 1">« Prev</button>
                                     </li>
                                     <li   *ngFor = "let list of pageCountArray" [ngClass]="getClass(list)"> 
                                       <a  (click)="Page(list)" >{{list}}</a>
                                     </li>
                                     <li  >
-                                      <button    (click)="nextPage()"   [disabled]="nextDisabled" >Next »</button>
+                                      <button    (click)="nextPage()"   [disabled]="selectedPage == pageCountArray[pageCountArray.length - 1]" >Next »</button>
                                     </li>
                                   </ul>
                                 </div>
