@@ -19,7 +19,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-  ;
+  
   this.sort = 0;
 
   this.header = [{
@@ -68,6 +68,7 @@ preDisabled: any;
     selectedPage: any;
     showpagi = true;
     advanceSearch = false;
+pageInfo: any;
 open() {
     const initialState = {
       title: 'false',
@@ -168,27 +169,25 @@ getData(data, key , index) {
     return '';
   }
 }
-pageInfo:any;
 getEventList() {
   this.service.getthingList(this.page, this.size, this.sort).subscribe(res => {
     this.pageInfo = res.page;
 
-     this.showpagi = true;
-     this.pageCount =  res.page.totalPages;
-     if (this.pageCount === this.page + 1) {
+    this.showpagi = true;
+    this.pageCount =  res.page.totalPages;
+    if (this.pageCount === this.page + 1) {
       this.nextDisabled = true;
     } else {
       this.nextDisabled = false;
     }
-     if (this.page   === 0) {
+    if (this.page   === 0) {
       this.preDisabled = true;
     } else {
       this.preDisabled = false;
-
     }
-     this.displayList = res._embedded.things;
-     this.pageCountArray = [];
-     for (let i = 0 ; i < this.pageCount; i++) {
+    this.displayList = res._embedded.things;
+    this.pageCountArray = [];
+    for (let i = 0 ; i < this.pageCount; i++) {
       this.pageCountArray.push(i + 1);
     }
   });
@@ -200,8 +199,7 @@ ngOnInit() {
     detail(data) {
       this.service.setId(data._links.self.href , 'Device/Provisioning/Detail');
     }
-    edit(data) {
-
+    edit(data ) {
       this.service.setId(data._links.self.href   , 'Device/Provisioning');
       const initialState = {
         title: 'true',
@@ -215,7 +213,7 @@ ngOnInit() {
    });
 
     }
-    delete(data) {
+    delete(data: any ) {
       alert('ds');
     }
     prePage() {
