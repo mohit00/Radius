@@ -79,6 +79,21 @@ export class AuthService {
       .map(res => res as any)
       .catch(this.handleError);
       }
+      getCommandTemplatefreeze( page, size, sort): Observable < any > {
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
+     .map(res => res as any)
+     .catch(this.handleError);
+     }
+     getEventemplatefreeze( page, size, sort): Observable < any > {
+      return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
+   .map(res => res as any)
+   .catch(this.handleError);
+   }
+   getThingsemplatefreeze( page, size, sort): Observable < any > {
+    return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
+ .map(res => res as any)
+ .catch(this.handleError);
+ }
        getAttributeTemplateDetail( data): Observable < any > {
 
         return this._http.get( this.BASE_URL + 'attributeTemplates/' + data)
