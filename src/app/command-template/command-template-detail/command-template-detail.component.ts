@@ -23,14 +23,14 @@ export class CommandTemplateDetailComponent implements OnInit {
    
     changeFreeze() {
       this.ComandDetail.freeze = this.data.check;
-      this.Service.freezeData(this.ComandDetail, this.ComandId).subscribe(res => {
+      this.Service.freezeData(this.ComandDetail, this.WebserModel.Sevice.BASE_URL+'commandTemplates/'+this.ComandId).subscribe(res => {
         this.Service.suceesAlertDialog('Command has been successfully Freezed.' );
         this.route.navigate(['Command/Template']);
        });
     }
     ngOnInit() {
       this.getDetailEvent();
-    }
+      }
   
   }
   

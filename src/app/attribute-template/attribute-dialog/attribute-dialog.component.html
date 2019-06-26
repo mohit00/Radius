@@ -1,6 +1,5 @@
 <div class="modal-header">
   <h4 class="modal-title pull-left"  >{{headerTitle}}</h4> 
-  
   <i class="fa fa-info" aria-hidden="true" style ="float: right;
   font-size: 20px;
   /* padding: 8px; */
@@ -15,24 +14,17 @@
             <div class="form-group">
                 <label for="lastname" class="control-label"><span class ="red">*</span> Name</label>
                 <input type="text" class="form-control" id="lastname" placeholder="Name"   name ="name" [(ngModel)] ="data.name" #first="ngModel" required> 
-            
-                <span class="errorSpan"  *ngIf ="!first.valid && f.submitted "
-               > 
+                <span class="errorSpan"  *ngIf ="!first.valid && f.submitted "> 
                This Field Is Required
-
-           </span>
-           
+           </span>       
               </div> 
         </div>
         <div class ="col-md-6">
             <div class="form-group">
                 <label for="lastname" class="control-label"><span class ="red">*</span>Description</label>
                 <textarea type="text" class="form-control" id="lastname"  name ="Description" placeholder="Description" [(ngModel)] ="data.description" #second="ngModel" rows="1" required></textarea>
-                <span class="errorSpan"  *ngIf ="!second.valid && f.submitted "
-                > 
-                This Field Is Required
- 
-            </span>
+                <span class="errorSpan"  *ngIf ="!second.valid && f.submitted " > 
+                This Field Is Required</span>
               </div>
           </div> 
           <div class ="col-md-12" id ="text" style ="     
@@ -63,8 +55,7 @@
                         <option value ="DECIMAL">DECIMAL</option>
                         <option value ="BOOL">BOOL</option>
                        </select>
-                    </div></div>
-                   
+                    </div></div> 
               <div class ="{{list.class2}}">
                   <div class="form-group {{list.class3}}">
                     <div class="form-group">
@@ -83,16 +74,18 @@
                         <input type="checkbox" name="check"    [(ngModel)]="list.isIdentifier"> <span class="label-text"></span>
                       </label>
                     </div> 
-                  </div></div>
+                  </div>
+                </div>
             </div> 
         </div> 
             </div>
       </div> 
  <div class="modal-footer">
   <button type="button" class="btn theme_table_button" (click) ="onCancel();" >Close</button>
-  <button type="button" class="btn theme_table_button"  (click) = "submitCreate(f);f.control.markAsTouched()" *ngIf ="title == 'false'">Save</button>
-  <button type="button" class="btn theme_table_button"  (click) = "submitUpdate()" *ngIf ="title == 'true'">Update</button>
-
+  <button type="button" class="btn theme_table_button"  (click) = "submitCreate(f);f.control.markAsTouched()" *ngIf ="title == 'false'">Save
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+  </button>
+   <button type="button" class="btn theme_table_button"  (click) = "submitUpdate()" *ngIf ="title == 'true'">Update</button>
 </div>
 </form>
 </div>

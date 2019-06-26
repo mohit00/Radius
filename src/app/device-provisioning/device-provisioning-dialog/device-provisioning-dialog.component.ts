@@ -65,38 +65,29 @@ title: any;
      if (this.selectedList.length > 0) {
     const indexselected =   this.eventTemplateList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
     this.eventTemplateList[indexselected].check = true;
-
-
    }
-
    });
  }
  updateDevicePro() {
-
   if (this.selectedList.length > 0 ) {
     this.Service.updateThing( this.selectedList[0].
       _links.self.href.substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
       this.onCloseEdit.next(true);
       this._bsModalRef.hide();
       this.Service.suceesAlertDialog('Device/Provisioning');
-
     });
-
        } else {
       alert('Please Select Things Template');
    }
  }
  createDevicePro() {
-  this.data.metadata ={};
+  this.data.metadata = {};
   if (this.dataList.length > 0 ) {
-
 // tslint:disable-next-line: prefer-for-of
   for (let i = 0 ; i < this.dataList.length ; i++) {
-    if(this.dataList[i].name){
+    if(this.dataList[i].name) {
        this.data.metadata[this.dataList[i].name] = this.dataList[i].value;
-      alert(this.dataList[i].name);
-      alert( this.data.metadata[this.dataList[i].name])
-    }
+     }
     
 
   }

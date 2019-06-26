@@ -201,7 +201,9 @@ ngOnInit() {
     }
     detail(data) {
        if(this.showpagi){
-        this.service.setId(data._links.self.href , 'Attribute/Template/detail');
+     let id =    this.service.getSplitId(data._links.self.href);
+ 
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Attribute/Template/detail');
 
       }else{
         this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template/detail');
@@ -210,7 +212,9 @@ ngOnInit() {
     }
     edit(data) {
       if(this.showpagi){
-        this.service.setId(data._links.self.href , 'Attribute/Template');
+        let id =    this.service.getSplitId(data._links.self.href);
+
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Attribute/Template');
 
       }else{
         this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template');

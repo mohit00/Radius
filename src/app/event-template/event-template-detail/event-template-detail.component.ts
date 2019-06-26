@@ -18,7 +18,7 @@ data:any;
    changeFreeze() {
     
     this.eventDetail.freeze = this.data.check;
-    this.Service.freezeData(this.eventDetail, this.eventId).subscribe(res => {
+    this.Service.freezeData(this.eventDetail, this.WebserModel.Sevice.BASE_URL+'eventTemplates/'+ this.eventId).subscribe(res => {
       this.Service.suceesAlertDialog('Event has been successfully Freezed.' );
 
       this.route.navigate(['Event/Template']);

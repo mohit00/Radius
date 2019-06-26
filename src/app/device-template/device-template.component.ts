@@ -191,7 +191,9 @@ getComandList() {
 }
 detail(data) {
    if (this.showpagi) {
-    this.service.setId(data._links.self.href , 'Device/Template/detail');
+    let id =    this.service.getSplitId(data._links.self.href);
+
+    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' +id , 'Device/Template/detail');
    } else {
     this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + data.id , 'Device/Template/detail');
 
@@ -200,7 +202,9 @@ detail(data) {
 edit(data) {
 // tslint:disable-next-line: max-line-length
 if (this.showpagi) {
-  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length)   , 'Device/Template');
+  let id =    this.service.getSplitId(data._links.self.href);
+
+  this.service.setId(id   , 'Device/Template');
 } else {
   this.service.setId( data.id  , 'Device/Template');
 

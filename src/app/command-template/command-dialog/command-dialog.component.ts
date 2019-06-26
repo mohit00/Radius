@@ -9,6 +9,7 @@ import {WebserModel} from '../../Service.model';
   styleUrls: ['./command-dialog.component.scss']
 })
 export class CommandDialogComponent implements OnInit {
+// tslint:disable-next-line: variable-name
   constructor(private _bsModalRef: BsModalRef, private AuthService: AuthService, private WebserModel: WebserModel) {
     this.selectedList = [];
     this.data = {};
@@ -204,10 +205,7 @@ Page(data) {
     this.intialize();
     if (this.selectedList.length > 0) {
          const indexselected =   this.alldata.findIndex( record => record.id === this.selectedList[0].id );
-  
          this.alldata[indexselected].check = true;
-  
-  
         }
   //   if (res.page) {
   //     this.pageCount =  res.page.totalPages;

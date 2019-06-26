@@ -41,6 +41,9 @@ export class AuthService {
       this.firstHeaders = new Headers();
       this.firstHeaders.append('Content-Type', 'application/json');
   }
+    getSplitId(data){
+    return data.split("/")[4];
+  }
   suceesAlertDialog(data ) {
     const initialState = {
       title: data, 

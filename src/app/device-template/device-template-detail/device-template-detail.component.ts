@@ -10,31 +10,30 @@ import { Router } from '@angular/router';
 export class DeviceTemplateDetailComponent implements OnInit {
   eventId: any;
   eventDetail: any;
-  data:any;
-    constructor(private  Service: AuthService,private route:Router) {
+  data: any;
+    constructor(private  Service: AuthService, private route: Router) {
       this.data = {};
      }
      changeFreeze() {
-       let dataJson = {
+       const dataJson = {
         freeze : this.data.check
-      }
-      this.Service.freezeData(dataJson, this.eventId).subscribe(res => {
+      };
+       this.Service.freezeData(dataJson,this.eventId).subscribe(res => {
         this.Service.suceesAlertDialog('Device Template has been successfully Freezed.' );
-  
+
         this.route.navigate(['Event/Template']);
        });
     }
     getDetailEvent() {
    this.eventId  =  this.Service.getId;
-   this.Service.getDetail(this.eventId).subscribe(res=>{
-     console.log(JSON.stringify(res))
+   this.Service.getDetail(this.eventId).subscribe(res => {
+     console.log(JSON.stringify(res));
      this.eventDetail = res;
-     this.data.check = this.eventDetail.freeze
+     this.data.check = this.eventDetail.freeze;
    });
     }
     ngOnInit() {
       this.getDetailEvent();
     }
-  
+
   }
-  

@@ -78,7 +78,9 @@ open() {
 }
 detail(data: any) {
   if (this.showpagi) {
-    this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length) , 'Event/Template/detail');
+    let id =    this.service.getSplitId(data._links.self.href);
+
+    this.service.setId(id, 'Event/Template/detail');
   } else {
     this.service.setId(  data.id  , 'Event/Template/detail');
   }
@@ -87,7 +89,9 @@ edit(data: any ) {
   console.log(JSON.stringify(data));
 // tslint:disable-next-line: max-line-length
   if (this.showpagi) {
-  this.service.setId(data._links.self.href.substring(data._links.self.href.length - 2, data._links.self.href.length)   , 'Event/Template');
+    let id =    this.service.getSplitId(data._links.self.href);
+
+  this.service.setId(id  , 'Event/Template');
 
 } else {
   this.service.setId( data.id  , 'Event/Template');

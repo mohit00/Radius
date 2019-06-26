@@ -93,7 +93,6 @@ getData(data, key , index) {
       <i class="fa fa-eye" aria-hidden="true"></i>
       <i class="fa fa-pencil" aria-hidden="true"></i>
       <i class="fa fa-trash" aria-hidden="true"></i>
-
       `;
       return this.actionData;
     } else {}
@@ -102,7 +101,6 @@ getData(data, key , index) {
       if ( isNaN(new Date(data[key]).getTime()  ) ) {
        return data[key];
      } else {
-
         if (Number.isInteger((data[key]))) {
           return data[key];
           } else {
@@ -117,36 +115,31 @@ getData(data, key , index) {
                       // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
                         return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
                    }
-
-
                 } else {
                   return data[key];
                 }
-
-
-              } else if (data[key].substring( 0 , 3 ) == 'ERN' || data[key].substring( 0 , 3 ) == 'MRN' || data[key].substring( 0 , 3 ) == 'SSC' || data[key].substring( 0 , 3 ) == 'Pro' || data[key].substring( 0 , 3 ) == 'Opp' || data[key].substring( 0 , 3 ) == 'Equ' || data[key].substring( 0 , 1 ) == 'C' || data[key].substring( 0 , 1 ) == 'P') {
+              } else if (data[key].substring( 0 , 3 ) === 'ERN' 
+              || data[key].substring( 0 , 3 ) === 'MRN' 
+              || data[key].substring( 0 , 3 ) === 'SSC' 
+              || data[key].substring( 0 , 3 ) === 'Pro' 
+              || data[key].substring( 0 , 3 ) === 'Opp' 
+              || data[key].substring( 0 , 3 ) === 'Equ' 
+              || data[key].substring( 0 , 1 ) === 'C' 
+              || data[key].substring( 0 , 1 ) === 'P') {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
                   return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
-
               }
             } else {
-              if (data[key] == true) {
+              if (data[key] === true) {
                    return 'YES';
                  } else {
-
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
                 return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
               }
-
-
             }
-
           }
-
-
-
      }
 
         } else {
@@ -187,13 +180,13 @@ ngOnInit() {
   this.title = 'Add Command';
   this.getComandList();
     }
-    detail(data) {
-
+    detail(data: any) {
 // tslint:disable-next-line: max-line-length
 // WebserModel
 if (this.showpagi) {
-  this.service.setId(data._links.self.href.substring(
-    data._links.self.href.length - 2, data._links.self.href.length) , 'Command/Template/detail');
+  let id =    this.service.getSplitId(data._links.self.href);
+
+  this.service.setId(id , 'Command/Template/detail');
  } else {
   this.service.setId( data.id , 'Command/Template/detail');
 
@@ -201,9 +194,9 @@ if (this.showpagi) {
      }
     edit(data: any) {
       if (this.showpagi) {
-        this.service.setId(data._links.self.href.substring(
-          data._links.self.href.length - 2, data._links.self.href.length
-          )   , 'Command/Template');
+        let id =    this.service.getSplitId(data._links.self.href);
+
+        this.service.setId(id  , 'Command/Template');
       } else {
         this.service.setId( data.id  , 'Command/Template');
       }
