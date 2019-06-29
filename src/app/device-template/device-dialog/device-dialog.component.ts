@@ -206,38 +206,55 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
      }
     });
   }
-
+  apagenew:any =0;
   getattriList() {
-    this.AuthService.getAttributeTemplate(this.apage, this.asize, this.asort).subscribe(res => {
-      this.attrDetailList = res._embedded.attributeTemplates;
 
-      this.apageCount =  res.page.totalPages;
+    this.apagenew =   this.apage / 5;
 
-      if (this.apageCount === this.apage + 1) {
-      this.anextDisabled = true;
-    } else {
-      this.anextDisabled = false;
 
+    this.AuthService.getAttributeTemplatefreeze(this.apagenew, 20, this.asort).subscribe(res => {
+// tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < res.length; i++) {
+      this.alldataattr.push(res[i]);
     }
+    this.aintialize();
+    if (this.aselectedList.length > 0) {
+         const indexselected =   this.alldataattr.findIndex( record => record.id === this.aselectedList[0].id );
+  
+         this.alldataattr[indexselected].check = true;
+  
+  
+        }
+  //   if (res.page) {
+  //     this.pageCount =  res.page.totalPages;
 
-      if (this.apage   === 0) {
-      this.apreDisabled = true;
-    } else {
-      this.apreDisabled = false;
+  //     if (this.pageCount == this.page + 1) {
+  //       this.nextDisabled = true;
+  //     } else {
+  //       this.nextDisabled = false;
+  //     }
+  //     if (this.page   == 0) {
+  //       this.preDisabled = true;
+  //     } else {
+  //       this.preDisabled = false;
 
-    }
-      this.apageCountArray = [];
-      for (let i = 0 ; i < this.apageCount; i++) {
-      this.apageCountArray.push(i + 1);
-    }
-      if (this.attributeselectedList.length > 0) {
-       const indexselected =   this.attrDetailList.findIndex(
-          record => record._links.self.href === this.attributeselectedList[0]._links.self.href
-           );
-       this.attrDetailList[indexselected].check = true;
-     }
-    });
-  }
+  //     }
+  //   }
+  //   this.pageCountArray = [];
+  //   for (let i = 0 ; i < this.pageCount; i++) {
+  //   this.pageCountArray.push(i + 1);
+  // }
+  //   if (this.selectedList.length > 0) {
+  //  const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
+
+  //  this.displayList[indexselected].check = true;
+
+
+  // }
+
+  });
+  
+}
   getcommandList() {
     this.AuthService.getComandTemplate(this.cpage, this.csize, this.csort).subscribe(res => {
        this.commandDetailList = res._embedded.commandTemplates;
@@ -422,24 +439,78 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       this.onClose.next(false);
       this._bsModalRef.hide();
   }
+  aintialize() {
+    if (this.attrDetailList.length > 0) {
+
+    } else {
+      for (let i = 0; i < 5; i++) {
+        this.attrDetailList.push(this.alldataattr[i]);
+      }
+      if (this.alldataattr.length < 6 ) {
+
+      } else {
+
+        for ( let i = 0 ; i < this.alldataattr.length / 5 ; i++) {
+          this.apageCountArray.push(i + 1);
+
+        }
+       }
+    }
+  }
   aprePage() {
+    if (this.apage !== 0) {
+      this.apage--;
+      this.aselectedPage = this.apage  + 1;
+      this.attrDetailList = [];
+      if ( this.apage * 5   + 5 <  this.alldataattr.length ) {
+                 for (let i = this.apage * 5; i < this.apage * 5   + 5 ; i++  ) {
+                 this.attrDetailList.push(this.alldataattr[i]);
+                }
+              } else {
+                for (let i = this.apage * 5; i < this.alldataattr.length ; i++  ) {
+                  this.attrDetailList.push(this.alldataattr[i]);
+                }
+              }
 
-    this.aselectedPage = this.aselectedPage - 1;
-    this.apage = this.aselectedPage - 1 ;
-    this.getattriList();
-
-
+    }
 }
 aPage(data) {
-   this.aselectedPage = data ;
-   this.apage = this.aselectedPage - 1;
-   this.getattriList();
-}
-  anextPage() {
+  this.apage = data - 1;
+  this.aselectedPage = this.apage + 1 ;
+  this.attrDetailList = [];
+  if ( this.apage * 5   + 5 <  this.alldataattr.length ) {
+             for (let i = this.apage * 5; i < this.apage * 5   + 5 ; i++  ) {
+             this.attrDetailList.push(this.alldataattr[i]);
+            }
+          } else {
+            for (let i = this.apage * 5; i < this.alldataattr.length ; i++  ) {
+              this.attrDetailList.push(this.alldataattr[i]);
+            }
+          }
 
-      this.aselectedPage = this.aselectedPage + 1;
-      this.apage = this.aselectedPage - 1;
-      this.getattriList();
+
+}
+alldataattr = [];
+  anextPage() {
+    this.apage  = this.apage + 1;
+    this.aselectedPage = this.apage + 1 ;
+
+    if (this.apage % 5 == 0) {
+  this.getattriList();
+} else {
+        this.attrDetailList = [];
+
+        if ( this.apage * 5   + 5 <  this.alldataattr.length ) {
+           for (let i = this.apage * 5; i < this.apage * 5   + 5 ; i++  ) {
+           this.attrDetailList.push(this.alldataattr[i]);
+          }
+        } else {
+          for (let i = this.apage * 5; i < this.alldataattr.length ; i++  ) {
+            this.attrDetailList.push(this.alldataattr[i]);
+          }
+        }
+}
+
 
   }
   agetClass(data) {
