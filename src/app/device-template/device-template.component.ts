@@ -21,20 +21,17 @@ constructor(private WebserModel: WebserModel, private modalService: BsModalServi
    this.page = 0;
    this.size =     this.service.sizetable;
    this.sort = '';
-   this.header = [{
-    name: 'TEMPLATE ID',
+   this.header = [  {
+    name: '  NAME',
     width: 10
   }, {
-    name: 'TEMPLATE NAME',
+    name: '  DESCRIPTION',
     width: 10
   }, {
-    name: 'TEMPLATE DESCRIPTION',
+    name: 'Is LOCK',
     width: 10
   }, {
-    name: 'IS FREEZE',
-    width: 10
-  }, {
-    name: 'DATE',
+    name: 'Created DATE',
     width: 10
   },
   {
@@ -43,7 +40,7 @@ constructor(private WebserModel: WebserModel, private modalService: BsModalServi
   }
  ];
 
-   this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+   this.keyData = [  'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
   public tableData1: TableData;
   pipe = new DatePipe('en-US');

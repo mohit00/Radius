@@ -19,20 +19,20 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'DASHBOARD',  icon: 'fa fa-th', class: '' ,HeaderTitle:'DASHBOARD', child:[ ] },
-    { path: '/user', title: 'PROTOTYPE',  icon:'fa-files-o', class: 'text-black', HeaderTitle:'DASHBOARD', child:[ {
-      path: '/Attribute/Template', title: 'ATTRIBUTE PROTOTYPE',  icon:'fa fa-wrench',HeaderTitle:'ATTRIBUTE PROTOTYPE'
+    { path: '/user', title: 'THINGS PROTOTYPE',  icon:'fa-files-o', class: 'text-black', HeaderTitle:'DASHBOARD', child:[ {
+      path: '/Properties/Prototype', title: 'Properties',  icon:'fa fa-wrench',HeaderTitle:'ATTRIBUTE PROTOTYPE'
     },{
-      path: '/Event/Template', title: 'EVENT PROTOTYPE',  icon:'fa fa-calendar',HeaderTitle:'EVENT TEMPLATE'
+      path: '/Event/Prototype', title: 'EVENT  ',  icon:'fa fa-calendar',HeaderTitle:'EVENT TEMPLATE'
     },{
-      path: '/Event/ACK/Template', title: 'EVENT ACK PROTOTYPE',  icon:'fa fa-file-text',HeaderTitle:'EVENT ACK TEMPLATE'
+      path: '/Event/ACK/Prototype', title: 'EVENT ACK  ',  icon:'fa fa-file-text',HeaderTitle:'EVENT ACK TEMPLATE'
     },{
-      path: '/Command/Template', title: 'COMMAND PROTOTYPE',  icon:'fa fa-terminal',HeaderTitle:'COMMAND PROTOTYPE'
+      path: '/Command/Prototype', title: 'COMMAND  ',  icon:'fa fa-terminal',HeaderTitle:'COMMAND PROTOTYPE'
     },{
-      path: '/Command/ACK/Template', title: 'COMMAND ACK PROTOTYPE',  icon:'fa fa-check',HeaderTitle:'COMMAND ACK PROTOTYPE'
+      path: '/Command/ACK/Prototype', title: 'COMMAND ACK  ',  icon:'fa fa-check',HeaderTitle:'COMMAND ACK PROTOTYPE'
     },{
-      path: '/Device/Template', title: 'THINGS PROTOTYPE',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
+      path: '/Device/Template', title: 'THINGS TEMPLATE  ',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
     }] },
-    { path: '/Device/Provisioning', title: 'THINGS PROVISIONING',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
+    { path: '/Device', title: 'THINGS',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
     { path: '/typography', title: 'CONFIGURATION',  icon:'fa fa-cog', class: 'text-black' ,HeaderTitle:'CONFIGURATION',child:[ ]},
     { path: '/icons', title: 'USERMANAGEMENT',  icon:'fa fa-user', class: 'text-black' ,HeaderTitle:'USERMANAGEMENT',child:[  ]},
        

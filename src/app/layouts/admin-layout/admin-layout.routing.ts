@@ -27,25 +27,25 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'd3',        component: D3Component },
     {
-        path: 'Attribute/Template',
+        path: 'Properties/Prototype',
         loadChildren: '../../attribute-template/attribute-template.module#AttributeTemplateModule'
       },{
-        path: 'Event/Template',
+        path: 'Event/Prototype',
         loadChildren: '../../event-template/event-template.module#EventTemplateModule'
       },{
-        path: 'Event/ACK/Template',
+        path: 'Event/ACK/Prototype',
         component:EventACKTemplateComponent ,
       },{
-        path: 'Command/Template',
+        path: 'Command/Prototype',
         loadChildren: '../../command-template/command-template.module#CommandTemplateModule'
       },{
-        path: 'Command/ACK/Template',
+        path: 'Command/ACK/Prototype',
         component:CommandACKTemplateComponent ,
       },{
         path: 'Device/Template',
         loadChildren: '../../device-template/device-template.module#DeviceTemplateModule'
       },{
-        path:'Device/Provisioning',
+        path:'Device',
         loadChildren: '../../device-provisioning/device-provisioning.module#DeviceProvisioningModule'
 
 

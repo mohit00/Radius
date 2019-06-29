@@ -21,10 +21,8 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.size = this.service.sizetable;
   this.sort = 0;
 
-  this.header = [{
-    name: 'Things ID',
-    width: 10
-  }, {
+  this.header = [
+     {
     name: 'Things NAME',
     width: 10
   }, {
@@ -43,7 +41,7 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   }
  ];
 
-  this.keyData = ['tenantId', 'name', 'description', 'deviceType',  'lastUpdatedOn', 'action'];
+  this.keyData = [  'name', 'description', 'deviceType',  'lastUpdatedOn', 'action'];
  }
   page: any;
    pageCountArray: any;

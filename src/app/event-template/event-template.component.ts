@@ -19,20 +19,17 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   this.page = 0;
   this.size = this.service.sizetable;
   this.sort = 0;
-  this.header = [{
-    name: 'TEMPLATE ID',
+  this.header = [  {
+    name: '  NAME',
     width: 10
   }, {
-    name: 'TEMPLATE NAME',
+    name: '  DESCRIPTION',
     width: 10
   }, {
-    name: 'TEMPLATE DESCRIPTION',
+    name: 'Is LOCK',
     width: 10
   }, {
-    name: 'IS FREEZE',
-    width: 10
-  }, {
-    name: 'DATE',
+    name: 'Created DATE',
     width: 10
   },
   {
@@ -41,7 +38,7 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   }
  ];
 
-  this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+  this.keyData = [ 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
   public tableData1: TableData;
   pipe = new DatePipe('en-US');

@@ -22,20 +22,17 @@ constructor(private modalService: BsModalService, private service: AuthService,p
   this.size = this.service.sizetable;
   this.sort = 0;
 
-  this.header = [{
-    name: 'TEMPLATE ID',
+  this.header = [  {
+    name: '  NAME',
     width: 10
   }, {
-    name: 'TEMPLATE NAME',
+    name: '  DESCRIPTION',
     width: 10
   }, {
-    name: 'TEMPLATE DESCRIPTION',
+    name: 'Is LOCK',
     width: 10
   }, {
-    name: 'IS FREEZE',
-    width: 10
-  }, {
-    name: 'DATE',
+    name: 'Created DATE',
     width: 10
   },
   {
@@ -44,7 +41,7 @@ constructor(private modalService: BsModalService, private service: AuthService,p
   }
  ];
 
-  this.keyData = ['tenantId', 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+  this.keyData = [  'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
  }
  pageInfo: any;
 
@@ -196,17 +193,17 @@ getEventList() {
   });
 }
 ngOnInit() {
-  this.title = 'Add Attribute';
+  this.title = 'Add Properties';
   this.getEventList();
     }
     detail(data) {
        if(this.showpagi){
      let id =    this.service.getSplitId(data._links.self.href);
  
-        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Attribute/Template/detail');
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Properties/Prototype/detail');
 
       }else{
-        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template/detail');
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Properties/Prototype/detail');
 
       }
     }
@@ -214,10 +211,10 @@ ngOnInit() {
       if(this.showpagi){
         let id =    this.service.getSplitId(data._links.self.href);
 
-        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Attribute/Template');
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+id , 'Properties/Prototype');
 
       }else{
-        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Attribute/Template');
+        this.service.setId(this.WebserModel.Sevice.BASE_URL+'attributeTemplates/'+data.id , 'Properties/Prototype');
 
       }
        const initialState = {
