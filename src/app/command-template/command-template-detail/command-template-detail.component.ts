@@ -15,17 +15,19 @@ export class CommandTemplateDetailComponent implements OnInit {
     getDetailEvent() {
    this.ComandId  =  this.Service.getId;
    this.Service.getDetail(this.WebserModel.Sevice.BASE_URL+'thing-service/commandTemplates/' + this.ComandId).subscribe(res=>{
-     console.log(JSON.stringify(res))
-     this.ComandDetail = res;
+      this.ComandDetail = res;
    });
     }
     
    
     changeFreeze() {
       this.ComandDetail.freeze = this.data.check;
-      this.Service.freezeData(this.ComandDetail, this.WebserModel.Sevice.BASE_URL+'commandTemplates/'+this.ComandId).subscribe(res => {
+      let freeze = {
+        freeze:this.data.check
+      }
+      this.Service.freezeData(freeze, this.WebserModel.Sevice.BASE_URL+'commandTemplates/'+this.ComandId).subscribe(res => {
         this.Service.suceesAlertDialog('Command has been successfully Freezed.' );
-        this.route.navigate(['Command/Template']);
+        this.route.navigate(['Command/Prototype']);
        });
     }
     ngOnInit() {

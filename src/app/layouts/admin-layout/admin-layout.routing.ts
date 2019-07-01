@@ -18,14 +18,7 @@ import { D3Component } from '../../d3/d3.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
-    { path: 'user',           component: UserComponent },
-    { path: 'table',          component: TablesComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-    { path: 'd3',        component: D3Component },
+     { path: 'd3',        component: D3Component },
     {
         path: 'Properties/Prototype',
         loadChildren: '../../attribute-template/attribute-template.module#AttributeTemplateModule'
@@ -42,10 +35,10 @@ export const AdminLayoutRoutes: Routes = [
         path: 'Command/ACK/Prototype',
         component:CommandACKTemplateComponent ,
       },{
-        path: 'Device/Template',
+        path: 'Things/Template',
         loadChildren: '../../device-template/device-template.module#DeviceTemplateModule'
       },{
-        path:'Device',
+        path:'things',
         loadChildren: '../../device-provisioning/device-provisioning.module#DeviceProvisioningModule'
 
 

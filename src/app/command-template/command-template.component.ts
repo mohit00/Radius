@@ -19,26 +19,35 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-  this.sort = 0;
+    this.sort = 'createdOn,Desc';
+;
   this.header = [  {
     name: '  NAME',
-    width: 10
+    width: 10,
+    sort:'0'
   }, {
     name: '  DESCRIPTION',
-    width: 10
+    width: 20,
+    sort:'0'
   }, {
     name: 'Is LOCK',
-    width: 10
+    width: 5
   }, {
     name: 'Created DATE',
-    width: 10
+    width: 12,
+    sort:1
+  },{
+    name: 'Created By',
+    width: 10,
+    sort:'0'
   },
   {
     name: 'ACTION',
     width: 10
   }
  ];
-  this.keyData = [ 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+
+  this.keyData = [  'name', 'description', 'freeze', 'createdOn','createdBy', 'action'];
  }
   public tableData1: TableData;
   pipe = new DatePipe('en-US');
@@ -76,13 +85,13 @@ open() {
 getData(data, key , index) {
   if (key) {
     if (key === 'freeze') {
-       if (data[key] === true) {
-        return '<i class="fa fa-check-square" aria-hidden="true"></i>';
+      if (data[key] === true) {
+       return '<i class="fa fa-lock" aria-hidden="true"></i>';
 
-      } else {
-        return '<i class="fa fa-window-close" aria-hidden="true"></i>';
-      }
-    } else {
+     } else {
+       return '<i class="fa fa-unlock" aria-hidden="true"></i>';
+     }
+   } else {
 
     }
     if (key === 'action') {
@@ -110,7 +119,7 @@ getData(data, key , index) {
                    return data[key];
                    } catch (err) {
                       // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                        return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                        return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
                    }
                 } else {
                   return data[key];
@@ -126,14 +135,14 @@ getData(data, key , index) {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                  return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                  return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             } else {
               if (data[key] === true) {
                    return 'YES';
                  } else {
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             }
           }
@@ -183,9 +192,9 @@ ngOnInit() {
 if (this.showpagi) {
   let id =    this.service.getSplitId(data._links.self.href);
 
-  this.service.setId(id , 'Command/Template/detail');
+  this.service.setId(id , 'Command/Prototype/detail');
  } else {
-  this.service.setId( data.id , 'Command/Template/detail');
+  this.service.setId( data.id , 'Command/Prototype/detail');
 
 }
      }
@@ -193,9 +202,9 @@ if (this.showpagi) {
       if (this.showpagi) {
         let id =    this.service.getSplitId(data._links.self.href);
 
-        this.service.setId(id  , 'Command/Template');
+        this.service.setId(id  , 'Command/Prototype');
       } else {
-        this.service.setId( data.id  , 'Command/Template');
+        this.service.setId( data.id  , 'Command/Prototype');
       }
 // tslint:disable-next-line: max-line-length
       const initialState = {
@@ -255,9 +264,11 @@ if (this.showpagi) {
     }
     onSearchChange(searchValue: string , serchdescription: String) {
       if (searchValue || serchdescription) {
+        this.searchTrue = true;
         console.log(searchValue);
         this.searchresult(searchValue, serchdescription);
       } else {
+        this.searchTrue = false;
         this.getComandList();
         this.showpagi = true;
 
@@ -278,4 +289,46 @@ if (this.showpagi) {
 
       }
     }
+    sortindex:any = 0;
+    dataorder:any = '';
+    searchTrue:any = false;
+     sortData(data) {
+      if(data.sort){}else{return '';}
+    for(var i =0 ;i <this.header.length ;i++){
+
+      if(this.header[i].sort){
+        if(data.name == this.header[i].name){
+          this.sortindex = i;
+        }else{
+          this.header[i].sort ='0';
+
+        }
+
+      }
+    }
+       if(data.sort == '0'){
+        data.sort = 1;
+        let orderby = 'Desc'
+        this.dataorder = orderby;
+      }else if(data.sort == 1){
+        data.sort = 2;
+
+        let orderby = 'asc'
+        this.dataorder = orderby;
+       }else if(data.sort == 2){
+        let orderby = 'Desc'  
+        data.sort = 1;
+        this.dataorder = orderby;
+
+
+      }
+       this.sort = this.keyData[this.sortindex]+ ','+this.dataorder
+      if(this.searchTrue){
+        
+      }else{
+        this.getComandList();
+
+      }
+     
+     }
 }

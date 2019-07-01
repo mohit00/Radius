@@ -20,14 +20,21 @@
                 <option value ="Schemafree"  >Schema free</option>
                 </select>
                  </div> 
-              
-          </div>
+                   <div class="form-group">
+                     <div class="form-check">
+                      <label class ="checkboxnew">
+                        <input type="checkbox" name="check"   > <span class="label-text"></span>
+                      </label><label>Is Acknowledgement Reqiured</label>
+                    </div>
+               </div>
+           </div>
           <div class ="col-md-6">
               <div class="form-group">
                   <label for="lastname" class="control-label">Description</label>
                   <textarea type="text" class="form-control" id="lastname" placeholder="Description" [(ngModel)] ="data.description" rows="3"></textarea>
               </div>
             </div> 
+       
             <div class ="col-md-12" style ="     padding: 0;
            "  *ngIf ="data.templateType == 'schemaDefine'">
                        <hr>
@@ -57,10 +64,10 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr class ="selecttable"  *ngFor ="let list of displayList ;" (click)="selectedListdata(list)" style ="cursor: pointer">
+                                          <tr class ="selecttable"  *ngFor ="let list of displayList ; let i = index" (click)="selectedListdata(list)" style ="cursor: pointer">
                                               <td  ><div class="form-check">
                                                 <label class ="checkboxnew">
-                                                  <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                                  <input type="radio" name ="radio" [value]="true" [(ngModel)]="list.check"> <span class="label-text"></span>
                                                 </label>
                                               </div> </td>
                                               <td  > {{list.name}}</td>

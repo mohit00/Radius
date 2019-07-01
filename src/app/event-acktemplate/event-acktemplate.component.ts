@@ -77,10 +77,10 @@ getData(data, key , index) {
   if (key) {
     if (key === 'freeze') {
        if (data[key] === true) {
-        return '<i class="fa fa-check-square" aria-hidden="true"></i>';
+        return '<i class="fa fa-unlock" aria-hidden="true"></i>';
 
       } else {
-        return '<i class="fa fa-window-close" aria-hidden="true"></i>';
+        return '<i class="fa fa-lock" aria-hidden="true"></i>';
       }
     } else {
 
@@ -111,7 +111,7 @@ getData(data, key , index) {
                    return data[key];
                    } catch (err) {
                       // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                        return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                        return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
                    }
                 } else {
                   return data[key];
@@ -128,14 +128,14 @@ getData(data, key , index) {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                  return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                  return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             } else {
               if (data[key] === true) {
                    return 'YES';
                  } else {
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             }
           }

@@ -51,12 +51,7 @@ export class AuthService {
     this.bsModalRef = this.modalService.show(SuccessDialogComponent, {initialState, class: 'modal-confirm  modal-sm' }    );
    
     }
-   login( ): Observable < any > {
-     return this._http.get( '/api/rest/v2/all', {
-     })
-    .map(res => res as any)
-    .catch(this.handleError);
-       }
+    
        addAttributeTemplate(data): Observable < any > {
         return this._http.post( this.BASE_URL + 'attributeTemplates', data)
        .map(res => res as any)
@@ -93,6 +88,7 @@ export class AuthService {
    .catch(this.handleError);
    }
    getThingsemplatefreeze( page, size, sort): Observable < any > {
+// tslint:disable-next-line: max-line-length
     return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
  .map(res => res as any)
  .catch(this.handleError);

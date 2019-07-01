@@ -18,19 +18,27 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-  this.sort = 0;
+  this.sort = 'createdOn,Desc';
+ 
   this.header = [  {
     name: '  NAME',
-    width: 10
+    width: 10,
+    sort:'0'
   }, {
     name: '  DESCRIPTION',
-    width: 10
+    width: 20,
+    sort:'0'
   }, {
     name: 'Is LOCK',
-    width: 10
+    width: 5 
   }, {
     name: 'Created DATE',
-    width: 10
+    width: 12,
+    sort:1
+  },{
+    name: 'Created By',
+    width: 10,
+    sort:'0'
   },
   {
     name: 'ACTION',
@@ -38,7 +46,7 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   }
  ];
 
-  this.keyData = [ 'name', 'description', 'freeze', 'lastUpdatedOn', 'action'];
+  this.keyData = [  'name', 'description', 'freeze', 'createdOn','createdBy', 'action'];
  }
   public tableData1: TableData;
   pipe = new DatePipe('en-US');
@@ -62,6 +70,7 @@ preDisabled: any;
     showpagi = true;
     advanceSearch = false;
 pageInfo: any;
+searchTrue:any = false;
 open() {
   const initialState = {
     title: 'false',
@@ -77,9 +86,9 @@ detail(data: any) {
   if (this.showpagi) {
     let id =    this.service.getSplitId(data._links.self.href);
 
-    this.service.setId(id, 'Event/Template/detail');
+    this.service.setId(id, 'Event/Prototype/detail');
   } else {
-    this.service.setId(  data.id  , 'Event/Template/detail');
+    this.service.setId(  data.id  , 'Event/Prototype/detail');
   }
 }
 edit(data: any ) {
@@ -88,10 +97,10 @@ edit(data: any ) {
   if (this.showpagi) {
     let id =    this.service.getSplitId(data._links.self.href);
 
-  this.service.setId(id  , 'Event/Template');
+  this.service.setId(id  , 'Event/Prototype');
 
 } else {
-  this.service.setId( data.id  , 'Event/Template');
+  this.service.setId( data.id  , 'Event/Prototype');
 
 }
 
@@ -112,11 +121,12 @@ delete(data: any) {
 getData(data: { [x: string]: any; }, key: string , index: any) {
   if (key) {
     if (key === 'freeze') {
-       if (data[key] === true) {
-        return '<i class="fa fa-check-square" aria-hidden="true"></i>';
+    
+      if (data[key] === true) {
+        return '<i class="fa fa-lock" aria-hidden="true"></i>';
 
       } else {
-        return '<i class="fa fa-window-close" aria-hidden="true"></i>';
+        return '<i class="fa fa-unlock" aria-hidden="true"></i>';
       }
     } else {
 
@@ -147,7 +157,7 @@ getData(data: { [x: string]: any; }, key: string , index: any) {
                    return data[key];
                    } catch (err) {
                       // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                        return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                        return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
                    }
                 } else {
                   return data[key];
@@ -157,14 +167,14 @@ getData(data: { [x: string]: any; }, key: string , index: any) {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                  return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                  return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             } else {
               if (data[key] == true) {
                    return 'YES';
                  } else {
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
             }
           }
@@ -253,9 +263,11 @@ ngOnInit() {
   }
     onSearchChange(searchValue: string , serchdescription: String) {
       if (searchValue || serchdescription) {
+        this.searchTrue = true;
         console.log(searchValue);
         this.searchresult(searchValue, serchdescription);
       } else {
+        this.searchTrue = false;
         this.getEventList();
         this.showpagi = true;
 
@@ -276,4 +288,45 @@ ngOnInit() {
 
       }
     }
+      sortindex:any = 0;
+    dataorder:any = '';
+     sortData(data) {
+      if(data.sort){}else{return '';}
+    for(var i =0 ;i <this.header.length ;i++){
+
+      if(this.header[i].sort){
+        if(data.name == this.header[i].name){
+          this.sortindex = i;
+        }else{
+          this.header[i].sort ='0';
+
+        }
+
+      }
+    }
+       if(data.sort == '0'){
+        data.sort = 1;
+        let orderby = 'Desc'
+        this.dataorder = orderby;
+      }else if(data.sort == 1){
+        data.sort = 2;
+
+        let orderby = 'asc'
+        this.dataorder = orderby;
+       }else if(data.sort == 2){
+        let orderby = 'Desc'  
+        data.sort = 1;
+        this.dataorder = orderby;
+
+
+      }
+       this.sort = this.keyData[this.sortindex]+ ','+this.dataorder
+      if(this.searchTrue){
+        
+      }else{
+        this.getEventList();
+
+      }
+     
+     }
 }

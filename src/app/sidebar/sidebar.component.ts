@@ -30,9 +30,9 @@ export const ROUTES: RouteInfo[] = [
     },{
       path: '/Command/ACK/Prototype', title: 'COMMAND ACK  ',  icon:'fa fa-check',HeaderTitle:'COMMAND ACK PROTOTYPE'
     },{
-      path: '/Device/Template', title: 'THINGS TEMPLATE  ',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
+      path: '/Things/Template', title: 'THINGS TEMPLATE  ',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
     }] },
-    { path: '/Device', title: 'THINGS',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
+    { path: '/things', title: 'THINGS',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
     { path: '/typography', title: 'CONFIGURATION',  icon:'fa fa-cog', class: 'text-black' ,HeaderTitle:'CONFIGURATION',child:[ ]},
     { path: '/icons', title: 'USERMANAGEMENT',  icon:'fa fa-user', class: 'text-black' ,HeaderTitle:'USERMANAGEMENT',child:[  ]},
        

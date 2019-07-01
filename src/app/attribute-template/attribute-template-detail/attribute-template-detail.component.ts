@@ -16,16 +16,15 @@ export class AttributeTemplateDetailComponent implements OnInit {
     changeFreeze() {
       this.eventDetail.freeze = this.data.check;
       this.Service.freezeData(this.eventDetail, this.eventId).subscribe(res => {
-        this.Service.suceesAlertDialog('Attribute has been successfully Freezed.' );
+        this.Service.suceesAlertDialog('Properties has been successfully Freezed.' );
 
-        this.route.navigate(['Attribute/Template']);
+        this.route.navigate(['Properties/Prototype']);
        });
     }
     getDetailEvent() {
    this.eventId  =  this.Service.getId;
    this.Service.getDetail(this.eventId).subscribe(res => {
-     console.log(JSON.stringify(res));
-     this.eventDetail = res;
+      this.eventDetail = res;
      this.data.check = this.eventDetail.freeze;
    });
     }

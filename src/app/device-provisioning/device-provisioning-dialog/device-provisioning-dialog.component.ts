@@ -19,7 +19,8 @@ export class DeviceProvisioningDialogComponent implements OnInit {
     this.data = {metadata: []};
     this.page = 0;
     this.size = 5;
-    this.sort = '';
+      this.sort = 'createdOn,Desc';
+;
     this.selectedPage = 1;
    }
   public onClose: Subject<boolean>;

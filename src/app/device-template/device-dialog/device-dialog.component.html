@@ -31,7 +31,7 @@
               </div>
             </div> 
           <div class ="clear"></div>
-          <tabset type="pills" *ngIf ="data.templateType =='Communicable'">
+          <tabset type="pills" >
             <tab heading="Attribute Template">
               <div class ="col-md-12"    >
                      <hr>
@@ -65,24 +65,24 @@
                                 <tr class ="selecttable"  *ngFor ="let list of attrDetailList ;" (click)="attributeselectedListdata(list)" style ="cursor: pointer">
                                     <td  ><div class="form-check">
                                       <label class ="checkboxnew">
-                                        <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                        <input type="radio" name="check"   [value]="true" [(ngModel)]="list.check"> <span class="label-text"></span>
                                       </label>
                                     </div> </td>
                                     <td  > {{list.name}}</td>
                                 </tr>
                             </tbody>
-                            <tfoot *ngIf ="apageCount && apageCountArray">
+                            <tfoot >
                               <tr  ><td [attr.colspan]="8"> 
                                 <div class=" " style="float: left;">
                                   <ul class="pagination">
                                     <li  >  
-                                      <button  (click)="aprePage()" [disabled]="apreDisabled">« Prev</button>
+                                      <button  (click)="aprePage()"  [disabled]="aselectedPage == 1">« Prev</button>
                                     </li>
                                     <li   *ngFor = "let list of apageCountArray" [ngClass]="agetClass(list)"> 
                                       <a  (click)="aPage(list)" >{{list}}</a>
                                     </li>
                                     <li  >
-                                      <button    (click)="anextPage()"   [disabled]="anextDisabled" >Next »</button>
+                                      <button    (click)="anextPage()"    [disabled]="aselectedPage == apageCountArray[apageCountArray.length - 1]" >Next »</button>
                                     </li>
                                   </ul>
                                 </div>
@@ -98,15 +98,13 @@
             </div>
 
             </tab>
-            <tab heading="Event Template"><div class ="col-md-12"  >
+            <tab heading="Event Template" *ngIf ="data.templateType =='Communicable'"><div class ="col-md-12"   >
                          <hr>
               <div class ="row" style="    width: 100%;"> 
                   <div class ="col-md-6 tablebutton"> 
                         <form class="form-horizontal col-md-8" style ="float: right;
                         margin-right: 15px;">
-                          <!-- <div class="form-group"> 
-                              <input type="text" class="form-control" id="email" placeholder="Search" style ="    height: 35px;">
-                          </div> -->
+                     
           </form>              
                   </div>
               </div>
@@ -136,18 +134,18 @@
                                         <td  > {{list.name}}</td>
                                     </tr>
                                 </tbody>
-                                <tfoot *ngIf ="epageCount && epageCountArray">
+                                <tfoot >
                                   <tr  ><td [attr.colspan]="8"> 
                                     <div class=" " style="float: left;">
                                       <ul class="pagination">
                                         <li  >  
-                                          <button  (click)="eprePage()" [disabled]="epreDisabled">« Prev</button>
+                                          <button  (click)="eprePage()"  [disabled]="eselectedPage == 1">« Prev</button>
                                         </li>
                                         <li   *ngFor = "let list of epageCountArray" [ngClass]="egetClass(list)"> 
                                           <a  (click)="ePage(list)" >{{list}}</a>
                                         </li>
                                         <li  >
-                                          <button    (click)="enextPage()"   [disabled]="enextDisabled" >Next »</button>
+                                          <button    (click)="enextPage()"    [disabled]="eselectedPage == epageCountArray[epageCountArray.length - 1]" >Next »</button>
                                         </li>
                                       </ul>
                                     </div>
@@ -161,7 +159,7 @@
                      
                 </div>
                 </div></tab>
-                <tab heading="Commands Template">
+                <tab heading="Commands Template" *ngIf ="data.templateType =='Communicable'">
                  <div class ="col-md-12"  >
                              <hr>
                   <div class ="row" style="    width: 100%;"> 
@@ -198,18 +196,18 @@
                                             <td  > {{list.name}}</td>
                                         </tr>
                                     </tbody>
-                                    <tfoot *ngIf ="cpageCount && cpageCountArray">
+                                    <tfoot >
                                       <tr  ><td [attr.colspan]="8"> 
                                         <div class=" " style="float: left;">
                                           <ul class="pagination">
                                             <li  >  
-                                              <button  (click)="cprePage()" [disabled]="cpreDisabled">« Prev</button>
+                                              <button  (click)="cprePage()"  [disabled]="cselectedPage == 1">« Prev</button>
                                             </li>
                                             <li   *ngFor = "let list of cpageCountArray" [ngClass]="cgetClass(list)"> 
                                               <a  (click)="cPage(list)" >{{list}}</a>
                                             </li>
                                             <li  >
-                                              <button    (click)="cnextPage()"   [disabled]="cnextDisabled" >Next »</button>
+                                              <button    (click)="cnextPage()"    [disabled]="cselectedPage == cpageCountArray[cpageCountArray.length - 1]" >Next »</button>
                                             </li>
                                           </ul>
                                         </div>

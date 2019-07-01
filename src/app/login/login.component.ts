@@ -12,10 +12,7 @@ export class LoginComponent implements OnInit {
   constructor(private AuthService1: AuthService,
               private router1: Router) { }
   login() {
-    this.router1.navigate(['dashboard']);
-    this.AuthService1.login().subscribe(res => {
-
-    });
+    this.router1.navigate(['dashboard']); 
   }
   ngOnInit() {
   }

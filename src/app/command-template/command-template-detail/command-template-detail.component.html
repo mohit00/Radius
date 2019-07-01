@@ -24,15 +24,7 @@
                 </div>
                 <div class ="col-md-12 bodyHeader"> 
                 <div class ="col-md-6 border_top_right" style ="    padding-left: 0;">
-                  <div class ="col-md-12">
-                      <div class ="col-md-4 detailheader"   >
-                          <div >Command Id</div>
-                      </div>
-                        <div class ="col-md-8 detailKey ">
-                            <div>{{ComandDetail.tenantId}} 
-                            </div>
-                        </div>
-                  </div>
+             
                   <div class ="col-md-12">
                       <div class ="col-md-4 detailheader"   >
                           <div >Command Name</div>
@@ -42,13 +34,29 @@
                         </div>
                   </div>
                   <div class ="col-md-12">
-                      <div class ="col-md-4 detailheader"   >
-                          <div >Date</div>
+                    <div class ="col-md-4 detailheader"   >
+                        <div >Created Date</div>
+                    </div>
+                      <div class ="col-md-8 detailKey ">
+                          <div>{{ComandDetail.createdOn | date:'medium'}}</div>
                       </div>
-                        <div class ="col-md-8 detailKey ">
-                            <div>{{ComandDetail.createdOn}}</div>
-                        </div>
-                  </div> 
+                </div>
+                <div class ="col-md-12">
+                  <div class ="col-md-4 detailheader"   >
+                      <div >Created By</div>
+                  </div>
+                    <div class ="col-md-8 detailKey ">
+                        <div>{{ComandDetail.createdBy}}</div>
+                    </div>
+              </div>
+               <div class ="col-md-12">
+                <div class ="col-md-4 detailheader"   >
+                    <div >Last Updated Date</div>
+                </div>
+                  <div class ="col-md-8 detailKey ">
+                      <div>{{ComandDetail.lastUpdatedOn | date:'medium'}}</div>
+                  </div>
+            </div>
                 </div>
                 <div class ="col-md-6 border_top" > 
                     <div class ="col-md-12" style ="margin-top: 10px;">

@@ -14,7 +14,8 @@ export class EventDialogComponent implements OnInit {
     this.data = {};
     this.page = 0;
     this.size = 5;
-    this.sort = '';
+      this.sort = 'createdOn,Desc';
+;
     this.selectedPage = 1;
   }
 
@@ -188,10 +189,7 @@ Page(data) {
 
   }
   getAttributeList() {
-
       this.pagenew =   this.page / 5;
-
-
       this.AuthService.getAttributeTemplatefreeze(this.pagenew, 20, this.sort).subscribe(res => {
 // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < res.length; i++) {
@@ -200,10 +198,7 @@ Page(data) {
       this.intialize();
       if (this.selectedList.length > 0) {
            const indexselected =   this.alldata.findIndex( record => record.id === this.selectedList[0].id );
-    
-           this.alldata[indexselected].check = true;
-    
-    
+           this.alldata[indexselected].check = true; 
           }
     //   if (res.page) {
     //     this.pageCount =  res.page.totalPages;

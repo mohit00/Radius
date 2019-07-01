@@ -19,7 +19,8 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-  this.sort = 0;
+    this.sort = 'createdOn,Desc';
+;
 
   this.header = [
      {
@@ -81,13 +82,13 @@ open() {
 getData(data, key , index) {
   if (key) {
     if (key === 'freeze') {
-       if (data[key] === true) {
-        return '<i class="fa fa-check-square" aria-hidden="true"></i>';
+      if (data[key] === true) {
+       return '<i class="fa fa-lock" aria-hidden="true"></i>';
 
-      } else {
-        return '<i class="fa fa-window-close" aria-hidden="true"></i>';
-      }
-    } else {
+     } else {
+       return '<i class="fa fa-unlock" aria-hidden="true"></i>';
+     }
+   } else {
 
     }
     if (key === 'action') {
@@ -117,7 +118,7 @@ getData(data, key , index) {
                    return data[key];
                    } catch (err) {
                       // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                        return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                        return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
                    }
 
 
@@ -138,7 +139,7 @@ getData(data, key , index) {
                  return data[key];
               } else {
                   // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                  return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                  return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
 
               }
             } else {
@@ -147,7 +148,7 @@ getData(data, key , index) {
                  } else {
 
                 // var _date = $filter('date')(new Date(input), 'MM/dd/yyyy');
-                return this.pipe.transform(data[key], 'MM/dd/yyyy HH:MM:SS');
+                return this.pipe.transform(data[key], 'MMM d, y, h:mm:ss a');
               }
 
 
@@ -194,10 +195,10 @@ ngOnInit() {
   this.getEventList();
     }
     detail(data) {
-      this.service.setId(data._links.self.href , 'Device/Provisioning/Detail');
+      this.service.setId(data._links.self.href , 'things/Detail');
     }
     edit(data ) {
-      this.service.setId(data._links.self.href   , 'Device/Provisioning');
+      this.service.setId(data._links.self.href   , 'things');
       const initialState = {
         title: 'true',
         id: this.service.getId

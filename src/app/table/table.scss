@@ -30,3 +30,20 @@ $theam-color-client:#1C8AD8;
     background-color: #fff;
     border: 1px solid #ddd;
 }
+.inner-addon{
+    position: relative; 
+}
+.inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+  }
+  .left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+button:disabled{
+    color: #a59b9b;
+}

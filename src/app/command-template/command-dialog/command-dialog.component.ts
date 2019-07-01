@@ -15,7 +15,8 @@ export class CommandDialogComponent implements OnInit {
     this.data = {};
     this.page = 0;
     this.size = 5;
-    this.sort = '';
+      this.sort = 'createdOn,Desc';
+;
     this.selectedPage = 1;
     this.dataList = [{
     class : 'col-md-4',
@@ -203,7 +204,9 @@ Page(data) {
       this.alldata.push(res[i]);
     }
     this.intialize();
+
     if (this.selectedList.length > 0) {
+
          const indexselected =   this.alldata.findIndex( record => record.id === this.selectedList[0].id );
          this.alldata[indexselected].check = true;
         }
@@ -259,13 +262,11 @@ Page(data) {
     this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/commandTemplates/' + this.id).subscribe(res => {
        this.data = res;
        if (res.commandFields.id) {
+
         this.selectedList.push({
-          _links: {
-            self: {
-              href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.commandFields.id
-            }
-          }
-        });
+          id : res.commandFields.id
+
+         });
       }
 
        this.getAttributeList();

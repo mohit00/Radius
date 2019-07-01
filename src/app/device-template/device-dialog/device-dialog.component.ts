@@ -9,35 +9,6 @@ import {WebserModel} from '../../Service.model';
   styleUrls: ['./device-dialog.component.scss']
 })
 export class DeviceDialogComponent implements OnInit {
-  apage: any;
-
-  asize: any;
-  asort: any;
-  aselectedList: any;
-  apageCountArray: any;
-  aselectedPage: any;
-  anextDisabled: any;
- apreDisabled: any;
- apageCount: any;
-
-  epage: any;
-  esize: any;
-  esort: any;
-  eselectedList: any;
-  epageCountArray: any;
-  eselectedPage: any;
-  enextDisabled: any;
- epreDisabled: any;
- epageCount: any;
-  cpage: any;
-  csize: any;
-  csort: any;
-  cselectedList: any;
-  cpageCountArray: any;
-  cselectedPage: any;
-  cnextDisabled: any;
- cpreDisabled: any;
- cpageCount: any;
   constructor(private _bsModalRef: BsModalRef,
               private AuthService: AuthService, private WebserModel: WebserModel ) {
     this.apage = 0;
@@ -72,6 +43,36 @@ export class DeviceDialogComponent implements OnInit {
     // commandselectedList: any;
     this.data = {templateType: 'nonCommunicable', eventTemplate: [], commandTemplate: [], attributeTemplate: []};
   }
+
+  apage: any;
+
+  asize: any;
+  asort: any;
+  aselectedList: any = [];
+  apageCountArray: any = [];
+  aselectedPage: any;
+  anextDisabled: any;
+ apreDisabled: any;
+ apageCount: any;
+
+  epage: any;
+  esize: any;
+  esort: any;
+  eselectedList: any = [];
+  epageCountArray: any = [];
+  eselectedPage: any;
+  enextDisabled: any;
+ epreDisabled: any;
+ epageCount: any;
+  cpage: any;
+  csize: any;
+  csort: any;
+  cselectedList: any = [];
+  cpageCountArray: any = [];
+  cselectedPage: any;
+  cnextDisabled: any;
+ cpreDisabled: any;
+ cpageCount: any;
   public onClose: Subject<boolean>;
   public onCloseEdit: Subject<boolean>;
 
@@ -81,11 +82,17 @@ export class DeviceDialogComponent implements OnInit {
   attributeselectedList: any;
   commandselectedList: any;
 
-  eventDetailList: any;
-  attrDetailList: any;
-  commandDetailList: any;
+  eventDetailList: any = [];
+  attrDetailList: any = [];  commandDetailList: any = [];
   title: any;
   id: any;
+  apagenew: any = 0;
+  epagenew: any = 0;
+  cpagenew: any = 0;
+alldataattr = [];
+alldataevent = [];
+alldatacommand = [];
+
   add() {
     this.dataList.push({
       class : 'col-md-4',
@@ -97,6 +104,7 @@ export class DeviceDialogComponent implements OnInit {
      } );
   }
   submitCreate() {
+
     this.data.createdBy = 'admin';
     this.data.lastUpdatedBy = 'admin';
     this.data.isFreeze = false;
@@ -108,24 +116,34 @@ export class DeviceDialogComponent implements OnInit {
       if (this.eventselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
-          this.data.eventTemplate.push(this.eventselectedList[i]._links.self.href );
+          this.data.eventTemplate.push(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplate/' + this.eventselectedList[i].id );
          }
       }
       if (this.attributeselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
 for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
-  this.data.attributeTemplate.push(this.attributeselectedList[i]._links.self.href );
+  this.data.attributeTemplate.push( this.data, this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
  }
       }
       if (this.commandselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
 for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
-  this.data.commandTemplate.push(this.commandselectedList[i]._links.self.href );
+  this.data.commandTemplate.push( this.data, this.WebserModel.Sevice.BASE_URL + 'commandTemplate/' + this.commandselectedList[i].id );
  }
       }
+    } else {
+      if (this.attributeselectedList.length > 0) {
+        // tslint:disable-next-line: prefer-for-of
+        this.data.attributeTemplate[0] = [];
+        this.data.attributeTemplate[0] = ( this.data, this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
+
+              } else {
+                alert('Attribute Requied');
+                return false;
+              }
     }
     this.data.tenantId = 'radius-PF';
-    console.log(JSON.stringify(this.data));
+    console.log( (this.data));
     this.AuthService.adddeviceTemplate(this.data).subscribe(res => {
       this.onClose.next(true);
 
@@ -136,7 +154,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
   }
   submitUpdate() {
-  
+
     this.data.isFreeze = false;
     // eventselectedList: any;
     // attributeselectedList: any;
@@ -146,23 +164,23 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       if (this.eventselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
-          this.data.eventTemplate.push(this.eventselectedList[i]._links.self.href );
+          this.data.eventTemplate.push(this.eventselectedList[i].id );
          }
       }
       if (this.attributeselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
 for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
-  this.data.attributeTemplate.push(this.attributeselectedList[i]._links.self.href );
+  this.data.attributeTemplate.push(this.attributeselectedList[i].id );
  }
       }
       if (this.commandselectedList.length > 0) {
 // tslint:disable-next-line: prefer-for-of
 for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
-  this.data.commandTemplate.push(this.commandselectedList[i]._links.self.href );
+  this.data.commandTemplate.push(this.commandselectedList[i].id );
  }
       }
     }
-     
+
     this.data.tenantId = 'radius-PF';
     this.AuthService.updatedeviceTemplate(this.data, this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + this.id).subscribe(res => {
       this.onCloseEdit.next(true);
@@ -173,161 +191,118 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       });
 
   }
-  geteventList() {
-    this.AuthService.getEventTemplate(this.epage, this.esize, this.esort).subscribe(res => {
-       this.eventDetailList = res._embedded.eventTemplates;
+  eintialize() {
 
-       this.epageCount =  res.page.totalPages;
-       if (this.epageCount === this.epage + 1) {
-      this.enextDisabled = true;
-    } else {
-      this.enextDisabled = false;
-    }
-       if (this.epage   === 0) {
-      this.epreDisabled = true;
-    } else {
-      this.epreDisabled = false;
-    }
-       this.epageCountArray = [];
-       for (let i = 0 ; i < this.cpageCount; i++) {
-      this.epageCountArray.push(i + 1);
-    }
-       if (this.eventselectedList.length > 0) {
-         // tslint:disable-next-line: prefer-for-of
-         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
-        const indexselected =   this.eventDetailList.findIndex(
-           record => record._links.self.href === this.eventselectedList[i]._links.self.href );
-        if (indexselected == -1) {} else {
-            this.eventDetailList[indexselected].check = true;
+    if (this.eventDetailList.length > 0) {
 
-           }
+    } else {
+      for (let i = 0; i < 5; i++) {
+        this.eventDetailList.push(this.alldataevent[i]);
       }
+      if (this.alldataevent.length < 6 ) {
 
+      } else {
+
+        for ( let i = 0 ; i < this.alldataevent.length / 5 ; i++) {
+          this.epageCountArray.push(i + 1);
+
+        }
+
+       }
      }
-    });
   }
-  apagenew:any =0;
+  cintialize() {
+
+    if (this.commandDetailList.length > 0) {
+
+    } else {
+      for (let i = 0; i < 5; i++) {
+        this.commandDetailList.push(this.alldatacommand[i]);
+      }
+      alert(JSON.stringify(this.commandDetailList))
+      if (this.alldatacommand.length < 6 ) {
+
+      } else {
+
+        for ( let i = 0 ; i < this.alldatacommand.length / 5 ; i++) {
+          this.cpageCountArray.push(i + 1);
+
+        }
+
+       }
+     }
+  }
+  geteventList() {
+    this.epagenew =   this.epage / 5;
+    this.AuthService.getEventemplatefreeze(this.epagenew, 20, this.esort).subscribe(res => {
+ // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < res.length; i++) {
+      this.alldataevent.push(res[i]);
+    }
+    this.eintialize();
+    if (this.eventselectedList.length > 0) {
+         const indexselected =   this.alldataevent.findIndex( record => record.id === this.eventselectedList[0].id );
+         this.alldataevent[indexselected].check = true;
+        }
+
+  });
+  }
+
   getattriList() {
-
     this.apagenew =   this.apage / 5;
-
-
     this.AuthService.getAttributeTemplatefreeze(this.apagenew, 20, this.asort).subscribe(res => {
-// tslint:disable-next-line: prefer-for-of
+ // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < res.length; i++) {
       this.alldataattr.push(res[i]);
     }
     this.aintialize();
-    if (this.aselectedList.length > 0) {
-         const indexselected =   this.alldataattr.findIndex( record => record.id === this.aselectedList[0].id );
-  
+    if (this.attributeselectedList.length > 0) {
+         const indexselected =   this.alldataattr.findIndex( record => record.id === this.attributeselectedList[0].id );
          this.alldataattr[indexselected].check = true;
-  
-  
         }
-  //   if (res.page) {
-  //     this.pageCount =  res.page.totalPages;
-
-  //     if (this.pageCount == this.page + 1) {
-  //       this.nextDisabled = true;
-  //     } else {
-  //       this.nextDisabled = false;
-  //     }
-  //     if (this.page   == 0) {
-  //       this.preDisabled = true;
-  //     } else {
-  //       this.preDisabled = false;
-
-  //     }
-  //   }
-  //   this.pageCountArray = [];
-  //   for (let i = 0 ; i < this.pageCount; i++) {
-  //   this.pageCountArray.push(i + 1);
-  // }
-  //   if (this.selectedList.length > 0) {
-  //  const indexselected =   this.displayList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
-
-  //  this.displayList[indexselected].check = true;
-
-
-  // }
 
   });
-  
 }
   getcommandList() {
-    this.AuthService.getComandTemplate(this.cpage, this.csize, this.csort).subscribe(res => {
-       this.commandDetailList = res._embedded.commandTemplates;
-
-       this.cpageCount =  res.page.totalPages;
-
-       if (this.cpageCount === this.cpage + 1) {
-      this.cnextDisabled = true;
-    } else {
-      this.cnextDisabled = false;
-
+    this.cpagenew =   this.cpage / 5;
+    this.AuthService.getCommandTemplatefreeze(this.cpagenew, 20, this.csort).subscribe(res => {
+ // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < res.length; i++) {
+      this.alldatacommand.push(res[i]);
     }
-
-       if (this.cpage   === 0) {
-      this.cpreDisabled = true;
-    } else {
-      this.cpreDisabled = false;
-
-    }
-       this.cpageCountArray = [];
-       for (let i = 0 ; i < this.cpageCount; i++) {
-      this.cpageCountArray.push(i + 1);
-    }
-
-       if (this.commandselectedList.length > 0) {
-      // tslint:disable-next-line: prefer-for-of
-      for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
-     const indexselected =   this.commandDetailList.findIndex(
-        record => record._links.self.href === this.commandselectedList[i]._links.self.href );
-     if (indexselected === -1) {} else {
-         this.commandDetailList[indexselected].check = true;
-
+    this.cintialize();
+    if (this.commandselectedList.length > 0) {
+         const indexselected =   this.alldatacommand.findIndex( record => record.id === this.commandselectedList[0].id );
+         this.alldatacommand[indexselected].check = true;
         }
-   }
 
-  }
-
-    });
+  });
   }
   eventselectedListdata(data) {
     data.check = ! data.check;
     if (data.check) {
       this.eventselectedList.push(data);
     } else {
-    const index =   this.eventselectedList.findIndex( record => record._links.self.href === data._links.self.href );
+    const index =   this.eventselectedList.findIndex( record => record.id === data.id );
 
     this.eventselectedList.splice(index, 1);
   }
   }
-  attributeselectedListdata(data: { _links: { self: { href: any; }; }; check: boolean; }) {
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0 ; i < this.attrDetailList.length; i++) {
-      if (this.attrDetailList[i]._links.self.href != data._links.self.href) {
-        this.attrDetailList[i].check =  false;
-        }
-       }
+  attributeselectedListdata(data: any) {
+    for (let i = 0 ; i < this.alldataattr.length; i++) {
+    if (this.alldataattr[i].id !== data.id) {
+      this.alldataattr[i].check =  false;
+      }
+     }
     data.check = ! data.check;
-
     this.attributeselectedList = [];
-
     if (data.check) {
-      this.attributeselectedList.push(data);
-    } else {
-    const index =   this.attributeselectedList.findIndex( record => record._links.self.href === data._links.self.href );
-    this.attributeselectedList.splice(index, 1);
-  }
-  //   data.check = ! data.check;
-  //   if (data.check) {
-  //     this. attributeselectedList.push(data);
-  //   } else {
-  //   const index =   this. attributeselectedList.findIndex( record => record._links.self.href === data._links.self.href );
-  //   this. attributeselectedList.splice(index, 1);
-  // }
+    this.attributeselectedList.push({id: data.id
+    });
+  } else {
+  const index =   this.attributeselectedList.findIndex( record => record.id === data.id );
+  this.attributeselectedList.splice(index, 1);
+}
   }
   commandselectedListdata(data) {
     data.check = ! data.check;
@@ -335,7 +310,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     if (data.check) {
       this. commandselectedList.push(data);
     } else {
-    const index =   this. commandselectedList.findIndex( record => record._links.self.href === data._links.self.href );
+    const index =   this. commandselectedList.findIndex( record => record.id === data.id );
     this. commandselectedList.splice(index, 1);
   }
   }
@@ -347,6 +322,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     this.commandselectedList = [];
     this.attributeselectedList = [];
     this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/thingTemplates/' + this.id).subscribe(res => {
+      console.log(JSON.stringify(res));
       this.getattriList();
       this.getcommandList();
       this.geteventList();
@@ -355,11 +331,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 // tslint:disable-next-line: prefer-for-of
        for (let i = 0 ; i < res.eventTemplate.length; i++) {
         this.eventselectedList.push({
-          _links: {
-            self: {
-              href: this.WebserModel.Sevice.BASE_URL + 'eventTemplates/' + res.eventTemplate[i].id
-            }
-          }
+         id: res.eventTemplate[i].id
         });
        }
 
@@ -368,28 +340,20 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       // tslint:disable-next-line: prefer-for-of
              for (let i = 0 ; i < res.commandTemplate.length; i++) {
               this.commandselectedList.push({
-                _links: {
-                  self: {
-                    href: this.WebserModel.Sevice.BASE_URL + 'commandTemplates/' + res.commandTemplate[i].id
-                  }
-                }
-              });
+                id: res.commandTemplate[i].id
+                });
              }
            }
       if (res.attributeTemplate) {
       this.attributeselectedList.push({
-        _links: {
-          self: {
-            href: this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + res.attributeTemplate[0].id
-          }
-        }
-      });
+                id: res.attributeTemplate[0].id
+                 });
            }
       if (this.commandselectedList.length > 0 ) {
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
            const indexselected =   this.commandDetailList.findIndex(
-              record => record._links.self.href === this.commandselectedList[i]._links.self.href );
+              record => record.id === this.commandselectedList[i].id );
            if (indexselected === -1) {} else {
                this.commandDetailList[indexselected].check = true;
 
@@ -401,7 +365,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
      const indexselected =   this.eventDetailList.findIndex(
-        record => record._links.self.href === this.eventselectedList[i]._links.self.href );
+        record => record.id === this.eventselectedList[i].id );
      if (indexselected == -1) {} else {
          this.eventDetailList[indexselected].check = true;
         }
@@ -410,7 +374,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
       if (this.attributeselectedList.length > 0) {
     const indexselected =   this.attrDetailList.findIndex(
-       record => record._links.self.href === this.attributeselectedList[0]._links.self.href
+       record => record.id === this.attributeselectedList[0].id
         );
     this.attrDetailList[indexselected].check = true;
   }
@@ -454,8 +418,9 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
           this.apageCountArray.push(i + 1);
 
         }
+
        }
-    }
+     }
   }
   aprePage() {
     if (this.apage !== 0) {
@@ -490,7 +455,7 @@ aPage(data) {
 
 
 }
-alldataattr = [];
+
   anextPage() {
     this.apage  = this.apage + 1;
     this.aselectedPage = this.apage + 1 ;
@@ -522,23 +487,57 @@ alldataattr = [];
   }
 
   eprePage() {
+    if (this.epage !== 0) {
+      this.epage--;
+      this.eselectedPage = this.epage  + 1;
+      this.eventDetailList = [];
+      if ( this.epage * 5   + 5 <  this.alldataevent.length ) {
+                 for (let i = this.epage * 5; i < this.epage * 5   + 5 ; i++  ) {
+                 this.eventDetailList.push(this.alldataevent[i]);
+                }
+              } else {
+                for (let i = this.epage * 5; i < this.alldataevent.length ; i++  ) {
+                  this.eventDetailList.push(this.alldataevent[i]);
+                }
+              }
 
-    this.eselectedPage = this.eselectedPage - 1;
-    this.epage = this.eselectedPage - 1 ;
-    this.geteventList();
-
-
+    }
 }
 ePage(data) {
-   this.eselectedPage = data ;
-   this.epage = this.eselectedPage - 1;
-   this.geteventList();
+  this.epage = data - 1;
+  this.eselectedPage = this.epage + 1 ;
+  this.eventDetailList = [];
+  if ( this.epage * 5   + 5 <  this.alldataevent.length ) {
+             for (let i = this.epage * 5; i < this.epage * 5   + 5 ; i++  ) {
+             this.eventDetailList.push(this.alldataevent[i]);
+            }
+          } else {
+            for (let i = this.epage * 5; i < this.alldataevent.length ; i++  ) {
+              this.eventDetailList.push(this.alldataevent[i]);
+            }
+          }
 }
-  enextPage() {
 
-      this.eselectedPage = this.eselectedPage + 1;
-      this.epage = this.eselectedPage - 1;
-      this.geteventList();
+  enextPage() {
+    this.epage  = this.epage + 1;
+    this.eselectedPage = this.epage + 1 ;
+
+    if (this.epage % 5 == 0) {
+  this.geteventList();
+} else {
+        this.eventDetailList = [];
+
+        if ( this.epage * 5   + 5 <  this.alldataevent.length ) {
+           for (let i = this.epage * 5; i < this.epage * 5   + 5 ; i++  ) {
+           this.eventDetailList.push(this.alldataevent[i]);
+          }
+        } else {
+          for (let i = this.epage * 5; i < this.alldataevent.length ; i++  ) {
+            this.eventDetailList.push(this.alldataevent[i]);
+          }
+        }
+}
+
 
   }
   egetClass(data) {
@@ -551,23 +550,57 @@ ePage(data) {
 
 
   cprePage() {
+    if (this.cpage !== 0) {
+      this.cpage--;
+      this.cselectedPage = this.cpage  + 1;
+      this.commandDetailList = [];
+      if ( this.cpage * 5   + 5 <  this.alldatacommand.length ) {
+                 for (let i = this.cpage * 5; i < this.cpage * 5   + 5 ; i++  ) {
+                 this.commandDetailList.push(this.alldatacommand[i]);
+                }
+              } else {
+                for (let i = this.cpage * 5; i < this.alldatacommand.length ; i++  ) {
+                  this.commandDetailList.push(this.alldatacommand[i]);
+                }
+              }
 
-    this.cselectedPage = this.cselectedPage - 1;
-    this.cpage = this.cselectedPage - 1 ;
-    this.getcommandList();
-
-
+    }
 }
 cPage(data) {
-   this.cselectedPage = data ;
-   this.cpage = this.cselectedPage - 1;
-   this.getcommandList();
+  this.cpage = data - 1;
+  this.cselectedPage = this.cpage + 1 ;
+  this.commandDetailList = [];
+  if ( this.cpage * 5   + 5 <  this.alldatacommand.length ) {
+             for (let i = this.cpage * 5; i < this.cpage * 5   + 5 ; i++  ) {
+             this.commandDetailList.push(this.alldatacommand[i]);
+            }
+          } else {
+            for (let i = this.cpage * 5; i < this.alldatacommand.length ; i++  ) {
+              this.commandDetailList.push(this.alldatacommand[i]);
+            }
+          }
 }
-  cnextPage() {
 
-      this.cselectedPage = this.cselectedPage + 1;
-      this.cpage = this.cselectedPage - 1;
-      this.getcommandList();
+ cnextPage() {
+    this.cpage  = this.cpage + 1;
+    this.cselectedPage = this.cpage + 1 ;
+
+    if (this.cpage % 5 == 0) {
+  this.getcommandList();
+} else {
+        this.commandDetailList = [];
+
+        if ( this.cpage * 5   + 5 <  this.alldatacommand.length ) {
+           for (let i = this.cpage * 5; i < this.cpage * 5   + 5 ; i++  ) {
+           this.commandDetailList.push(this.alldatacommand[i]);
+          }
+        } else {
+          for (let i = this.cpage * 5; i < this.alldatacommand.length ; i++  ) {
+            this.commandDetailList.push(this.alldatacommand[i]);
+          }
+        }
+}
+
 
   }
   cgetClass(data) {
@@ -577,4 +610,5 @@ cPage(data) {
       return '';
     }
   }
+
 }

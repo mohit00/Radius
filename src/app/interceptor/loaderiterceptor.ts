@@ -17,15 +17,19 @@ export class LoaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-      console.log('start');
-      this.AuthService.loaderCheck.emit('show');
+      setTimeout(()=>{
+        this.AuthService.loaderCheck.emit('show');
+
+      },10)
 
       return next.handle(req).do(evt => {
 
       if (evt instanceof HttpResponse) {
         console.log('end');
-
-        this.AuthService.loaderCheck.emit('hide');
+        setTimeout(()=>{
+          this.AuthService.loaderCheck.emit('hide');
+  
+        },10)
 
         console.log('---> status:', evt.status);
        }

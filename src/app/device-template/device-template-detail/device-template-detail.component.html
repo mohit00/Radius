@@ -4,7 +4,7 @@
           <div class ="col-md-12">
             <div class ="header_top col-md-12">
               <div class ="col-md-6" style ="margin-top: 12px;">
-                 <span>Device Prototype Name:</span> {{eventDetail.name}}  
+                 <span>Things Prototype Name:</span> {{eventDetail.name}}  
               </div>
               <div class ="col-md-6" > 
                 <div class="col-md-3" style="float: right">
@@ -20,39 +20,53 @@
             <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
             padding-right: 0px;">
                 <div class ="header">
-                    Device DETAILS
+                    Things DETAILS
                     
                 </div>
                 <div class ="col-md-12 bodyHeader">
                   
                 <div class ="col-md-6 border_top_right" style ="    padding-left: 0;">
+            
                   <div class ="col-md-12">
                       <div class ="col-md-4 detailheader"   >
-                          <div >Event Id</div>
-                      </div>
-                        <div class ="col-md-8 detailKey ">
-                            <div>{{eventDetail.tenantId}}
-                              
-                            </div>
-                        </div>
-                  </div>
-                  <div class ="col-md-12">
-                      <div class ="col-md-4 detailheader"   >
-                          <div >Device Name</div>
+                          <div >Things Name</div>
                       </div>
                         <div class ="col-md-8 detailKey ">
                             <div>{{eventDetail.name}}</div>
                         </div>
                   </div>
                   <div class ="col-md-12">
-                      <div class ="col-md-4 detailheader"   >
-                          <div >Date</div>
+                    <div class ="col-md-4 detailheader"   >
+                        <div >Created Date</div>
+                    </div>
+                      <div class ="col-md-8 detailKey ">
+                          <div>{{eventDetail.createdOn | date:'medium'}}</div>
                       </div>
-                        <div class ="col-md-8 detailKey ">
-                            <div>{{eventDetail.createdOn}}</div>
-                        </div>
+                </div>
+                <div class ="col-md-12">
+                  <div class ="col-md-4 detailheader"   >
+                      <div >Created By</div>
                   </div>
-                      
+                    <div class ="col-md-8 detailKey ">
+                        <div>{{eventDetail.createdBy}}</div>
+                    </div>
+              </div>
+               <div class ="col-md-12">
+                <div class ="col-md-4 detailheader"   >
+                    <div >Last Updated Date</div>
+                </div>
+                  <div class ="col-md-8 detailKey ">
+                      <div>{{eventDetail.lastUpdatedOn | date:'medium'}}</div>
+                  </div>
+            </div>
+            <div class ="col-md-12">
+              <div class ="col-md-4 detailheader"   >
+                  <div >Last Updated By</div>
+              </div>
+                <div class ="col-md-8 detailKey ">
+                    <div>{{eventDetail.lastUpdatedBy | date:'medium'}}</div>
+                </div>
+          </div>  
                  
                   
   
@@ -77,17 +91,17 @@
     <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
     padding-right: 0px;">
         <div class ="header">
-            Device Field Details
+            Things Field Details
             
         </div>
         <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">
           
            <div class ="col-md-12">
               <div class ="col-md-4 detailheader"   >
-                  <div >Device Field Name</div>
+                  <div >Things Field Name</div>
               </div>
                 <div class ="col-md-8 detailheader ">
-                      <div >Device Field Value</div>  
+                      <div >Things Field Value</div>  
                     <div> 
                     </div>
                 </div>
@@ -104,7 +118,7 @@
       <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
       padding-right: 0px;">
           <div class ="header">
-            Device Tags
+            Things Tags
               
           </div>
           <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">

@@ -18,17 +18,19 @@ data:any;
    changeFreeze() {
     
     this.eventDetail.freeze = this.data.check;
-    this.Service.freezeData(this.eventDetail, this.WebserModel.Sevice.BASE_URL+'eventTemplates/'+ this.eventId).subscribe(res => {
+    let datasend = {
+      freeze:this.data.check
+    }
+    this.Service.freezeData(datasend, this.WebserModel.Sevice.BASE_URL+'eventTemplates/'+ this.eventId).subscribe(res => {
       this.Service.suceesAlertDialog('Event has been successfully Freezed.' );
 
-      this.route.navigate(['Event/Template']);
+      this.route.navigate(['Event/Prototype']);
      });
   }
   getDetailEvent() {
  this.eventId  =  this.Service.getId;
  this.Service.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/eventTemplates/'+this.eventId).subscribe(res=>{
-   console.log(JSON.stringify(res))
-   this.eventDetail = res;
+    this.eventDetail = res;
    this.data.check = this.eventDetail.freeze
  });
   }
