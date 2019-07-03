@@ -179,13 +179,7 @@ getEventList() {
    this.service.getAttributeTemplate(this.page, this.size, this.sort).subscribe(res => {
      this.showpagi = true;
      this.pageInfo = res.page;
-     this.pageCount =  res.page.totalPages;
-     if (this.pageCount == this.page + 1) {
-      this.nextDisabled = true;
-    } else {
-      this.nextDisabled = false;
-
-    }
+    
 
      if (this.page   == 0) {
       this.preDisabled = true;
@@ -194,14 +188,23 @@ getEventList() {
 
     }
      this.displayList = res._embedded.attributeTemplates;
-     this.pageCountArray = [];
-     for (let i = 0 ; i < this.pageCount; i++) {
+    
+  });
+}
+getCountAttribute(){
+  this.service.getAttrbuteCount().subscribe(res=>{
+     
+      for (let i = 0 ; i <  res/this.size; i++) {
       this.pageCountArray.push(i + 1);
     }
-  });
+    if(this.pageCountArray.length == 0){
+      this.pageCountArray.push(1)
+    }
+  })
 }
 ngOnInit() {
   this.title = 'Add Properties';
+    this.getCountAttribute();
   this.getEventList();
     }
     detail(data) {

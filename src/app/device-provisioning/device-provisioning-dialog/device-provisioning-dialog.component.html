@@ -36,7 +36,7 @@
                         <textarea type="text" class="form-control" id="lastname" placeholder="Description"  [(ngModel)] ="data.description" rows="5"></textarea>
                     </div>
                   </div>
-                  <div class ="col-md-12"  style ="border:1px solid ;margin-top:10px">
+                  <div class ="col-md-12"  style ="border:1px solid ;margin-top:10px"  *ngIf ="title == 'false'">
                     <div    *ngFor = "let list of dataList ;let i = index ;"  style ="padding: 13px;"> 
                      <div class ="{{list.class1}}">
                        <div class="form-group">
@@ -58,33 +58,10 @@
                     
                    </div> 
                </div> 
-                  <!-- <div class ="col-md-12" style ="padding:0">
-                  <div class ="col-md-5">
-                      <div class="form-group">
-                          <label for="lastname" class="control-label">Metadata Key:</label>
-                          <input type="text" class="form-control" id="lastname" placeholder="Key" [(ngModel)]  = "data.metadata.model">
-                      </div></div>
-                      <div class ="col-md-7">
-                          <div class="form-group col-md-10">
-                              <label for="lastname" class="control-label">Metadata Value:</label>
-                              <input type="text" class="form-control" id="lastname" placeholder="Value"  [(ngModel)]  = "data.metadata.modelValue" >
-      
-                          </div>
-      
-                          <button class="btn col-md-2 theme_table_button" style ="        margin-top: 28px;
-                          width: 7%;
-                          padding: 16px !important;"><i class="fa fa-plus" style ="position: absolute;
-          top: 50%;
-          left: 50%;
-          height: 50%;
-          transform: translate(-50%, -50%);
-          width: 10px;
-          height: 10px;
-          display: block;"></i></button>
-                      </div></div> -->
+                  
               </div>
                         </tab>
-                        <tab heading="Select Things Template">
+                        <tab heading="Select Things Template" *ngIf ="title == 'false'">
                                 <div class="row" style="    width: 100%;padding-top:10px;
                                 margin: auto;">
                                   <div class="card"> 
@@ -106,7 +83,7 @@
                                                             <tr class ="selecttable"  *ngFor ="let list of eventTemplateList ;" (click)="selectedListdata(list)" style ="cursor: pointer">
                                                                 <td  ><div class="form-check">
                                                                   <label class ="checkboxnew">
-                                                                    <input type="checkbox" name="check"   [(ngModel)]="list.check"> <span class="label-text"></span>
+                                                                    <input type="radio" name="check" [value] ="true"   [(ngModel)]="list.check"> <span class="label-text"></span>
                                                                   </label>
                                                                 </div> </td>
                                                                 <td  > {{list.name}}</td>

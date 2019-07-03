@@ -172,27 +172,10 @@ getComandList() {
   this.service.getdeviceTemplate(this.page, this.size, this.sort).subscribe(res => {
     this.pageInfo = res.page;
 
-    this.pageCount =  res.page.totalPages;
-
-    if (this.pageCount == this.page + 1) {
-      this.nextDisabled = true;
-    } else {
-      this.nextDisabled = false;
-
-    }
-
-    if (this.page   == 0) {
-      this.preDisabled = true;
-    } else {
-      this.preDisabled = false;
-
-    }
+ 
+  
     this.displayList = res._embedded.thingTemplates;
-    this.pageCountArray = [];
-    for (let i = 0 ; i < this.pageCount; i++) {
-      this.pageCountArray.push(i + 1);
-    }
-  });
+   });
 }
 detail(data) {
    if (this.showpagi) {
@@ -229,9 +212,22 @@ this.bsModalRef.content.onCloseEdit.subscribe(result => {
 delete(data) {
   alert('ds');
 }
+
+getCountDeviceTemplate(){
+  this.service.getDeviceTemplateCount().subscribe(res=>{
+     
+      for (let i = 0 ; i <  res/this.size; i++) {
+      this.pageCountArray.push(i + 1);
+    }
+    if(this.pageCountArray.length == 0){
+      this.pageCountArray.push(1)
+    }
+  })
+}
 ngOnInit() {
   this.title = 'Add Things';
   this.getComandList();
+  this.getCountDeviceTemplate();
     }
 
     prePage() {

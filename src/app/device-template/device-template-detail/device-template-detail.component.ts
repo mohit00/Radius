@@ -27,8 +27,7 @@ export class DeviceTemplateDetailComponent implements OnInit {
     getDetailEvent() {
    this.eventId  =  this.Service.getId;
    this.Service.getDetail(this.eventId).subscribe(res => {
-     console.log(JSON.stringify(res));
-     this.eventDetail = res;
+      this.eventDetail = res;
      this.data.check = this.eventDetail.freeze;
    });
     }

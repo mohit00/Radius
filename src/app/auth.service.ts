@@ -51,11 +51,50 @@ export class AuthService {
     this.bsModalRef = this.modalService.show(SuccessDialogComponent, {initialState, class: 'modal-confirm  modal-sm' }    );
    
     }
-    
+    deviceLifestateChange(data,state): Observable < any > {
+      return this._http.post( this.BASE_URL + 'thing-service/thing/'+data+'/changeDeviceLifeCycleState/'+state, {})
+     .map(res => res as any)
+     .catch(this.handleError);
+     }
+     deviceOperationstateChange(data,state): Observable < any > {
+      return this._http.post( this.BASE_URL + 'thing-service/thing/'+data+'/changeDeviceOperationalState/'+state, {})
+     .map(res => res as any)
+     .catch(this.handleError);
+     }
        addAttributeTemplate(data): Observable < any > {
         return this._http.post( this.BASE_URL + 'attributeTemplates', data)
        .map(res => res as any)
        .catch(this.handleError);
+       }
+       getAttrbuteCount():Observable<any>{
+        
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/count')
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getEventCount():Observable<any>{
+        
+        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/count')
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getCommandCount():Observable<any>{
+        
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/count')
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getDeviceTemplateCount():Observable<any>{
+        
+        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/count')
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getDeviceCount():Observable<any>{
+        
+        return this._http.get( this.BASE_URL + 'thing-service/things/count')
+        .map(res => res as any)
+        .catch(this.handleError);
        }
        updateAttributeTemplate(data, id): Observable < any > {
         return this._http.put( id, data)

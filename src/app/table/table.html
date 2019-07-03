@@ -85,28 +85,22 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoot *ngIf ="pageCount && pageCountArray && showpagi">
+                                <tfoot *ngIf =" pageCountArray && showpagi">
                                     <tr  ><td [attr.colspan]="keyData.length"> 
                                       <div class=" " style="float: left;">
                                         <ul class="pagination">
                                           <li  >  
-                                            <button  (click)="prePage()" [disabled]="preDisabled">« Prev</button>
+                                            <button  (click)="prePage()" [disabled]="selectedPage == 1">« Prev</button>
                                           </li>
                                           <li   *ngFor = "let list of pageCountArray" [ngClass]="getClass(list)"> 
                                             <a  (click)="Page(list)" >{{list}}</a>
                                           </li>
                                           <li  >
-                                            <button    (click)="nextPage()"   [disabled]="nextDisabled" >Next »</button>
+                                            <button    (click)="nextPage()"   [disabled]="selectedPage == pageCountArray[pageCountArray.length - 1]" >Next »</button>
                                           </li>
                                         </ul>
                                       </div>
-                                      <div style ="float: right  ;  float: right;
-                                      font-size: 13px;
-                                      margin-right: 57px;margin-top:26px" *ngIf ="pageInfo">
-                                      <span style ="font-weight: 600;">Page Size :</span>{{pageInfo.size}} 
-                                      <span style ="font-weight: 600;">Total Record :{{pageInfo.totalElements}}</span> 
-
-                                      </div>
+                               
                                     </td>
                                   </tr></tfoot>
                           </table>

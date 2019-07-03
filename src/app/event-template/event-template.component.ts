@@ -71,6 +71,8 @@ preDisabled: any;
     advanceSearch = false;
 pageInfo: any;
 searchTrue:any = false;
+      sortindex:any = 0;
+    dataorder:any = '';
 open() {
   const initialState = {
     title: 'false',
@@ -193,29 +195,28 @@ getEventList() {
     // console.log(JSON.stringify(res))
     this.pageInfo = res.page;
 
-    this.pageCount =  res.page.totalPages;
+ 
+    
 
-    if (this.pageCount == this.page + 1) {
-      this.nextDisabled = true;
-    } else {
-      this.nextDisabled = false;
-
-    }
-
-    if (this.page   == 0) {
-      this.preDisabled = true;
-    } else {
-      this.preDisabled = false;
-
-    }
+     
     this.displayList = res._embedded.eventTemplates;
-    this.pageCountArray = [];
-    for (let i = 0 ; i < this.pageCount; i++) {
-      this.pageCountArray.push(i + 1);
-    }
+   
    });
 }
+getCountEvent(){
+  this.service.getEventCount().subscribe(res=>{
+     
+      for (let i = 0 ; i <  res/this.size; i++) {
+      this.pageCountArray.push(i + 1);
+    }
+    if(this.pageCountArray.length == 0){
+      this.pageCountArray.push(1)
+    }
+  })
+}
+
 ngOnInit() {
+  this.getCountEvent();
   this.title = 'Add Event';
   this.getEventList();
     }
@@ -288,8 +289,6 @@ ngOnInit() {
 
       }
     }
-      sortindex:any = 0;
-    dataorder:any = '';
      sortData(data) {
       if(data.sort){}else{return '';}
     for(var i =0 ;i <this.header.length ;i++){

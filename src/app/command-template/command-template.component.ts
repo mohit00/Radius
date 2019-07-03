@@ -158,31 +158,23 @@ getData(data, key , index) {
 }
 getComandList() {
   this.service.getComandTemplate(this.page, this.size, this.sort).subscribe(res => {
-    this.pageInfo = res.page;
-
-    this.pageCount =  res.page.totalPages;
-
-    if (this.pageCount == this.page + 1) {
-      this.nextDisabled = true;
-    } else {
-      this.nextDisabled = false;
-
-    }
-
-    if (this.page   == 0) {
-      this.preDisabled = true;
-    } else {
-      this.preDisabled = false;
-
-    }
-    this.displayList = res._embedded.commandTemplates;
-    this.pageCountArray = [];
-    for (let i = 0 ; i < this.pageCount; i++) {
-      this.pageCountArray.push(i + 1);
-    }
+    this.pageInfo = res.page; 
+    this.displayList = res._embedded.commandTemplates; 
   });
 }
+getCountCommand(){
+  this.service.getCommandCount().subscribe(res=>{
+     
+      for (let i = 0 ; i <  res/this.size; i++) {
+      this.pageCountArray.push(i + 1);
+    }
+    if(this.pageCountArray.length == 0){
+      this.pageCountArray.push(1)
+    }
+  })
+}
 ngOnInit() {
+  this.getCountCommand();
   this.title = 'Add Command';
   this.getComandList();
     }

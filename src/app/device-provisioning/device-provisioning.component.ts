@@ -19,8 +19,8 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-    this.sort = 'createdOn,Desc';
-;
+  this.sort = 'createdOn,Desc';
+
 
   this.header = [
      {
@@ -172,26 +172,25 @@ getEventList() {
     this.pageInfo = res.page;
 
     this.showpagi = true;
-    this.pageCount =  res.page.totalPages;
-    if (this.pageCount === this.page + 1) {
-      this.nextDisabled = true;
-    } else {
-      this.nextDisabled = false;
-    }
-    if (this.page   === 0) {
-      this.preDisabled = true;
-    } else {
-      this.preDisabled = false;
-    }
+
     this.displayList = res._embedded.things;
-    this.pageCountArray = [];
-    for (let i = 0 ; i < this.pageCount; i++) {
+
+  });
+}
+getCountDevice() {
+  this.service.getDeviceCount().subscribe(res => {
+
+      for (let i = 0 ; i <  res / this.size; i++) {
       this.pageCountArray.push(i + 1);
+    }
+      if (this.pageCountArray.length == 0) {
+      this.pageCountArray.push(1);
     }
   });
 }
 ngOnInit() {
   this.title = 'Add Things';
+  this.getCountDevice();
   this.getEventList();
     }
     detail(data) {

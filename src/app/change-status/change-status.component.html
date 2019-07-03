@@ -1,16 +1,22 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Add Device</h4>
+    <button type="button" class="close pull-right" aria-label="Close"  >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
 <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;" stroke="null">
   <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
  
   <g stroke="null">
    <title stroke="null">background</title>
-   <rect stroke="null" x="-1" y="-1" width="300" height="402" id="canvas_background" fill="#f9f9ff"/>
+   <rect stroke="null" x="-1" y="-1" width="400" height="402" id="canvas_background" fill="#f9f9ff"/>
    <g stroke="null" id="canvasGrid" display="none">
     <rect stroke="null" id="svg_2" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"/>
    </g>
   </g>
   <g stroke="null">
-   <title stroke="null">Layer 1</title>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" fill="#1c8ad8" stroke-width="1.5" cx="65.75" cy="215.43751" id="svg_1" rx="62" ry="57"/>
+    <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" fill="#1c8ad8" stroke-width="1.5" cx="65.75" cy="215.43751" id="svg_1" rx="62" ry="57"/>
    <text stroke="#000" fill="#000000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="80.5" y="93.4375" id="svg_3" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" transform="matrix(5.743672448719508,0,0,2.337131977081299,-399.05187830096463,-91.9069307371974) "/>
    <text stroke="null" fill="#ffffff" stroke-width="0" x="36" y="201.4375" id="svg_5" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">THINGS</text>
    <text stroke="#000" fill="#ffffff" stroke-width="0" x="48.5" y="105.4375" id="svg_6" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" transform="matrix(4.887850284576416,0,0,1,-214.56073758006096,0) "/>
@@ -28,14 +34,14 @@
    <path stroke="#000" fill="#1c8ad8" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" opacity="0.5" d="m71.5,130.4375" id="svg_29"/>
    <path stroke="#000" id="svg_4" d="m73.5,136.4375" opacity="0.5" stroke-width="1.5" fill="#fff"/>
    <path stroke="#000" id="svg_25" d="m70.5,133.4375" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_30" cy="74.9375" cx="193" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" transform="rotate(-3.262033462524414 255.49999999999872,162.93750000000009) " ry="40" rx="40" id="svg_31" cy="162.9375" cx="255.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_32" cy="256.9375" cx="268.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_33" cy="344.9375" cx="215" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_36" y="80.4375" x="173.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Testing</text>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_40" y="170.4375" x="232.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Register</text>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_41" y="262.4375" x="250.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Active</text>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_43" y="352.4375" x="191.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">In Active</text>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="option" cy="74.9375" cx="193" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"  (click) ="status('testing')" [ngClass]  ="getStatusselected('testing')" />
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" id="option1" transform="rotate(-3.262033462524414 255.49999999999872,162.93750000000009) " ry="40" rx="40"   cy="162.9375" cx="255.5"  (click) ="status('register')" fill-opacity="null" stroke-opacity="null"  [ngClass]  ="getStatusselected('register')"stroke-width="1.5" fill="#1c8ad8"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="option2" cy="256.9375" cx="268.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8" (click) ="status('Active')" [ngClass]  ="getStatusselected('Active')"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="option3" cy="344.9375" cx="215" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8" (click) ="status('inactive')" [ngClass]  ="getStatusselected('inactive')"/>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="optiontext" y="80.4375" x="173.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Testing</text>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="optiontext1" y="170.4375" x="232.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Register</text>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="optiontext2" y="262.4375" x="250.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Active</text>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="optiontext3" y="352.4375" x="191.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">In Active</text>
    <path stroke="#000" id="svg_44" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
    <path stroke="#000" id="svg_51" d="m123.5,156.4375" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
    <path stroke="#000" id="svg_52" d="m125.5,156.4375c21,21 18,37 17.5,36.5625" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
@@ -66,12 +72,11 @@
    </g>
   </g>
   <g stroke="null">
-   <title stroke="null">Layer 1</title>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" fill="#1c8ad8" stroke-width="1.5" cx="65.75" cy="215.43751" id="svg_1" rx="62" ry="57"/>
+    <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" fill="#1c8ad8" stroke-width="1.5" cx="65.75" cy="215.43751" id="svg_1" rx="62" ry="57"/>
    <text stroke="#000" fill="#000000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="80.5" y="93.4375" id="svg_3" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" transform="matrix(5.743672448719508,0,0,2.337131977081299,-399.05187830096463,-91.9069307371974) "/>
-   <text stroke="null" fill="#ffffff" stroke-width="0" x="36" y="201.4375" id="svg_5" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">THINGS</text>
+   <text stroke="null" fill="#ffffff" stroke-width="0" x="39" y="201.4375" id="svg_5" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">THINGS</text>
    <text stroke="#000" fill="#ffffff" stroke-width="0" x="48.5" y="105.4375" id="svg_6" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" transform="matrix(4.887850284576416,0,0,1,-214.56073758006096,0) "/>
-   <text stroke="#000" fill="#ffffff" stroke-width="0" x="13.5" y="220.4375" id="svg_7" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">OPERATIONAL</text>
+   <text stroke="#000" fill="#ffffff" stroke-width="0" x="21.5" y="220.4375" id="svg_7" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">OPERATIONAL</text>
    <text stroke="#000" fill="#ffffff" stroke-width="0" x="39.5" y="236.4375" id="svg_8" font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">STATE</text>
    <ellipse stroke="#000" fill="#1c8ad8" stroke-width="1.5" stroke-opacity="null" cx="110" cy="281.4375" id="svg_14" rx="7" ry="7"/>
    <ellipse stroke="#000" fill="#1c8ad8" stroke-width="1.5" cx="138" cy="247.9375" id="svg_15" rx="7" ry="7"/>
@@ -85,13 +90,13 @@
    <path stroke="#000" fill="#1c8ad8" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" opacity="0.5" d="m71.5,130.4375" id="svg_29"/>
    <path stroke="#000" id="svg_4" d="m73.5,136.4375" opacity="0.5" stroke-width="1.5" fill="#fff"/>
    <path stroke="#000" id="svg_25" d="m70.5,133.4375" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_30" cy="74.9375" cx="193" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" transform="rotate(-3.262033462524414 255.49999999999872,162.93750000000009) " ry="40" rx="40" id="svg_31" cy="162.9375" cx="255.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_32" cy="256.9375" cx="268.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
-   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40" id="svg_33" cy="344.9375" cx="215" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40"  cy="74.9375" cx="193" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" id="optionope" fill="#1c8ad8" (click) ="statusOpp('online')" [ngClass]  ="getStatusselectedOpp('online')"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" transform="rotate(-3.262033462524414 255.49999999999872,162.93750000000009) " ry="40" rx="40"  cy="162.9375" cx="255.5"  id="optionope1" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8" (click) ="statusOpp('offline')" [ngClass]  ="getStatusselectedOpp('offline')"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40"  cy="256.9375" cx="268.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8" id="optionope2" (click) ="statusOpp('suspend')" [ngClass]  ="getStatusselectedOpp('suspend')"/>
+   <ellipse stroke="#000" style="vector-effect: non-scaling-stroke;" ry="40" rx="40"   cy="344.9375" cx="215" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"id="optionope3" (click) ="statusOpp('resume')" [ngClass]  ="getStatusselectedOpp('resume')"/>
    <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_36" y="80.4375" x="173.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Online</text>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_40" y="170.4375" x="232.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Offline</text>
-   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_41" y="262.4375" x="250.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Suspend</text>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_40" y="170.4375" x="239.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Offline</text>
+   <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_41" y="262.4375" x="246.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Suspend</text>
    <text stroke="#000" style="vector-effect: non-scaling-stroke;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" id="svg_43" y="352.4375" x="191.5" stroke-opacity="null" stroke-width="0" fill="#ffffff">Resume</text>
    <path stroke="#000" id="svg_44" stroke-opacity="null" stroke-width="0" fill="#ffffff"/>
    <path stroke="#000" id="svg_51" d="m123.5,156.4375" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#1c8ad8"/>
@@ -110,3 +115,4 @@
    <line stroke-linecap="null" stroke-linejoin="null" id="svg_68" y2="326.4375" x2="165.5" y1="289.4375" x1="116.5" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
   </g>
  </svg>
+ </div>

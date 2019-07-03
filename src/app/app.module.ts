@@ -26,7 +26,8 @@ import { CommandDialogComponent } from './command-template/command-dialog/comman
 import { DeviceDialogComponent } from './device-template/device-dialog/device-dialog.component';
 import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.component';
 import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.component';
- 
+import { ChangeStatusComponent } from './change-status/change-status.component';
+
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
@@ -50,13 +51,13 @@ import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.co
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,
+    ArrtibuteSelectComponent,ChangeStatusComponent
   
   ],
   entryComponents: [
     DeviceDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
-    EventDialogComponent, CommandDialogComponent, SuccessDialogComponent
+    EventDialogComponent, CommandDialogComponent, SuccessDialogComponent,ChangeStatusComponent
   ],
   providers: [NewsletterService, AuthService, WebserModel,HttpClient, 
        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
