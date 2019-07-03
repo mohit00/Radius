@@ -35,6 +35,12 @@ export class DeviceProvisiongDetailComponent implements OnInit {
         this.getDetailEvent();
   });
      }
+     migrate(data){
+       
+     }
+     addField(data){
+
+     }
   ngOnInit() {
     this.getDetailEvent();
   }

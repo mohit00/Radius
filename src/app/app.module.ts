@@ -27,6 +27,7 @@ import { DeviceDialogComponent } from './device-template/device-dialog/device-di
 import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.component';
 import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.component';
 import { ChangeStatusComponent } from './change-status/change-status.component';
+import { MigrateDialogComponent } from './migrate-dialog/migrate-dialog.component';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -51,7 +52,7 @@ import { ChangeStatusComponent } from './change-status/change-status.component';
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,ChangeStatusComponent
+    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent
   
   ],
   entryComponents: [
