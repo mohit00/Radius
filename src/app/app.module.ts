@@ -28,6 +28,7 @@ import { SuccessDialogComponent } from './dialog/success-dialog/success-dialog.c
 import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.component';
 import { ChangeStatusComponent } from './change-status/change-status.component';
 import { MigrateDialogComponent } from './migrate-dialog/migrate-dialog.component';
+import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.component';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -52,13 +53,13 @@ import { MigrateDialogComponent } from './migrate-dialog/migrate-dialog.componen
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent
+    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent
   
   ],
   entryComponents: [
     DeviceDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
-    EventDialogComponent, CommandDialogComponent, SuccessDialogComponent,ChangeStatusComponent
+    EventDialogComponent, CommandDialogComponent, SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent
   ],
   providers: [NewsletterService, AuthService, WebserModel,HttpClient, 
        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

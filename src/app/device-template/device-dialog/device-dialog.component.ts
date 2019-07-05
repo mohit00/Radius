@@ -114,28 +114,32 @@ alldatacommand = [];
 
     if (this.data.templateType === 'Communicable') {
       if (this.eventselectedList.length > 0) {
-// tslint:disable-next-line: prefer-for-of
-        for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
-          this.data.eventTemplate.push(this.data, this.WebserModel.Sevice.BASE_URL + 'eventTemplate/' + this.eventselectedList[i].id );
+        this.data.eventTemplate =[];
+         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
+          this.data.eventTemplate.push( this.WebserModel.Sevice.BASE_URL + 'eventTemplate/' + this.eventselectedList[i].id );
          }
+      }else{
+        alert("No Event Selected.");
+        return false
       }
       if (this.attributeselectedList.length > 0) {
-// tslint:disable-next-line: prefer-for-of
-for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
-  this.data.attributeTemplate.push( this.data, this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
+        this.data.attributeTemplate =[];
+ for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
+  this.data.attributeTemplate.push(  this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
  }
+      }else{
+        alert("No Attribute Selected.");
+        return false
       }
       if (this.commandselectedList.length > 0) {
-// tslint:disable-next-line: prefer-for-of
-for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
-  this.data.commandTemplate.push( this.data, this.WebserModel.Sevice.BASE_URL + 'commandTemplate/' + this.commandselectedList[i].id );
+ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
+  this.data.commandTemplate.push( this.WebserModel.Sevice.BASE_URL + 'commandTemplate/' + this.commandselectedList[i].id );
  }
       }
     } else {
       if (this.attributeselectedList.length > 0) {
-        // tslint:disable-next-line: prefer-for-of
-        this.data.attributeTemplate[0] = [];
-        this.data.attributeTemplate[0] = ( this.data, this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
+         this.data.attributeTemplate[0] = [];
+        this.data.attributeTemplate[0] = (this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
 
               } else {
                 alert('Attribute Requied');
@@ -219,8 +223,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       for (let i = 0; i < 5; i++) {
         this.commandDetailList.push(this.alldatacommand[i]);
       }
-      alert(JSON.stringify(this.commandDetailList))
-      if (this.alldatacommand.length < 6 ) {
+       if (this.alldatacommand.length < 6 ) {
 
       } else {
 
@@ -241,8 +244,11 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     }
     this.eintialize();
     if (this.eventselectedList.length > 0) {
-         const indexselected =   this.alldataevent.findIndex( record => record.id === this.eventselectedList[0].id );
-         this.alldataevent[indexselected].check = true;
+      for(var i =0 ;i<this.eventselectedList.length ;i++){
+        const indexselected =   this.alldataevent.findIndex( record => record.id === this.eventselectedList[i].id );
+        this.alldataevent[indexselected].check = true;
+      
+      }
         }
 
   });
@@ -272,8 +278,11 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     }
     this.cintialize();
     if (this.commandselectedList.length > 0) {
-         const indexselected =   this.alldatacommand.findIndex( record => record.id === this.commandselectedList[0].id );
-         this.alldatacommand[indexselected].check = true;
+      for(var i =0 ;i< this.commandselectedList.length;i++){
+        const indexselected =   this.alldatacommand.findIndex( record => record.id === this.commandselectedList[i].id );
+        this.alldatacommand[indexselected].check = true;
+       
+      }
         }
 
   });
@@ -322,8 +331,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     this.commandselectedList = [];
     this.attributeselectedList = [];
     this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/thingTemplates/' + this.id).subscribe(res => {
-      console.log(JSON.stringify(res));
-      this.getattriList();
+       this.getattriList();
       this.getcommandList();
       this.geteventList();
       this.data = res;
