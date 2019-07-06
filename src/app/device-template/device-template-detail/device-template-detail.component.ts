@@ -18,11 +18,13 @@ export class DeviceTemplateDetailComponent implements OnInit {
        const dataJson = {
         freeze : this.data.check
       };
-       this.Service.freezeData(dataJson,this.eventId).subscribe(res => {
-        this.Service.suceesAlertDialog('Device Template has been successfully Freezed.' );
+      alert(JSON.stringify(this.eventId))
+      alert(JSON.stringify(dataJson))
+         this.Service.freezeData(dataJson,this.eventId).subscribe(res => {
+          this.Service.suceesAlertDialog('Device Template has been successfully Freezed.' );
 
-        this.route.navigate(['Things/Template']);
-       });
+         this.route.navigate(['Things/Template']);
+        });
     }
     getDetailEvent() {
    this.eventId  =  this.Service.getId;
