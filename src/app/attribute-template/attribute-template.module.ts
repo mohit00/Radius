@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AttributeTemplateComponent } from './attribute-template.component';
 import { AttributeTemplateRoutes } from './attribute-template.routing';
 import { AttributeTemplateDetailComponent } from './attribute-template-detail/attribute-template-detail.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AttributeTemplateRoutes),
-    FormsModule,
+    FormsModule,CollapseModule.forRoot()
 
    ],
   declarations: [  AttributeTemplateComponent, AttributeTemplateDetailComponent

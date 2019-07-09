@@ -10,6 +10,8 @@ import {WebserModel} from '../../Service.model'
 export class CommandTemplateDetailComponent implements OnInit {
   ComandId: any;
   data:any;
+  collabsableHeader:any = true;
+  collabsableDetail:any = true;
   ComandDetail: any;
     constructor(private  Service: AuthService,private route:Router,private WebserModel:WebserModel) {this.data = {}; }
     getDetailEvent() {

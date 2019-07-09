@@ -31,9 +31,11 @@
               </div>
             </div> 
           <div class ="clear"></div>
+          <div class ="col-md-12">
+
           <tabset type="pills" >
-            <tab heading="Attribute Template">
-              <div class ="col-md-12"    >
+            <tab heading="Attribute Template" style ="margin-left: 10px">
+              <div class ="col-md-12"  style ="    padding: 0px;"   >
                      <hr>
           <div class ="row" style="    width: 100%;"> 
               <div class ="col-md-6 tablebutton"> 
@@ -65,7 +67,7 @@
                                 <tr class ="selecttable"  *ngFor ="let list of attrDetailList ;" (click)="attributeselectedListdata(list)" style ="cursor: pointer">
                                     <td  ><div class="form-check">
                                       <label class ="checkboxnew">
-                                        <input type="radio" name="check"   [value]="true" [(ngModel)]="list.check"> <span class="label-text"></span>
+                                        <input type="checkbox" name="check"  [(ngModel)]="list.check"> <span class="label-text"></span>
                                       </label>
                                     </div> </td>
                                     <td  > {{list.name}}</td>
@@ -225,7 +227,7 @@
                 </tab>
 
           </tabset>
-          
+          </div>
         </div>
            
    <div class="modal-footer">

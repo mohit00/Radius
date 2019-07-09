@@ -10,6 +10,11 @@ export class AttributeTemplateDetailComponent implements OnInit {
   eventId: any;
   eventDetail: any;
   data: any;
+  isCollapsed = false;
+  collabsableHeader:any = true;
+  collabsableDetail:any = true;
+
+  
     constructor(private  Service: AuthService, private route: Router) {
       this.data = {};
     }

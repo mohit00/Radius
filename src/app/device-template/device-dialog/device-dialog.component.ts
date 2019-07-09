@@ -114,22 +114,23 @@ alldatacommand = [];
 
     if (this.data.templateType === 'Communicable') {
       if (this.eventselectedList.length > 0) {
-        this.data.eventTemplate =[];
-         for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
+        this.data.eventTemplate = [];
+        for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
           this.data.eventTemplate.push( this.WebserModel.Sevice.BASE_URL + 'eventTemplate/' + this.eventselectedList[i].id );
          }
-      }else{
-        alert("No Event Selected.");
-        return false
+      } else {
+        alert('No Event Selected.');
+        return false;
       }
       if (this.attributeselectedList.length > 0) {
-        this.data.attributeTemplate =[];
- for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
-  this.data.attributeTemplate.push(  this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
+        this.data.attributeTemplate = [];
+        
+        for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
+  this.data.attributeTemplate.push(  this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[i].id );
  }
-      }else{
-        alert("No Attribute Selected.");
-        return false
+      } else {
+        alert('No Attribute Selected.');
+        return false;
       }
       if (this.commandselectedList.length > 0) {
  for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
@@ -138,9 +139,11 @@ alldatacommand = [];
       }
     } else {
       if (this.attributeselectedList.length > 0) {
-         this.data.attributeTemplate[0] = [];
-        this.data.attributeTemplate[0] = (this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[0].id );
+        this.data.attributeTemplate = [];
 
+        for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
+          this.data.attributeTemplate.push(  this.WebserModel.Sevice.BASE_URL + 'attributeTemplates/' + this.attributeselectedList[i].id );
+         }
               } else {
                 alert('Attribute Requied');
                 return false;
@@ -223,7 +226,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
       for (let i = 0; i < 5; i++) {
         this.commandDetailList.push(this.alldatacommand[i]);
       }
-       if (this.alldatacommand.length < 6 ) {
+      if (this.alldatacommand.length < 6 ) {
 
       } else {
 
@@ -244,10 +247,10 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     }
     this.eintialize();
     if (this.eventselectedList.length > 0) {
-      for(var i =0 ;i<this.eventselectedList.length ;i++){
+      for (let i = 0 ; i < this.eventselectedList.length ; i++) {
         const indexselected =   this.alldataevent.findIndex( record => record.id === this.eventselectedList[i].id );
         this.alldataevent[indexselected].check = true;
-      
+
       }
         }
 
@@ -278,10 +281,10 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     }
     this.cintialize();
     if (this.commandselectedList.length > 0) {
-      for(var i =0 ;i< this.commandselectedList.length;i++){
+      for (let i = 0 ; i < this.commandselectedList.length; i++) {
         const indexselected =   this.alldatacommand.findIndex( record => record.id === this.commandselectedList[i].id );
         this.alldatacommand[indexselected].check = true;
-       
+
       }
         }
 
@@ -298,11 +301,8 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
   }
   }
   attributeselectedListdata(data: any) {
-    for (let i = 0 ; i < this.alldataattr.length; i++) {
-    if (this.alldataattr[i].id !== data.id) {
-      this.alldataattr[i].check =  false;
-      }
-     }
+// tslint:disable-next-line: prefer-for-of
+
     data.check = ! data.check;
     this.attributeselectedList = [];
     if (data.check) {
@@ -332,10 +332,10 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     this.attributeselectedList = [];
     this.AuthService.getDetail(this.WebserModel.Sevice.BASE_URL + 'thing-service/thingTemplates/' + this.id).subscribe(res => {
        this.getattriList();
-      this.getcommandList();
-      this.geteventList();
-      this.data = res;
-      if (res.eventTemplate) {
+       this.getcommandList();
+       this.geteventList();
+       this.data = res;
+       if (res.eventTemplate) {
 // tslint:disable-next-line: prefer-for-of
        for (let i = 0 ; i < res.eventTemplate.length; i++) {
         this.eventselectedList.push({
@@ -344,7 +344,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
        }
 
      }
-      if (res.commandTemplate) {
+       if (res.commandTemplate) {
       // tslint:disable-next-line: prefer-for-of
              for (let i = 0 ; i < res.commandTemplate.length; i++) {
               this.commandselectedList.push({
@@ -352,12 +352,15 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
                 });
              }
            }
-      if (res.attributeTemplate) {
-      this.attributeselectedList.push({
-                id: res.attributeTemplate[0].id
-                 });
+       if (res.attributeTemplate) {
+        for (let i = 0 ; i < res.attributeTemplate.length; i++) {
+          this.attributeselectedList.push({
+            id: res.attributeTemplate[i].id
+             });
+         }
+
            }
-      if (this.commandselectedList.length > 0 ) {
+       if (this.commandselectedList.length > 0 ) {
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
            const indexselected =   this.commandDetailList.findIndex(
@@ -369,7 +372,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
          }
 
         }
-      if (this.eventselectedList.length > 0 ) {
+       if (this.eventselectedList.length > 0 ) {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0 ; i < this.eventselectedList.length ; i ++) {
      const indexselected =   this.eventDetailList.findIndex(
@@ -380,11 +383,16 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
    }
   }
 
-      if (this.attributeselectedList.length > 0) {
-    const indexselected =   this.attrDetailList.findIndex(
-       record => record.id === this.attributeselectedList[0].id
-        );
-    this.attrDetailList[indexselected].check = true;
+       if (this.attributeselectedList.length > 0) {
+// tslint:disable-next-line: prefer-for-of
+        for (let i = 0 ; i < this.attributeselectedList.length ; i ++) {
+          const indexselectedatt =   this.attrDetailList.findIndex(
+             record => record.id === this.attributeselectedList[i].id );
+          if (indexselectedatt == -1) {} else {
+              this.attributeselectedList[indexselectedatt].check = true;
+             }
+        }
+
   }
 
     });

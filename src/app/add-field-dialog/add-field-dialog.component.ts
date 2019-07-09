@@ -10,66 +10,68 @@ import { Subject } from 'rxjs';
   styleUrls: ['./add-field-dialog.component.scss']
 })
 export class AddFieldDialogComponent implements OnInit {
+
+  constructor(private _bsModalRef: BsModalRef, private Service: AuthService) {
+    this.onClose = new Subject();
+
+   }
   dataList: any;
   id: any;
   data: any;
-  constructor(private _bsModalRef: BsModalRef, private Service: AuthService) { }
+  dataDetail: any;
+  public onClose: Subject<boolean>;
+  metadata: any;
+  selectedList:any = [];
   getDetailDeviceProvisioning() {
-    this.Service.getDetail(this.id).subscribe(res => {
-      this.data = res;
 
+      this.data = this.dataDetail;
       this.dataList = [];
-      if (this.data.metadata) {
-     let j = 0 ;
-     for (const i in this.data.metadata) {
-       if (j == 0) {
-         this.dataList.push({
-           class : 'col-md-6',
-           class1: 'col-md-6',
-           class5: 'col-md-2',
+      this.dataList.push({
+        class : 'col-md-6',
+        class1: 'col-md-6',
+        class5: 'col-md-2',
 
-           type: '1',
-           class2: 'col-md-6',
-           class3: 'col-md-10',
-           class4: 'plustbutton',
-           name: i,
-           value: this.data.metadata[i]
-         });
-       } else {
-         this.dataList.push({
-           type: '1',
-           class : 'col-md-6',
-           class1: 'col-md-6',
-           class2: 'col-md-6',
-           class3: 'col-md-8' ,
-           class4: 'plusbutonafter',
-           class5: 'col-md-2',
-           name: i,
-           value: this.data.metadata[i]
-         });
+        type: '1',
+        class2: 'col-md-6',
+        class3: 'col-md-10',
+        class4: 'plustbutton',
+       });
 
-       }
-
-       j++;
-     }
    }
-
-
-   });
-   }
-  ngOnInit() {
-    this.dataList = [{
+   add() {
+    this.dataList.push({
+      type: '1',
       class : 'col-md-6',
       class1: 'col-md-6',
-      class5: 'col-md-2',
-
-      type: '1',
       class2: 'col-md-6',
-      class3: 'col-md-10',
-      class4: 'plustbutton'
-       }
-  ];
+      class3: 'col-md-8' ,
+      class4: 'plusbutonafter',
+      class5: 'col-md-2',
+     } );
+   }
+  remove(index) {
+    this.dataList.splice(index, 1);
   }
-  updateDevicePro(){}
+  ngOnInit() {
+    this.getDetailDeviceProvisioning();
+  }
+  updateDevicePro() {
+    this.metadata = {};
+    if (this.dataList.length > 0 ) {
+  // tslint:disable-next-line: prefer-for-of
+    for (let i = 0 ; i < this.dataList.length ; i++) {
+      if (this.dataList[i].name) {
+        this.metadata[this.dataList[i].name] = this.dataList[i].value;
+       }
+    }
+  }
+    this.Service.addMetaData(this.data._links.self.href.split('/')[4], this.metadata).subscribe(res => {
+      this._bsModalRef.hide();
+      this.Service.suceesAlertDialog('Metadata Successfully added.');
+
+      this.onClose.next(true);
+
+   });
+}
 
 }

@@ -101,8 +101,13 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
-        freezeData(data: { freeze: any; }, id: string): Observable < any > {
+        freezeData(data: any, id: string): Observable < any > {
         return this._http.patch( id, data)
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
+       getData(data: any, id: string): Observable < any > {
+        return this._http.get( id, data)
        .map(res => res as any)
        .catch(this.handleError);
        }
@@ -228,6 +233,12 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
+      migrateThing( id1: any, id2: any,data: any): Observable < any > {
+
+        return this._http.post( this.BASE_URL + 'thing-service/thing/'+id1+'/migrateThingToNewThingTemplate/'+id2+'/retainMetaData='+data,{} )
+       .map(res => res as any)
+       .catch(this.handleError);
+       }
        updateThing( id: any,data: any): Observable < any > {
 
         return this._http.put( this.BASE_URL + 'thing-service/createThingFromTemplate/'+id,data )
@@ -290,6 +301,12 @@ export class AuthService {
        getSearchThingsdesc(data,des): Observable<any> {
         
         return this._http.get( this.BASE_URL + 'thing-service/things/search?description='+des+'*'  )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       addMetaData(id,data): Observable<any> {
+        
+        return this._http.post( this.BASE_URL + 'thing-service/thing/'+id+'/metadata' ,data )
         .map(res => res as any)
         .catch(this.handleError);
        }

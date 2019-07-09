@@ -8,23 +8,20 @@
   "></i> 
 </div>
 <div class="modal-body">
-  <form name ="formgr" #f="ngForm">
+  <form name ="formgr"  >
        <div class ="row">
         <div class ="col-md-6"> 
             <div class="form-group">
                 <label for="lastname" class="control-label"><span class ="red">*</span> Name</label>
-                <input type="text" class="form-control" id="lastname" placeholder="Name"   name ="name" [(ngModel)] ="data.name" #first="ngModel" required> 
-                <span class="errorSpan"  *ngIf ="!first.valid && f.submitted "> 
-               This Field Is Required
-           </span>       
+                <input type="text" class="form-control" id="lastname" placeholder="Name"   name ="name" [(ngModel)] ="data.name"  required> 
+                    
               </div> 
         </div>
         <div class ="col-md-6">
             <div class="form-group">
                 <label for="lastname" class="control-label"><span class ="red">*</span>Description</label>
-                <textarea type="text" class="form-control" id="lastname"  name ="Description" placeholder="Description" [(ngModel)] ="data.description" #second="ngModel" rows="1" required></textarea>
-                <span class="errorSpan"  *ngIf ="!second.valid && f.submitted " > 
-                This Field Is Required</span>
+                <textarea type="text" class="form-control" id="lastname"  name ="Description" placeholder="Description" [(ngModel)] ="data.description"  rows="1" required></textarea>
+               
               </div>
           </div> 
           <div class ="col-md-12" id ="text" style ="     
@@ -36,19 +33,19 @@
            /* bottom: 70%; */
            background-color: #e9ecef;
            z-index: 999;">   
-               <label for="text" class="control-label"><span class ="red">*</span>Attribute template field</label>
+               <label for="text" class="control-label"><span class ="red">*</span>Properties template field</label>
              </span>
  <div class ="col-md-12"  style ="border:1px solid ;margin-top:10px">
              <div    *ngFor = "let list of dataList ;let i = index ;"  style ="padding: 13px;"> 
               <div class ="{{list.class1}}">
-                <div class="form-group">
+                 <div class="form-group">
                     <label for="lastname" class="control-label" *ngIf ="i == 0 ">Name:</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="Key" name ="key" [(ngModel)] ="list.name" >
+                    <input type="text" class="form-control" id="lastname" placeholder="Key"   [name] ="i+'name'" [(ngModel)] ="list.name" >
                 </div></div> 
                 <div class ="{{list.class}}">
                   <div class="form-group">
                       <label for="lastname" class="control-label"  *ngIf ="i == 0 ">Type:</label>
-                       <select class="form-control" id="sel1" [(ngModel)] ="list.type" name ="type">
+                       <select class="form-control" id="sel1"   [(ngModel)] ="list.type" [name] ="i+'sdtype'">
                           <option value ="1" selected>Select Type</option> 
                         <option value ="STRING" >STRING</option>
                         <option value ="INTEGER">INTEGER</option>
@@ -60,7 +57,7 @@
                   <div class="form-group {{list.class3}}">
                     <div class="form-group">
                         <label for="sel1" *ngIf ="i == 0 ">Value:</label>
-                        <input type="text" class="form-control" id="lastname"  name ="Value" placeholder="Default value" [(ngModel)] ="list.defaultValue" > 
+                        <input type="text" class="form-control" id="valuw"    placeholder="Default value"  [name] ="i+'value'" [(ngModel)] ="list.defaultValue" > 
                       </div> 
                   </div> 
                   <button class="btn col-md-2 theme_table_button {{list.class4}}" (click) ="add()" ><i class="fa fa-plus plusIcon"  ></i></button>
@@ -82,7 +79,7 @@
       </div> 
  <div class="modal-footer">
   <button type="button" class="btn theme_table_button" (click) ="onCancel();" >Close</button>
-  <button type="button" class="btn theme_table_button"  (click) = "submitCreate(f);f.control.markAsTouched()" *ngIf ="title == 'false'">Save
+  <button type="button" class="btn theme_table_button"  (click) = "submitCreate();" *ngIf ="title == 'false'">Save
     <i class="fa fa-floppy-o" aria-hidden="true"></i>
   </button>
    <button type="button" class="btn theme_table_button"  (click) = "submitUpdate()" *ngIf ="title == 'true'">Update</button>

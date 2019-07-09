@@ -11,6 +11,8 @@ export class EventTemplateDetailComponent implements OnInit {
 eventId: any;
 eventDetail: any;
 data:any;
+collabsableDetail:any = true;
+collabsableHeader:any = true;
   constructor(private  Service: AuthService,private route:Router,private WebserModel:WebserModel) {
     this.data = {};
    }

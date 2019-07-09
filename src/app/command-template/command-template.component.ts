@@ -14,32 +14,33 @@ declare interface TableData {
   styleUrls: ['../table/table.scss']
 })
 export class CommandTemplateComponent implements OnInit {
+
 constructor(private modalService: BsModalService, private service: AuthService, private WebserModel: WebserModel) {
   this.pageCountArray = [];
   this.selectedPage = 1;
   this.page = 0;
   this.size = this.service.sizetable;
-    this.sort = 'createdOn,Desc';
-;
+  this.sort = 'createdOn,Desc';
+
   this.header = [  {
     name: '  NAME',
     width: 10,
-    sort:'0'
+    sort: '0'
   }, {
     name: '  DESCRIPTION',
     width: 20,
-    sort:'0'
+    sort: '0'
   }, {
     name: 'Is LOCK',
     width: 5
   }, {
     name: 'Created DATE',
     width: 12,
-    sort:1
-  },{
+    sort: 1
+  }, {
     name: 'Created By',
     width: 10,
-    sort:'0'
+    sort: '0'
   },
   {
     name: 'ACTION',
@@ -47,9 +48,9 @@ constructor(private modalService: BsModalService, private service: AuthService, 
   }
  ];
 
-  this.keyData = [  'name', 'description', 'freeze', 'createdOn','createdBy', 'action'];
+  this.keyData = [  'name', 'description', 'freeze', 'createdOn', 'createdBy', 'action'];
  }
-  public tableData1: TableData;
+   public tableData1: TableData;
   pipe = new DatePipe('en-US');
   bsModalRef: BsModalRef;
   pageCount: any;
@@ -70,6 +71,9 @@ actionData: any;
 pageInfo: any;
     showpagi = true;
     advanceSearch = false;
+    sortindex: any = 0;
+    dataorder: any = '';
+    searchTrue: any = false;
 open() {
   const initialState = {
     title: 'false',
@@ -124,13 +128,13 @@ getData(data, key , index) {
                 } else {
                   return data[key];
                 }
-              } else if (data[key].substring( 0 , 3 ) === 'ERN' 
-              || data[key].substring( 0 , 3 ) === 'MRN' 
-              || data[key].substring( 0 , 3 ) === 'SSC' 
-              || data[key].substring( 0 , 3 ) === 'Pro' 
-              || data[key].substring( 0 , 3 ) === 'Opp' 
-              || data[key].substring( 0 , 3 ) === 'Equ' 
-              || data[key].substring( 0 , 1 ) === 'C' 
+              } else if (data[key].substring( 0 , 3 ) === 'ERN'
+              || data[key].substring( 0 , 3 ) === 'MRN'
+              || data[key].substring( 0 , 3 ) === 'SSC'
+              || data[key].substring( 0 , 3 ) === 'Pro'
+              || data[key].substring( 0 , 3 ) === 'Opp'
+              || data[key].substring( 0 , 3 ) === 'Equ'
+              || data[key].substring( 0 , 1 ) === 'C'
               || data[key].substring( 0 , 1 ) === 'P') {
                  return data[key];
               } else {
@@ -158,20 +162,20 @@ getData(data, key , index) {
 }
 getComandList() {
   this.service.getComandTemplate(this.page, this.size, this.sort).subscribe(res => {
-    this.pageInfo = res.page; 
-    this.displayList = res._embedded.commandTemplates; 
+    this.pageInfo = res.page;
+    this.displayList = res._embedded.commandTemplates;
   });
 }
-getCountCommand(){
-  this.service.getCommandCount().subscribe(res=>{
-     
-      for (let i = 0 ; i <  res/this.size; i++) {
+getCountCommand() {
+  this.service.getCommandCount().subscribe(res => {
+
+      for (let i = 0 ; i <  res / this.size; i++) {
       this.pageCountArray.push(i + 1);
     }
-    if(this.pageCountArray.length == 0){
-      this.pageCountArray.push(1)
+      if (this.pageCountArray.length == 0) {
+      this.pageCountArray.push(1);
     }
-  })
+  });
 }
 ngOnInit() {
   this.getCountCommand();
@@ -182,7 +186,7 @@ ngOnInit() {
 // tslint:disable-next-line: max-line-length
 // WebserModel
 if (this.showpagi) {
-  let id =    this.service.getSplitId(data._links.self.href);
+  const id =    this.service.getSplitId(data._links.self.href);
 
   this.service.setId(id , 'Command/Prototype/detail');
  } else {
@@ -192,7 +196,7 @@ if (this.showpagi) {
      }
     edit(data: any) {
       if (this.showpagi) {
-        let id =    this.service.getSplitId(data._links.self.href);
+        const id =    this.service.getSplitId(data._links.self.href);
 
         this.service.setId(id  , 'Command/Prototype');
       } else {
@@ -233,7 +237,7 @@ if (this.showpagi) {
         this.getComandList();
 
     }
-    getClass(data :any) {
+    getClass(data: any) {
       if (this.selectedPage === data) {
         return 'active';
       } else {
@@ -281,46 +285,43 @@ if (this.showpagi) {
 
       }
     }
-    sortindex:any = 0;
-    dataorder:any = '';
-    searchTrue:any = false;
      sortData(data) {
-      if(data.sort){}else{return '';}
-    for(var i =0 ;i <this.header.length ;i++){
+      if (data.sort) {} else {return ''; }
+      for (let i = 0 ; i < this.header.length ; i++) {
 
-      if(this.header[i].sort){
-        if(data.name == this.header[i].name){
+      if (this.header[i].sort) {
+        if (data.name == this.header[i].name) {
           this.sortindex = i;
-        }else{
-          this.header[i].sort ='0';
+        } else {
+          this.header[i].sort = '0';
 
         }
 
       }
     }
-       if(data.sort == '0'){
+      if (data.sort == '0') {
         data.sort = 1;
-        let orderby = 'Desc'
+        const orderby = 'Desc';
         this.dataorder = orderby;
-      }else if(data.sort == 1){
+      } else if (data.sort == 1) {
         data.sort = 2;
 
-        let orderby = 'asc'
+        const orderby = 'asc';
         this.dataorder = orderby;
-       }else if(data.sort == 2){
-        let orderby = 'Desc'  
+       } else if (data.sort == 2) {
+        const orderby = 'Desc'
         data.sort = 1;
         this.dataorder = orderby;
 
 
       }
-       this.sort = this.keyData[this.sortindex]+ ','+this.dataorder
-      if(this.searchTrue){
-        
-      }else{
+      this.sort = this.keyData[this.sortindex] + ',' + this.dataorder;
+      if (this.searchTrue) {
+
+      } else {
         this.getComandList();
 
       }
-     
+
      }
 }

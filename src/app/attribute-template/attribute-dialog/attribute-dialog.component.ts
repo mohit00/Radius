@@ -13,7 +13,7 @@ export class AttributeDialogComponent implements OnInit {
   public onClose: Subject<boolean>;
   public onCloseEdit: Subject<boolean>;
   data: any;
-  dataList: any;
+  dataList: any = [];;
   title: any;
   id: any;
 // tslint:disable-next-line: variable-name
@@ -22,24 +22,24 @@ export class AttributeDialogComponent implements OnInit {
               private AuthService: AuthService ) {
   }
   add() {
-    this.dataList.push({
-      type: '1',
-      class : 'col-md-3',
-      class1: 'col-md-3',
-      class2: 'col-md-4',
-      class3: 'col-md-7' ,
-      class4: 'plusbutonafter',
-      class5: 'col-md-2',
-     } );
-  }
-  submitCreate(form) {
-    console.log(form)
- if(form.valid){
+    
+    
+ 
+  this.dataList.push({
+    type: '1',
+    class : 'col-md-3',
+    class1: 'col-md-3',
+    class2: 'col-md-4',
+    class3: 'col-md-7' ,
+    class4: 'plusbutonafter',
+    class5: 'col-md-2',
+   } );
+  console.log(JSON.stringify(this.dataList));
 
-}else{
-  form.submitted = true;
-  return false
-}
+    }
+  submitCreate(form) {
+   
+ 
 // tslint:disable-next-line: prefer-for-of
   if(this.dataList[0].name && this.dataList[0].type != 1){
 

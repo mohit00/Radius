@@ -25,25 +25,41 @@ export class MigrateDialogComponent implements OnInit {
   public onClose: Subject<boolean>;
   public onCloseEdit: Subject<boolean>;
 
-  
+  selectedList:any = [];
+
   pageCountArray: any;
   selectedPage: any;
   nextDisabled: any;
  preDisabled: any;
  pageCount: any;
  page: any;
- selectedList: any;
-eventTemplateList: any;
+ eventTemplateList: any =[];; 
 data: any;
 size: any;
 sort: any;
 title: any;
  id: any;
  dataList: any;
+thingsTemplateDetail(){
+  
+  this.Service.getData({},this.selectedList[0]._links.thingTemplate.href).subscribe(res=>{
+    this.dataDetail.templateDetailId = res._links.self.href.split('/')[4]
+     this.selectedList =[];
+    this.selectedList.push(res)
+    console.log(JSON.stringify(this.selectedList))
+    if (this.selectedList.length > 0) {
+      const indexselected =   this.eventTemplateList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
+     if(indexselected != -1){
+      this.eventTemplateList[indexselected].check = true;
 
+     }
+     }
+  })
+}
  geteventTemplate() {
    this.Service.getdeviceTemplate(this.page, this.size, this.sort).subscribe(res => {
      this.eventTemplateList = res._embedded.thingTemplates;
+   console.log ( JSON.stringify(this.eventTemplateList))
      this.pageCount =  res.page.totalPages;
 
      if (this.pageCount === this.page + 1) {
@@ -62,35 +78,18 @@ title: any;
      for (let i = 0 ; i < this.pageCount; i++) {
      this.pageCountArray.push(i + 1);
    }
-     if (this.selectedList.length > 0) {
-    const indexselected =   this.eventTemplateList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
-    this.eventTemplateList[indexselected].check = true;
-   }
+    this.thingsTemplateDetail();
+    
    });
  }
-  
+  status:any = false;
  createDevicePro() {
-  this.data.metadata = {};
-  if (this.dataList.length > 0 ) {
-// tslint:disable-next-line: prefer-for-of
-  for (let i = 0 ; i < this.dataList.length ; i++) {
-    if(this.dataList[i].name) {
-       this.data.metadata[this.dataList[i].name] = this.dataList[i].value;
-     }
-    
-
-  }
-}
-
-console.log(JSON.stringify(this.data));
- 
-
   if (this.selectedList.length > 0 ) {
-     this.Service.addThing( this.selectedList[0]._links.self.href
-        .substr(this.selectedList[0]._links.self.href.length - 2), this.data).subscribe(res => {
+     this.Service.migrateThing(  this.dataDetail.templateDetailId,
+      this.selectedList[0]._links.thingTemplate.href.split('/')[4],this.status ).subscribe(res => { 
        this.onClose.next(true);
        this._bsModalRef.hide();
-       this.Service.suceesAlertDialog('Device/Provisioning');
+       this.Service.suceesAlertDialog('Device Successfully migrated');
 
      });
 
@@ -98,48 +97,10 @@ console.log(JSON.stringify(this.data));
        alert('Please Select Things Template');
     }
  }
+ dataDetail:any;
 getDetailDeviceProvisioning() {
- this.Service.getDetail(this.id).subscribe(res => {
-   this.data = res;
-  
-this.dataList = [];
- if(this.data.metadata){
-  let j =0 ;
-  for(let i in this.data.metadata){
-    if(j == 0){
-      this.dataList.push({
-        class : 'col-md-6',
-        class1: 'col-md-6',
-        class5: 'col-md-2',
-    
-        type: '1',
-        class2: 'col-md-6',
-        class3: 'col-md-10',
-        class4: 'plustbutton',
-        name:i,
-        value:this.data.metadata[i]
-      })
-    }else{
-      this.dataList.push({
-        type: '1',
-        class : 'col-md-6',
-        class1: 'col-md-6',
-        class2: 'col-md-6',
-        class3: 'col-md-8' ,
-        class4: 'plusbutonafter',
-        class5: 'col-md-2',
-        name:i,
-        value:this.data.metadata[i]
-      })
-    
-    }
-    
-    j++;
-  }
-}
-
-
-});
+    this.data = this.dataDetail;
+  this.selectedList.push(this.dataDetail)
 }
 
   ngOnInit() {
@@ -149,22 +110,9 @@ this.dataList = [];
 
     
     this.geteventTemplate();
-    if (this.title === 'false') {
-      this.dataList = [{
-        class : 'col-md-6',
-        class1: 'col-md-6',
-        class5: 'col-md-2',
-
-        type: '1',
-        class2: 'col-md-6',
-        class3: 'col-md-10',
-        class4: 'plustbutton'
-         }
-    ];
-
-    } else {
+     
       this.getDetailDeviceProvisioning();
-    }
+ 
 
   }
   prePage() {

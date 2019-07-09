@@ -28,9 +28,11 @@
             padding-right: 0px;">
                 <div class ="header">
                     Things DETAILS
-                    
+                    <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsableHeader" (click) ="collabsableHeader = !collabsableHeader "style="font-size: 16px ;    float: right;"></i>
+                    <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsableHeader" (click) ="collabsableHeader = !collabsableHeader "style="font-size: 16px ;    float: right;"></i>
+
                 </div>
-                <div class ="col-md-12 bodyHeader">
+                <div class ="col-md-12 bodyHeader" *ngIf ="collabsableHeader">
                   
                 <div class ="col-md-6 border_top_right" style ="    padding-left: 0;">
                  
@@ -129,27 +131,98 @@
 
             </div>
           </div>
-
+          <div class ="col-md-6 "   style ="padding-right: 6px;" >
+                <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
+                padding-right: 0px;">
+                    <div class ="header">
+                        Things  Properties
+                        <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsablePro" (click) ="collabsablePro = !collabsablePro "style="font-size: 16px ;    float: right;"></i>
+                        <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsablePro" (click) ="collabsablePro = !collabsablePro "style="font-size: 16px ;    float: right;"></i>
+    
+                    </div>
+                    <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;" *ngIf ="collabsablePro">
+                      
+                       <div class ="col-md-12" *ngFor ="let list of thingsProperties">
+                          <div class ="col-md-4 detailheader"   >
+                              <div >{{list.name}}</div>
+                          </div>
+                          <div class ="col-md-8 detailKey ">
+                                <div>                    {{list.value}}
+                                    </div>
+                              </div>
+            
+                           
+                      </div>
+                       
+                     
+            
+                     
+                  </div>
+            
+                </div>
+              </div>
+              <div class ="col-md-6 " style ="padding-left: 6px;"  >
+                  <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
+                  padding-right: 0px;">
+                      <div class ="header">
+                          Things Identifier Properties
+                          <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsableIdPro" (click) ="collabsableIdPro = !collabsableIdPro "style="font-size: 16px ;    float: right;"></i>
+                          <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsableIdPro" (click) ="collabsableIdPro = !collabsableIdPro "style="font-size: 16px ;    float: right;"></i>
+  
+                      </div>
+                      <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;" *ngIf ="collabsableIdPro">
+                        
+                            <div class ="col-md-12" *ngFor ="let list of thingsPropertiesIdentifier">
+                                    <div class ="col-md-4 detailheader"   >
+                                        <div >{{list.name}}</div>
+                                    </div>
+                                      <div class ="col-md-8 detailKey ">
+                                          <div> {{list.value}}</div>
+                        
+                                        
+                                      </div>
+                                </div>
+                         
+                        
+              
+                       
+                    </div>
+              
+                  </div>
+                </div>
 <div class ="col-md-6 "   style ="padding-right: 6px;" >
     <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
     padding-right: 0px;">
         <div class ="header">
-            Standard Attribute Details
-            
+            Things  Status
+            <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsableStatus" (click) ="collabsableStatus = !collabsableStatus "style="font-size: 16px ;    float: right;"></i>
+            <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsableStatus" (click) ="collabsableStatus = !collabsableStatus "style="font-size: 16px ;    float: right;"></i>
+
         </div>
-        <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">
+        <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;" *ngIf ="collabsableStatus">
           
            <div class ="col-md-12">
               <div class ="col-md-4 detailheader"   >
-                  <div >Latitude</div>
+                  <div >Operational Status</div>
               </div>
-                <div class ="col-md-8 detailKey ">
-                    <div> 
-                    </div>
-                </div>
+              <div class ="col-md-8 detailKey ">
+                    <div>                    {{ComandDetail.state.operationalState}}
+                        </div>
+                  </div>
+
+               
           </div>
            
-          
+          <div class ="col-md-12">
+            <div class ="col-md-4 detailheader"   >
+                <div >Life Cycle Status</div>
+            </div>
+              <div class ="col-md-8 detailKey ">
+                  <div>  {{ComandDetail.state.lifecycleState}}</div>
+
+                
+              </div>
+        </div>
 
          
       </div>
@@ -160,12 +233,23 @@
       <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
       padding-right: 0px;">
           <div class ="header">
-              Custom Attribute Details
-              
+              Things Metadata
+              <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsablemetaStatus" (click) ="collabsablemetaStatus = !collabsablemetaStatus "style="font-size: 16px ;    float: right;"></i>
+              <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsablemetaStatus" (click) ="collabsablemetaStatus = !collabsablemetaStatus "style="font-size: 16px ;    float: right;"></i>
+  
           </div>
-          <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">
+          <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;" *ngIf ="collabsablemetaStatus">
             
+                <div class ="col-md-12" *ngFor ="let list of dataList">
+                        <div class ="col-md-4 detailheader"   >
+                            <div >{{list.name}}</div>
+                        </div>
+                          <div class ="col-md-8 detailKey ">
+                              <div> {{list.value}}</div>
             
+                            
+                          </div>
+                    </div>
              
             
   

@@ -11,19 +11,23 @@
                   <a  class=" " style="color:white;">  <div class="material-switch ">
                     <input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"  [(ngModel)]="data.check" [disabled]="data.check" (change)="changeFreeze()"/>
                     <label for="someSwitchOptionPrimary" class="label-primary"></label>
-                </div><br>is Freeze</a> 
+                </div><br>is Locked</a> 
               </div> 
             </div> 
           </div> 
         </div>
+        
         <div class ="col-md-12 "  >
+          
           <div class ="col-md-12 dashbox card" style ="margin-top: 23px;     padding-left: 0px;
           padding-right: 0px;">
               <div class ="header">
                 Attribute DETAILS
-                  
+                <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsableHeader" (click) ="collabsableHeader = !collabsableHeader "style="font-size: 16px ;    float: right;"></i>
+                <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf =" collabsableHeader" (click) ="collabsableHeader = !collabsableHeader "style="font-size: 16px ;    float: right;"></i>
+
               </div>
-              <div class ="col-md-12 bodyHeader">
+              <div class ="col-md-12 bodyHeader" *ngIf ="collabsableHeader">
                 
               <div class ="col-md-6 border_top_right" style ="    padding-left: 0;">
              
@@ -92,9 +96,11 @@
   padding-right: 0px;">
       <div class ="header">
              Attribute Field Details
-          
+             <i class="fa fa-caret-down ng-tns-c2-0 ng-star-inserted"   *ngIf ="!collabsableDetail" (click) ="collabsableDetail = !collabsableDetail "style="font-size: 16px ;    float: right;"></i>
+             <i class="fa fa-caret-up ng-tns-c2-0 ng-star-inserted" *ngIf ="collabsableDetail" (click) ="collabsableDetail = !collabsableDetail "style="font-size: 16px ;    float: right;"></i>
+
       </div>
-      <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;">
+      <div class ="col-md-12 bodyHeader border_top_right" style ="    padding-left: 0;" *ngIf ="collabsableDetail">
         
          <div class ="col-md-12">
             <div class ="col-md-4 detailheader"   >

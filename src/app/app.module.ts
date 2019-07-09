@@ -15,7 +15,8 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {  ModalModule , AlertModule, TabsModule  } from 'ngx-bootstrap';
+import {  ModalModule , AlertModule, TabsModule    } from 'ngx-bootstrap';
+
 import { DeviceProvisioningDialogComponent } from './device-provisioning/device-provisioning-dialog/device-provisioning-dialog.component';
 import { LoginComponent } from './login/login.component';
 import {AuthService} from './auth.service';
@@ -41,7 +42,7 @@ import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.com
     SidebarModule, TabsModule.forRoot(), 
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ModalModule.forRoot(), AlertModule.forRoot()
+    ModalModule.forRoot(), AlertModule.forRoot() 
   ],
    declarations: [
     AppComponent,
