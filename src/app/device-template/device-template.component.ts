@@ -224,8 +224,9 @@ getCountDeviceTemplate(){
     }
   })
 }
+
 ngOnInit() {
-  this.title = 'Add Things';
+  this.title = 'Add';
   this.getComandList();
   this.getCountDeviceTemplate();
     }

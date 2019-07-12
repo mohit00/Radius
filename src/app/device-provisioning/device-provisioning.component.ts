@@ -25,16 +25,20 @@ constructor(private modalService: BsModalService, private service: AuthService) 
   this.header = [
      {
     name: 'Things NAME',
-    width: 10
+    width: 10,
+    sort: '0'
   }, {
     name: 'Things DESCRIPTION',
-    width: 10
+    width: 10,
+    sort: '0'
   },  {
     name: 'Things Type',
-    width: 10
+    width: 10,
+    sort: '0'
   },   {
     name: 'DATE',
-    width: 10
+    width: 10,
+    sort: '1'
   },
   {
     name: 'ACTION',
@@ -67,6 +71,9 @@ preDisabled: any;
     showpagi = true;
     advanceSearch = false;
 pageInfo: any;
+    sortindex:any = 0;
+    dataorder:any = '';
+    searchTrue:any = false;
 open() {
     const initialState = {
       title: 'false',
@@ -269,4 +276,44 @@ ngOnInit() {
 
       }
     }
+
+    sortData(data) {
+      if (data.sort) {} else {return ''; }
+      for (let i = 0 ; i < this.header.length ; i++) {
+
+      if (this.header[i].sort) {
+        if (data.name == this.header[i].name) {
+          this.sortindex = i;
+        } else {
+          this.header[i].sort = '0';
+
+        }
+
+      }
+    }
+      if (data.sort == '0') {
+        data.sort = 1;
+        const orderby = 'Desc';
+        this.dataorder = orderby;
+      } else if (data.sort == 1) {
+        data.sort = 2;
+
+        const orderby = 'asc';
+        this.dataorder = orderby;
+       } else if (data.sort == 2) {
+        const orderby = 'Desc';  
+        data.sort = 1;
+        this.dataorder = orderby;
+
+
+      }
+      this.sort = this.keyData[this.sortindex] + ',' + this.dataorder;
+      if (this.searchTrue) {
+
+      } else {
+        this.getEventList();
+
+      }
+
+     }
 }

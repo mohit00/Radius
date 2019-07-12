@@ -43,6 +43,11 @@ export const AdminLayoutRoutes: Routes = [
 
 
       },{
+        path:'Account',
+        loadChildren: '../../Account/account/account.module#AccountModule'
+
+
+      },{
         path:'quickHelp',
         component:QuickHelpComponent
       }

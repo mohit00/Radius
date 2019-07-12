@@ -203,7 +203,7 @@ getCountAttribute(){
   })
 }
 ngOnInit() {
-  this.title = 'Add Properties';
+  this.title = 'Add';
     this.getCountAttribute();
   this.getEventList();
     }

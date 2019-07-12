@@ -217,7 +217,7 @@ getCountEvent(){
 
 ngOnInit() {
   this.getCountEvent();
-  this.title = 'Add Event';
+  this.title = 'Add';
   this.getEventList();
     }
     prePage() {

@@ -179,7 +179,7 @@ getCountCommand() {
 }
 ngOnInit() {
   this.getCountCommand();
-  this.title = 'Add Command';
+  this.title = 'Add';
   this.getComandList();
     }
     detail(data: any) {

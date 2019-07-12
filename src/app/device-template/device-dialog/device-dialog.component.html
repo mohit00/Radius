@@ -15,6 +15,8 @@
                   <input type="text" class="form-control" id="lastname" placeholder="Device Id" [(ngModel)] ="data.name">
               </div>
             <div class="form-group">
+                <label for="lastname" class="control-label">Template Type</label>
+
               <select class="form-control" id="sel1" [(ngModel)] ="data.templateType">
  
               <option value ="Communicable"  >Communicable</option>
@@ -22,12 +24,24 @@
              </select>
               
              </div> 
-             
+             <div class="form-group">
+              <label for="lastname" class="control-label">HardWare Type</label>
+              <input type="text" class="form-control" id="lastname" placeholder="Device Id" [(ngModel)] ="data.hardwareType">
+          </div>
+          
           </div>
           <div class ="col-md-6">
               <div class="form-group">
+                  <label for="lastname" class="control-label">Product Type</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="Device Id" [(ngModel)] ="data.productType">
+              </div>
+              <div class="form-group">
+                  <label for="lastname" class="control-label">Unit Type</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="Device Id" [(ngModel)] ="data.unitType">
+              </div>
+              <div class="form-group">
                   <label for="lastname" class="control-label">Description</label>
-                  <textarea type="text" class="form-control" id="lastname" placeholder="Description" [(ngModel)] ="data.description" rows="3"></textarea>
+                  <textarea type="text" class="form-control" id="lastname" placeholder="Description" [(ngModel)] ="data.description" rows="1"></textarea>
               </div>
             </div> 
           <div class ="clear"></div>

@@ -1,4 +1,4 @@
-import { Injectable,EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {
 
   Headers,
@@ -24,14 +24,14 @@ import {SuccessDialogComponent} from './dialog/success-dialog/success-dialog.com
 export class AuthService {
   loaderCheck = new EventEmitter<any>();
   bsModalRef: BsModalRef;
-  BASE_URL = this.WebserModel.Sevice.BASE_URL
+  BASE_URL = this.WebserModel.Sevice.BASE_URL;
   public loading = false;
   private missionAnnouncedSource = new Subject<string>();
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();
   CREATE_ATTRIBUTE_TEMPLATE = this.WebserModel.Sevice.CREATE_ATTRIBUTE_TEMPLATE;
   firstHeaders: any;
-  get sizetable (){
-    return 7;
+  get sizetable() {
+    return 10;
   }
 // tslint:disable-next-line: variable-name
   constructor(private _http: HttpClient, private router: Router, private modalService: BsModalService
@@ -41,23 +41,23 @@ export class AuthService {
       this.firstHeaders = new Headers();
       this.firstHeaders.append('Content-Type', 'application/json');
   }
-    getSplitId(data){
-    return data.split("/")[4];
+    getSplitId(data) {
+    return data.split('/')[4];
   }
   suceesAlertDialog(data ) {
     const initialState = {
-      title: data, 
+      title: data,
     };
     this.bsModalRef = this.modalService.show(SuccessDialogComponent, {initialState, class: 'modal-confirm  modal-sm' }    );
-   
+
     }
-    deviceLifestateChange(data,state): Observable < any > {
-      return this._http.post( this.BASE_URL + 'thing-service/thing/'+data+'/changeDeviceLifeCycleState/'+state, {})
+    deviceLifestateChange(data, state): Observable < any > {
+      return this._http.post( this.BASE_URL + 'thing-service/thing/' + data + '/changeDeviceLifeCycleState/' + state, {})
      .map(res => res as any)
      .catch(this.handleError);
      }
-     deviceOperationstateChange(data,state): Observable < any > {
-      return this._http.post( this.BASE_URL + 'thing-service/thing/'+data+'/changeDeviceOperationalState/'+state, {})
+     deviceOperationstateChange(data, state): Observable < any > {
+      return this._http.post( this.BASE_URL + 'thing-service/thing/' + data + '/changeDeviceOperationalState/' + state, {})
      .map(res => res as any)
      .catch(this.handleError);
      }
@@ -66,32 +66,32 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
-       getAttrbuteCount():Observable<any>{
-        
+       getAttrbuteCount(): Observable<any> {
+
         return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/count')
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getEventCount():Observable<any>{
-        
+       getEventCount(): Observable<any> {
+
         return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/count')
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getCommandCount():Observable<any>{
-        
+       getCommandCount(): Observable<any> {
+
         return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/count')
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getDeviceTemplateCount():Observable<any>{
-        
+       getDeviceTemplateCount(): Observable<any> {
+
         return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/count')
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getDeviceCount():Observable<any>{
-        
+       getDeviceCount(): Observable<any> {
+
         return this._http.get( this.BASE_URL + 'thing-service/things/count')
         .map(res => res as any)
         .catch(this.handleError);
@@ -143,13 +143,13 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
-       setId(data, state){
+       setId(data, state) {
          localStorage.setItem('Id', data);
          this.router.navigate([state]);
         }
-  get  getId(){
+  get  getId() {
           return localStorage.getItem('Id');
-          
+
          }
        getEventTemplate( page, size, sort): Observable < any > {
 
@@ -168,12 +168,12 @@ export class AuthService {
        .map(res => res as any)
        .catch(this.handleError);
        }
-       updateEventTemplate(data, id): Observable < any > { 
+       updateEventTemplate(data, id): Observable < any > {
         return this._http.put( id, data)
        .map(res => res as any)
        .catch(this.handleError);
        }
-       updateCommandTemplate(data: any, id: string): Observable < any > { 
+       updateCommandTemplate(data: any, id: string): Observable < any > {
         return this._http.put( id, data)
        .map(res => res as any)
        .catch(this.handleError);
@@ -221,92 +221,92 @@ export class AuthService {
        .catch(this.handleError);
        }
        getthingList( page: string, size: string, sort: string ): Observable < any > {
-      
+
         return this._http.get( this.BASE_URL + 'things?page=' + page + '&size=' + size + '&sort=' + sort )
        .map(res => res as any)
        .catch(this.handleError);
        }
-       
-       addThing( id: any,data: any): Observable < any > {
 
-        return this._http.post( this.BASE_URL + 'thing-service/createThingFromTemplate/'+id,data )
+       addThing( id: any, data: any): Observable < any > {
+
+        return this._http.post( this.BASE_URL + 'thing-service/createThingFromTemplate/' + id, data )
        .map(res => res as any)
        .catch(this.handleError);
        }
-      migrateThing( id1: any, id2: any,data: any): Observable < any > {
+      migrateThing( id1: any, id2: any, data: any): Observable < any > {
 
-        return this._http.post( this.BASE_URL + 'thing-service/thing/'+id1+'/migrateThingToNewThingTemplate/'+id2+'/retainMetaData='+data,{} )
+        return this._http.post( this.BASE_URL + 'thing-service/thing/' + id1 + '/migrateThingToNewThingTemplate/' + id2 + '/retainMetaData=' + data, {} )
        .map(res => res as any)
        .catch(this.handleError);
        }
-       updateThing( id: any,data: any): Observable < any > {
+       updateThing( id: any, data: any): Observable < any > {
 
-        return this._http.put( this.BASE_URL + 'thing-service/createThingFromTemplate/'+id,data )
+        return this._http.put( this.BASE_URL + 'thing-service/createThingFromTemplate/' + id, data )
        .map(res => res as any)
        .catch(this.handleError);
        }
-       getSearchAttribute(data,des): Observable<any> {
-       
-        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?name='+data+'*' )
+       getSearchAttribute(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?name=' + data + '*' )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchAttributedescript(data,des){
-        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?description='+des+'*' )
+       getSearchAttributedescript(data, des) {
+        return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?description=' + des + '*' )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchEvent(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?name='+data+'*'  )
+       getSearchEvent(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?name=' + data + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchEventdesc(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?description='+des+'*'  )
+       getSearchEventdesc(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/eventTemplates/search?description=' + des + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchCommand(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?name='+data+'*'  )
+       getSearchCommand(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?name=' + data + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchCommanddesc(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?description='+des+'*'  )
+       getSearchCommanddesc(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/commandTemplates/search?description=' + des + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchThingsTemplate(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?name='+data+'*'  )
+       getSearchThingsTemplate(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?name=' + data + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchThingsTemplatedesc(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?description='+des+'*'  )
+       getSearchThingsTemplatedesc(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/thingTemplates/search?description=' + des + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchThings(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/things/search?name='+data+'*'  )
+       getSearchThings(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/things/search?name=' + data + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       getSearchThingsdesc(data,des): Observable<any> {
-        
-        return this._http.get( this.BASE_URL + 'thing-service/things/search?description='+des+'*'  )
+       getSearchThingsdesc(data, des): Observable<any> {
+
+        return this._http.get( this.BASE_URL + 'thing-service/things/search?description=' + des + '*'  )
         .map(res => res as any)
         .catch(this.handleError);
        }
-       addMetaData(id,data): Observable<any> {
-        
-        return this._http.post( this.BASE_URL + 'thing-service/thing/'+id+'/metadata' ,data )
+       addMetaData(id, data): Observable<any> {
+
+        return this._http.post( this.BASE_URL + 'thing-service/thing/' + id + '/metadata' , data )
         .map(res => res as any)
         .catch(this.handleError);
        }
