@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import {  ModalModule , AlertModule, TabsModule    } from 'ngx-bootstrap';
+import {  ModalModule , AlertModule, TabsModule ,BsDatepickerModule    } from 'ngx-bootstrap';
 
 import { DeviceProvisioningDialogComponent } from './device-provisioning/device-provisioning-dialog/device-provisioning-dialog.component';
 import { LoginComponent } from './login/login.component';
@@ -30,6 +30,8 @@ import { ArrtibuteSelectComponent } from './arrtibute-select/arrtibute-select.co
 import { ChangeStatusComponent } from './change-status/change-status.component';
 import { MigrateDialogComponent } from './migrate-dialog/migrate-dialog.component';
 import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.component';
+import { AccountDialogComponent } from './Account/account/account-dialog/account-dialog.component'
+import {AccountService} from './Account/account.service';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -42,10 +44,10 @@ import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.com
     SidebarModule, TabsModule.forRoot(), 
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ModalModule.forRoot(), AlertModule.forRoot() 
+    ModalModule.forRoot(), AlertModule.forRoot() , BsDatepickerModule.forRoot()
   ],
    declarations: [
-    AppComponent,
+    AppComponent,AccountDialogComponent,
     AdminLayoutComponent,
     DeviceProvisioningDialogComponent,
     LoginComponent,
@@ -58,11 +60,12 @@ import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.com
   
   ],
   entryComponents: [
-    DeviceDialogComponent,
+    DeviceDialogComponent,AccountDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
-    EventDialogComponent, CommandDialogComponent, SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent
+    EventDialogComponent, CommandDialogComponent, 
+    SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent
   ],
-  providers: [NewsletterService, AuthService, WebserModel,HttpClient, 
+  providers: [NewsletterService, AuthService, WebserModel,HttpClient, AccountService,
        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
