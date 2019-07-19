@@ -5,12 +5,12 @@ import { AccountDetailComponent } from './account-detail/account-detail.componen
 
 const routes: Routes = [
   {
-    path:'',
-    component:AccountComponent
+    path: '',
+    component: AccountComponent
   },
   {
-    path:'Detail',
-    component:AccountDetailComponent
+    path: 'Detail',
+    component: AccountDetailComponent
   }
 ];
 

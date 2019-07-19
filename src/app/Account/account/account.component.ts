@@ -15,7 +15,7 @@ declare interface TableData {
 })
 
 export class AccountComponent implements OnInit {
-   
+
     constructor(private modalService: BsModalService, private service: AccountService ) {
       this.pageCountArray = [];
       this.selectedPage = 1;
@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
       this.keyData = [  'name', 'description',   'createdOn', 'createdBy', 'action'];
      }
  
-   
+
       public tableData1: TableData;
       pipe = new DatePipe('en-US');
       bsModalRef: BsModalRef;
@@ -218,8 +218,8 @@ export class AccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        
-       
+
+
       this.getCountEvent();
       this.title = 'Add';
       this.getAccountList();

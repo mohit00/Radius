@@ -67,27 +67,27 @@ export class AccountDialogComponent implements OnInit {
   }
   next() {
     this.stepper.next();
-  } 
+  }
   onSubmit() {
     return false;
-  } 
-  submitData() { 
+  }
+  submitData() {
     this.data.metadata = {};
     if (this.dataList.length > 0 ) {
   // tslint:disable-next-line: prefer-for-of
     for (let i = 0 ; i < this.dataList.length ; i++) {
       if (this.dataList[i].name) {
          this.data.metadata[this.dataList[i].name] = this.dataList[i].value;
-       } 
+       }
     }
     this.data.createdBy = 'admin';
     this.data.tenantId = 'Radius-PF';
-    this.data.status = 'ACTIVE'; 
+    this.data.status = 'ACTIVE';
   }
     this.data.userContacts = this.contactUser;
     console.log(JSON.stringify(this.data));
     this.Service.addAccount(this.data).subscribe(res => {
      this.Service.suceesAlertDialog('Account Successfully Created');
-    }); 
+    });
   }
 }
