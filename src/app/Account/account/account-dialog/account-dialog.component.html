@@ -73,14 +73,17 @@
                        <select class="form-control" id="sel1" name ="type" [(ngModel)]="data.type">
                           <option value ="1" selected>Select Type</option> 
                         <option value ="OWNER" >Owner</option>
-                        
+                        <option value ="SITE" >SITE</option>
+                        <option value ="LOCATION" >LOCATION</option>
+                        <option value ="FLAT" >FLAT</option>
+
                        </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf ="data.type != 'OWNER' && data.type != '1' ">
                       <label for="lastname" class="control-label"  >Parent Account:</label>
                        <select class="form-control" id="sel1"  name ="parent"  [(ngModel)]="data.parentAccount" >
-                          <option value ="1" selected>Parent Account</option> 
-                         <option value ="BOOL">Account Id</option>
+                          <option value ="1" selected>Select Parent Account</option> 
+                         <option [value] ="list._links.self.href" *ngFor ="let list of ListSelect">{{list.name}}</option>
                        </select>
                     </div>
                    </div>
@@ -230,7 +233,7 @@
                    <div class ="{{list.class1}}">
                      <div class="form-group">
                          <label for="lastname" class="control-label" *ngIf ="i == 0 ">Metadata Key:</label>
-                         <input type="text" class="form-control" id="lastname" placeholder="Key" name ="meta" [(ngModel)] ="list.name" >
+                         <input type="text" class="form-control" id="lastname" placeholder="Key" name ="meta"  [name] ="i+'mname'" [(ngModel)] ="list.name" >
                      </div></div> 
                     
                         
@@ -238,7 +241,7 @@
                        <div class="form-group {{list.class3}}">
                          <div class="form-group">
                              <label for="sel1" *ngIf ="i == 0 ">Metadata Value:</label>
-                             <input type="text" class="form-control" id="lastname" placeholder="Default value"  name ="value"  [(ngModel)] ="list.value" > 
+                             <input type="text" class="form-control" id="lastname" placeholder="Default value"   [name] ="i+'value'"  [(ngModel)] ="list.mvalue" > 
                            </div> 
                        </div> 
                        <button class="btn col-md-2 theme_table_button {{list.class4}}" (click) ="add()" ><i class="fa fa-plus plusIcon"  ></i></button>
@@ -259,26 +262,26 @@
                             <div class ="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Name</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.name" name ="user" placeholder="Name" />
+                                    <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.name"  [name] ="i+'uname'" placeholder="Name" />
                                   </div>
                           </div>  
                           <div class ="col-md-6">
                               <div class="form-group">
                                   <label for="exampleInputPassword1">Email</label> 
-                                  <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.email" name ="email" placeholder="email" />
+                                  <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.email" [name] ="i+'uemail'" placeholder="email" />
                                 </div>
                         </div>  
                       
                       <div class ="col-md-6">
                           <div class="form-group">
                               <label for="exampleInputPassword1">Phone Number</label> 
-                              <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.phoneNumber" name ="phoneNumber" placeholder="Phone Number" />
+                              <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.phoneNumber"  [name] ="i+'uphoneNumber'"  placeholder="Phone Number" />
                             </div>
                     </div>  
                     <div class ="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">What's Up Number</label> 
-                            <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.whatsUpNumber" name ="whatsUpNumber" placeholder="Phone Number" />
+                            <input type="text" class="form-control" id="exampleInputPassword1"  [(ngModel)]="list.whatsUpNumber" [name] ="i+'uwhatsUpNumber'"  placeholder="Phone Number" />
                           </div>
                   </div>  
                         </div>

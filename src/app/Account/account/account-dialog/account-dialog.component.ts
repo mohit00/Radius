@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 
 import Stepper from 'bs-stepper';
 import {AccountService} from '../../account.service';
+import { BsModalRef } from 'ngx-bootstrap';
 @Component({
   selector: 'app-account-dialog',
   templateUrl: './account-dialog.component.html',
@@ -11,11 +12,16 @@ import {AccountService} from '../../account.service';
 export class AccountDialogComponent implements OnInit {
   private stepper: Stepper;
   public onClose: Subject<boolean>;
-  data: any = {accountContact: {}, userInfo: {}};
+  data: any = {accountContact: {}, userInfo: {},
+  type: '1', parentAccount: '1'};
   contactUser: any = [];
-  constructor(private Service: AccountService) { }
+  constructor(private Service: AccountService, private _bsModalRef: BsModalRef) { }
   dataList: any;
   title: any;
+  page: any;
+  size: any;
+  sort: any;
+  ListSelect: any;
   add() {
     this.dataList.push({
       type: '1',
@@ -27,6 +33,12 @@ export class AccountDialogComponent implements OnInit {
       class5: 'col-md-2',
      } );
    }
+   getAccountList() {
+    this.Service.AccountDataGet(this.page, this.size, this.sort).subscribe(res => {
+         this.ListSelect = res._embedded.accounts;
+         console.log(JSON.stringify(this.ListSelect));
+     });
+  }
   remove(index) {
     this.dataList.splice(index, 1);
   }
@@ -40,6 +52,7 @@ export class AccountDialogComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.getAccountList();
     if (this.title === 'false') {
       this.contactUser = [{
         name: 'User'
@@ -80,6 +93,7 @@ export class AccountDialogComponent implements OnInit {
          this.data.metadata[this.dataList[i].name] = this.dataList[i].value;
        }
     }
+    // this.data.parentAccount
     this.data.createdBy = 'admin';
     this.data.tenantId = 'Radius-PF';
     this.data.status = 'ACTIVE';
@@ -87,7 +101,9 @@ export class AccountDialogComponent implements OnInit {
     this.data.userContacts = this.contactUser;
     console.log(JSON.stringify(this.data));
     this.Service.addAccount(this.data).subscribe(res => {
-     this.Service.suceesAlertDialog('Account Successfully Created');
+      this._bsModalRef.hide();
+      this.onClose.next(true);
+      this.Service.suceesAlertDialog('Account Successfully Created');
     });
   }
 }

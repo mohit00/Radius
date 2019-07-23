@@ -117,7 +117,7 @@ export class AuthService {
        .catch(this.handleError);
        }
        getAttributeTemplatefreeze( page, size, sort): Observable < any > {
-         return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
+          return this._http.get( this.BASE_URL + 'thing-service/attributeTemplates/search?isFreeze=true&page=' + page + '&size=' + size +  '&sort=' + sort )
       .map(res => res as any)
       .catch(this.handleError);
       }

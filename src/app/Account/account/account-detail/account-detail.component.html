@@ -10,7 +10,7 @@
                 <div class="col-md-3">
  
                 </div>
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <a  class=" " style="color:white;"  (click)="migrate(ComandDetail)"> <i class="fa fa-cloud-upload material-icons" aria-hidden="true"   ></i><br>Migrate</a>
 
                 </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-3">
                     <a   class=" " style="color:white;"  (click)="addField(ComandDetail)"> <i class="fa fa-plus material-icons" aria-hidden="true"  ></i><br>Add Field</a> 
-                </div> 
+                </div>  -->
               </div> 
             </div> 
           </div>
@@ -38,7 +38,7 @@
                  
                   <div class ="col-md-12">
                       <div class ="col-md-4 detailheader"   >
-                          <div >Account Name</div>
+                          <div >  Name</div>
                       </div>
                         <div class ="col-md-8 detailKey ">
                             <div>{{ComandDetail.name}}</div>
@@ -55,7 +55,7 @@
                 
                   <div class ="col-md-12">
                     <div class ="col-md-4 detailheader"   >
-                        <div >Account Type</div>
+                        <div >  Type</div>
                     </div>
                       <div class ="col-md-8 detailKey ">
                           <div>{{ComandDetail.type}}</div>
@@ -65,7 +65,7 @@
 
                 <div class ="col-md-12">
                   <div class ="col-md-4 detailheader"   >
-                      <div >Account status</div>
+                      <div >  status</div>
                   </div>
                     <div class ="col-md-8 detailKey ">
                         <div>{{ComandDetail.status}}</div>
@@ -73,7 +73,7 @@
               </div>
               <div class ="col-md-12">
                 <div class ="col-md-4 detailheader"   >
-                    <div >Account From</div>
+                    <div >  From</div>
                 </div>
                   <div class ="col-md-8 detailKey ">
                       <div>{{ComandDetail.validityFrom  | date}}</div>
@@ -81,7 +81,7 @@
             </div>
             <div class ="col-md-12">
               <div class ="col-md-4 detailheader"   >
-                  <div >Account To</div>
+                  <div >  To</div>
               </div>
                 <div class ="col-md-8 detailKey ">
                     <div>{{ComandDetail.validityTo  | date}}</div>
@@ -89,10 +89,10 @@
           </div>
           <div class ="col-md-12" *ngIf =" ComandDetail.type != 'OWNER'">
             <div class ="col-md-4 detailheader"   >
-                <div >Account Parent</div>
+                <div >  Parent</div>
             </div>
               <div class ="col-md-8 detailKey ">
-                  <div>{{ComandDetail.parentAccount}}</div>
+                  <div>{{ComandDetail.parentAccount.name}}</div>
               </div>
         </div>
         <div class ="col-md-12" >
@@ -216,11 +216,8 @@
                         <div>{{list.whatsUpNumber}}</div>
                     </div>
               </div>
-                </div>
-            
-                     
+                </div>    
                   </div>
-            
                 </div>
               </div>
               <div class ="col-md-6 " style ="padding-left: 6px;"  >

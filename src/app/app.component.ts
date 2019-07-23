@@ -4,7 +4,6 @@ import {NewsletterService} from './newsletterService';
 import { environment } from './../environments/environment';
 import {AuthService } from '../app/auth.service';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,21 +13,19 @@ export class AppComponent {
   title = 'Radius';
 loaderShow: any;
   readonly VAPID_PUBLIC_KEY = 'BEGbsELIrNOEWo833QxzGALIVU8uDwpaVWMDbK5UFD4qtz0lTGzmmFm0A3GArS_qAbb3jU_TNL7ujr3i2anYdeA';
-
   constructor(
-
     private swPush: SwPush,
     private SwUpdate1: SwUpdate ,
     private newsletterService: NewsletterService ,
+    // tslint:disable-next-line: no-shadowed-variable
     private Service: AuthService, private Router: Router ) {
        this.loaderShow = false;
        SwUpdate1.available.subscribe(evt => {
         // an update is available, add some logic here.
         alert('Update Available');
        });
-
        this.Service.loaderCheck.subscribe(res => {
-           if (res == 'show') {
+           if (res === 'show') {
             this.loaderShow = true;
            } else {
             this.loaderShow = false;
@@ -48,13 +45,9 @@ loaderShow: any;
 
             } else {
              }
-
-
           }
-
           if (event instanceof NavigationError) {
             this.loaderShow = false;
-
           }
       });
        console.log(environment.production); // Logs false for default environment
@@ -62,7 +55,6 @@ loaderShow: any;
       }
 
   subscribeToNotifications() {
-
       this.swPush.requestSubscription({
            serverPublicKey: this.VAPID_PUBLIC_KEY
        })

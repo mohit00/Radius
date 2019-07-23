@@ -198,7 +198,7 @@ Page(data) {
     this.pagenew =   this.page / 5;
 
 
-    this.AuthService.getAttributeTemplatefreeze(this.pagenew, 20, this.sort).subscribe(res => {
+    this.AuthService.getAttributeTemplatefreeze(this.pagenew, 100, this.sort).subscribe(res => {
 // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < res.length; i++) {
       this.alldata.push(res[i]);

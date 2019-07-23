@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {WebserModel} from '../../../Service.model';
 import {AccountService} from '../../account.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { json } from 'body-parser';
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
@@ -29,6 +30,7 @@ export class AccountDetailComponent implements OnInit {
     this.ComandId  =  this.Service.getId;
     this.Service.getDetail(this.WebserModel.Sevice.BASENEWURL + 'account-service/account/' + this.ComandId).subscribe(res => {
        this.ComandDetail = res;
+       console.log(JSON.stringify(res))
 
 // tslint:disable-next-line: forin
        for (const i in this.ComandDetail.metadata) {
@@ -95,6 +97,7 @@ export class AccountDetailComponent implements OnInit {
   // });
      }
   ngOnInit() {
+ 
     this.getDetailEvent();
   }
 

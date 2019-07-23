@@ -240,7 +240,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
   }
   geteventList() {
     this.epagenew =   this.epage / 5;
-    this.AuthService.getEventemplatefreeze(this.epagenew, 20, this.esort).subscribe(res => {
+    this.AuthService.getEventemplatefreeze(this.epagenew, 100, this.esort).subscribe(res => {
  // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < res.length; i++) {
       this.alldataevent.push(res[i]);
@@ -259,7 +259,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 
   getattriList() {
     this.apagenew =   this.apage / 5;
-    this.AuthService.getAttributeTemplatefreeze(this.apagenew, 20, this.asort).subscribe(res => {
+    this.AuthService.getAttributeTemplatefreeze(this.apagenew, 100, this.asort).subscribe(res => {
  // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < res.length; i++) {
       this.alldataattr.push(res[i]);
@@ -274,7 +274,7 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
 }
   getcommandList() {
     this.cpagenew =   this.cpage / 5;
-    this.AuthService.getCommandTemplatefreeze(this.cpagenew, 20, this.csort).subscribe(res => {
+    this.AuthService.getCommandTemplatefreeze(this.cpagenew, 100, this.csort).subscribe(res => {
  // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < res.length; i++) {
       this.alldatacommand.push(res[i]);

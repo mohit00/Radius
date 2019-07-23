@@ -196,11 +196,11 @@ getCountDevice() {
   });
 }
 ngOnInit() {
-  this.title = 'Add Things';
+  this.title = 'Add';
   this.getCountDevice();
   this.getEventList();
     }
-    detail(data) {
+    detail(data: any) {
       this.service.setId(data._links.self.href , 'things/Detail');
     }
     edit(data ) {
