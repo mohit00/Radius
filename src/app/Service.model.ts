@@ -3,7 +3,7 @@ export class WebserModel {
 
     constructor() {
         this.Sevice = {
-                BASE_URL: 'http://13.126.31.198:8080/',
+                BASE_URL: '/api/',
                 BASENEWURL: 'http://13.126.31.198:8090/',
 
                 CREATE_ATTRIBUTE_TEMPLATE: '/attributeTemplates'

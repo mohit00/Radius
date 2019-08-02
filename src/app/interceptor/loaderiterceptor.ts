@@ -12,7 +12,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
     }
 
-
+    authReq:any;
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -21,8 +21,17 @@ export class LoaderInterceptor implements HttpInterceptor {
         this.AuthService.loaderCheck.emit('show');
 
       },10)
-
-      return next.handle(req).do(evt => {
+      if(req.url !='Login'){
+        this.authReq = req.clone({
+          setHeaders: {
+            "x-account": `Radius-PF`,
+            "x-user":`admin`
+          }
+        });
+      }else{
+        this.authReq = req;
+      }
+      return next.handle(this.authReq).do(evt => {
 
       if (evt instanceof HttpResponse) {
         console.log('end');
