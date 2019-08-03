@@ -4,7 +4,7 @@ import {
   Headers,
   RequestOptions
 } from '@angular/http';
-import { HttpClient , HttpInterceptor} from '@angular/common/http';
+import { HttpClient , HttpInterceptor, HttpHeaders} from '@angular/common/http';
 import {
   Router
 } from '@angular/router';
@@ -33,13 +33,20 @@ export class AuthService {
   get sizetable() {
     return 10;
   }
+  //  httpOptions:any = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'x-account': 'Radius-PF',
+  //     'x-user':'admin'
+  //   })
+  // };
 // tslint:disable-next-line: variable-name
   constructor(private _http: HttpClient, private router: Router, private modalService: BsModalService
 // tslint:disable-next-line: no-shadowed-variable
     ,         private WebserModel: WebserModel) {
 // tslint:disable-next-line: deprecation
-      this.firstHeaders = new Headers();
-      this.firstHeaders.append('Content-Type', 'application/json');
+ 
+    
   }
     getSplitId(data) {
     return data.split('/')[4];

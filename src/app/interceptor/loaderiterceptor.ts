@@ -24,8 +24,8 @@ export class LoaderInterceptor implements HttpInterceptor {
       if(req.url !='Login'){
         this.authReq = req.clone({
           setHeaders: {
-            "x-account": `Radius-PF`,
-            "x-user":`admin`
+            'x-account': 'Radius-PF',
+            'x-user':'admin'
           }
         });
       }else{

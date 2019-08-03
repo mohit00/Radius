@@ -38,7 +38,7 @@ export const AdminLayoutRoutes: Routes = [
         path: 'Things/Template',
         loadChildren: '../../device-template/device-template.module#DeviceTemplateModule'
       },{
-        path:'things',
+        path:'Things',
         loadChildren: '../../device-provisioning/device-provisioning.module#DeviceProvisioningModule'
 
 
