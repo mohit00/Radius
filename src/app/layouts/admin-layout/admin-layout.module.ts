@@ -8,8 +8,7 @@ import { LbdModule } from '../../lbd/lbd.module';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
-import { UserComponent } from '../../user/user.component';
-import { TablesComponent } from '../../tables/tables.component';
+ import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -31,7 +30,7 @@ import {VideoConferenceComponent} from '../../video-conference/video-conference.
   declarations: [    EventACKTemplateComponent
      , CommandACKTemplateComponent,
     HomeComponent,D3Component,
-    UserComponent,
+    
     TablesComponent,
     TypographyComponent,VideoConferenceComponent,
     IconsComponent,

@@ -7,11 +7,13 @@
                  <span>Things Name:</span> {{ComandDetail.name}}  
               </div>
               <div class ="col-md-6" >
+            
                 <div class="col-md-3">
- 
+                    <a  class=" " style="color:white; padding-right: 0px"  (click)="migrate2Account(ComandDetail)"> <i class="fa fa-cloud-upload material-icons" aria-hidden="true"   ></i><br>To Account</a>
+
                 </div>
                 <div class="col-md-2">
-                    <a  class=" " style="color:white;"  (click)="migrate(ComandDetail)"> <i class="fa fa-cloud-upload material-icons" aria-hidden="true"   ></i><br>Migrate</a>
+                    <a  class=" " style="color:white;padding-left: 0px"  (click)="migrate(ComandDetail)"> <i class="fa fa-cloud-upload material-icons" aria-hidden="true"   ></i><br>Migrate</a>
 
                 </div>
                 <div class="col-md-4">

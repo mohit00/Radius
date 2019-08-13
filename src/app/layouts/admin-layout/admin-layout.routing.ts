@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from '../../home/home.component';
-import { UserComponent } from '../../user/user.component';
-import { TablesComponent } from '../../tables/tables.component';
+ import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -45,6 +44,11 @@ export const AdminLayoutRoutes: Routes = [
       },{
         path:'Account',
         loadChildren: '../../Account/account/account.module#AccountModule'
+
+
+      },{
+        path:'user',
+        loadChildren: '../../user/user/user.module#UserModule'
 
 
       },{

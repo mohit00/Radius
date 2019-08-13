@@ -4,6 +4,8 @@ import {AuthService} from '../../auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {ChangeStatusComponent} from '../../change-status/change-status.component';
 import {MigrateDialogComponent} from '../../migrate-dialog/migrate-dialog.component';
+import {MigrateAccountComponent} from '../../migrate-account/migrate-account.component';
+
 import {AddFieldDialogComponent } from '../../add-field-dialog/add-field-dialog.component';
 
 @Component({
@@ -30,10 +32,9 @@ export class DeviceProvisiongDetailComponent implements OnInit {
     this.dataList = [];
     this.thingsPropertiesIdentifier = [];
     this.thingsProperties = [];
-    this.ComandId  =  this.Service.getId;
-    this.Service.getDetail(this.ComandId).subscribe(res => {
-      console.log(JSON.stringify(res));
-      this.ComandDetail = res;
+    this.ComandId  =  this.Service.getSplitId(this.Service.getId);
+     this.Service.getDetail('things/'+this.ComandId).subscribe(res => {
+       this.ComandDetail = res;
 
 // tslint:disable-next-line: forin
       for (const i in this.ComandDetail.metadata) {
@@ -79,21 +80,29 @@ export class DeviceProvisiongDetailComponent implements OnInit {
         dataDetail: data
       };
       this.bsModalRef = this.modalService.show(MigrateDialogComponent,  {initialState, class: 'gray modal-lg' });
-
+      this.bsModalRef.content.onClose.subscribe(result => {
+        console.log('results', result);
+        this.getDetailEvent();
+  });
+     }
+     migrate2Account(data){
+      alert(JSON.stringify(data))
+      const initialState = {
+        title: 'false',
+        dataDetail: data
+      };
+      this.bsModalRef = this.modalService.show(MigrateAccountComponent,  {initialState, class: 'gray modal-lg' });
       this.bsModalRef.content.onClose.subscribe(result => {
         console.log('results', result);
         this.getDetailEvent();
   });
      }
      addField(data) {
-
-
       const initialState = {
         title: 'false',
         dataDetail: data
       };
       this.bsModalRef = this.modalService.show(AddFieldDialogComponent,  {initialState, class: 'gray modal-lg' });
-
       this.bsModalRef.content.onClose.subscribe(result => {
         console.log('results', result);
         this.getDetailEvent();
@@ -102,5 +111,4 @@ export class DeviceProvisiongDetailComponent implements OnInit {
   ngOnInit() {
     this.getDetailEvent();
   }
-
 }

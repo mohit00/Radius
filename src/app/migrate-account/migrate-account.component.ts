@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AccountService } from '../Account/account.service';
 import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
-  selector: 'app-migrate-dialog',
-  templateUrl: './migrate-dialog.component.html',
-  styleUrls: ['./migrate-dialog.component.scss']
+  selector: 'app-migrate-account',
+  templateUrl: './migrate-account.component.html',
+  styleUrls: ['./migrate-account.component.scss']
 })
-export class MigrateDialogComponent implements OnInit {
-  constructor(private Service: AuthService,
+export class MigrateAccountComponent implements OnInit {
+  constructor(private Service: AccountService,
 // tslint:disable-next-line: variable-name
               private _bsModalRef: BsModalRef,
    ) {
-
+ 
     this.selectedList = [];
     this.data = {metadata: []};
     this.page = 0;
@@ -41,27 +41,13 @@ title: any;
  id: any;
  dataList: any;
 //  http://13.126.31.198:8080/things/106/thingTemplate 
-thingsTemplateDetail(){
-  // alert(this.selectedList[0]._links.thingTemplate.href.split('/')[4]);
-  this.Service.getData({}, "/things/"+this.selectedList[0]._links.thingTemplate.href.split('/')[4]+"/thingTemplate").subscribe(res=>{
-    this.dataDetail.templateDetailId = res._links.self.href.split('/')[4]
-     this.selectedList =[];
-    this.selectedList.push(res)
-    console.log(JSON.stringify(this.selectedList))
-    if (this.selectedList.length > 0) {
-      const indexselected =   this.eventTemplateList.findIndex( record => record._links.self.href === this.selectedList[0]._links.self.href );
-     if(indexselected != -1){
-      this.eventTemplateList[indexselected].check = true;
-
-     }
-     }
-  })
+thingsTemplateDetail(){ 
 }
  geteventTemplate() {
-   this.Service.getdeviceTemplate(this.page, this.size, this.sort).subscribe(res => {
-     this.eventTemplateList = res._embedded.thingTemplates;
-   console.log ( JSON.stringify(this.eventTemplateList))
-     this.pageCount =  res.page.totalPages;
+   this.Service.AccountDataGet(this.page, this.size, this.sort).subscribe(res => {
+     console.log(JSON.stringify(res))
+     this.eventTemplateList = res._embedded.accounts;
+    this.pageCount =  res.page.totalPages;
 
      if (this.pageCount === this.page + 1) {
        this.nextDisabled = true;
@@ -85,9 +71,10 @@ thingsTemplateDetail(){
  }
   status:any = false;
  createDevicePro() {
+   alert(JSON.stringify( this.selectedList));
   if (this.selectedList.length > 0 ) {
      this.Service.migrateThing(  this.dataDetail.templateDetailId,
-      this.selectedList[0]._links.thingTemplate.href.split('/')[4],this.status ).subscribe(res => { 
+      this.selectedList[0].accountId,this.status ).subscribe(res => { 
        this.onClose.next(true);
        this._bsModalRef.hide();
        this.Service.suceesAlertDialog('Device Successfully migrated');
@@ -101,6 +88,7 @@ thingsTemplateDetail(){
  dataDetail:any;
 getDetailDeviceProvisioning() {
     this.data = this.dataDetail;
+    console.log(JSON.stringify(this.data))
   this.selectedList.push(this.dataDetail)
 }
 
@@ -138,10 +126,10 @@ add() {
 remove(index) {
   this.dataList.splice(index, 1);
 }
-selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
+selectedListdata(data: any) {
 // tslint:disable-next-line: prefer-for-of
   for (let i = 0 ; i < this.eventTemplateList.length; i++) {
-    if (this.eventTemplateList[i]._links.self.href !== data._links.self.href) {
+    if (this.eventTemplateList[i].accountId !== data.accountId) {
       this.eventTemplateList[i].check =  false;
       }
      }
@@ -152,7 +140,7 @@ selectedListdata(data: { check: boolean; _links: { self: { href: any; }; }; }) {
   if (data.check) {
     this.selectedList.push(data);
   } else {
-  const index =   this.selectedList.findIndex( record => record._links.self.href === data._links.self.href );
+  const index =   this.selectedList.findIndex( record => record.accountId === data.accountId );
   this.selectedList.splice(index, 1);
 }
  }

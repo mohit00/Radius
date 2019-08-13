@@ -32,6 +32,7 @@ import { MigrateDialogComponent } from './migrate-dialog/migrate-dialog.componen
 import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.component';
 import { AccountDialogComponent } from './Account/account/account-dialog/account-dialog.component'
 import {AccountService} from './Account/account.service';
+import { MigrateAccountComponent } from './migrate-account/migrate-account.component';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -56,14 +57,14 @@ import {AccountService} from './Account/account.service';
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent
+    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent, MigrateAccountComponent
   
   ],
   entryComponents: [
     DeviceDialogComponent,AccountDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
     EventDialogComponent, CommandDialogComponent, 
-    SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent
+    SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent,MigrateAccountComponent
   ],
   providers: [NewsletterService, AuthService, WebserModel,HttpClient, AccountService,
        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

@@ -34,7 +34,7 @@ export const ROUTES: RouteInfo[] = [
     }] },
     { path: '/Things', title: 'THINGS',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
     { path: '/Account', title: 'Account',  icon:'fa fa-cog', class: 'text-black' ,HeaderTitle:'Account',child:[ ]},
-    { path: '/icons', title: 'USERMANAGEMENT',  icon:'fa fa-user', class: 'text-black' ,HeaderTitle:'USERMANAGEMENT',child:[  ]},
+    { path: '/user/management', title: 'USER MANAGEMENT',  icon:'fa fa-user', class: 'text-black' ,HeaderTitle:'USERMANAGEMENT',child:[  ]},
        
 ];
 

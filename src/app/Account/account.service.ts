@@ -53,6 +53,12 @@ export class AccountService {
   get  getId() {
           return localStorage.getItem('Id');
     }
+    migrateThing( id1: any, id2: any, data: any): Observable < any > {
+alert('/thing-service/thing/' + id1 + '/moveThingToAccount/' + id2 )
+      return this._http.post( '/thing-service/thing/' + id1 + '/moveThingToAccount/' + id2 , {} )
+     .map(res => res as any)
+     .catch(this.handleError);
+     }
          AccountDataGet(page, size, sort): Observable < any > {
               
             return this._http.get( this.BASE_URL + 'accounts' + '?page=' + page + '&size=' + size + '&sort=' + sort)
