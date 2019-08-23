@@ -52,6 +52,11 @@ export const AdminLayoutRoutes: Routes = [
 
 
       },{
+        path:'Roles',
+        loadChildren: '../../roles/roles.module#RolesModule'
+
+
+      },{
         path:'quickHelp',
         component:QuickHelpComponent
       }

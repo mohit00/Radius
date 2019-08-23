@@ -30,7 +30,11 @@ export class AuthService {
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();
   CREATE_ATTRIBUTE_TEMPLATE = this.WebserModel.Sevice.CREATE_ATTRIBUTE_TEMPLATE;
   BASE_URL2 = this.WebserModel.Sevice.BASE_URL2;
+  COUNTRYLIST = this.WebserModel.countryList;
   firstHeaders: any;
+  get CountryList(){
+    return this.COUNTRYLIST;
+  }
   get sizetable() {
     return 10;
   }
@@ -273,7 +277,13 @@ export class AuthService {
        }
        getUser(page,size,sort): Observable<any> {
 
-        return this._http.get(this.BASE_URL2+'users?page=' + page + '&size=' + size + '&sort=' + sort )
+        return this._http.get('users?page=' + page + '&size=' + size + '&sort=' + sort )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       addUser(data): Observable<any> {
+
+        return this._http.post('user-service',data )
         .map(res => res as any)
         .catch(this.handleError);
        }
@@ -325,6 +335,37 @@ export class AuthService {
         .map(res => res as any)
         .catch(this.handleError);
        }
+       //Roles
+       GetRoles(page,size,sort): Observable<any> {
+
+        return this._http.get(  'roles?page=' + page + '&size=' + size + '&sort=' + sort  )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getRolesCount(){
+        return this._http.get(  'authorization-service/role/count')
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchRoles(data, des): Observable<any> {
+
+        return this._http.get(  'authorization-service/role/search?name=' + data + '*'  )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       getSearchRolesdesc(data, des): Observable<any> {
+
+        return this._http.get(  'authorization-service/role/search?description=' + des + '*'  )
+        .map(res => res as any)
+        .catch(this.handleError);
+       }
+       createRole(data): Observable<any> {
+        return this._http.post('roles',data  )
+        .map(res => res as any)
+        .catch(this.handleError);
+       } 
+        
+     
        private handleError(error: Response) {
         console.log(error);
         this.loading = false;

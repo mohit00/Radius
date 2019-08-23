@@ -3,10 +3,12 @@ import { Component, OnInit, SecurityContext  } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {AuthService} from '../../auth.service';
 import { DatePipe } from '@angular/common';
+import { UserAddDialogComponent } from 'src/app/user-add-dialog/user-add-dialog.component';
  declare interface TableData {
   headerRow: any ;
   dataRows: string[][];
 }
+
 
 @Component({
   selector: 'app-user',
@@ -20,19 +22,17 @@ export class UserComponent implements OnInit {
     this.page = 0;
     this.size = this.service.sizetable;
     this.sort = 'createdOn,Desc';
-  
-  
     this.header = [
        {
-      name: 'Things NAME',
+      name: 'User Name',
       width: 10,
       sort: '0'
     }, {
-      name: 'Things DESCRIPTION',
+      name: 'Department',
       width: 10,
       sort: '0'
     },  {
-      name: 'Things Type',
+      name: 'Account',
       width: 10,
       sort: '0'
     },   {
@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
     }
    ];
   
-    this.keyData = [  'name', 'description', 'deviceType',  'lastUpdatedOn', 'action'];
+    this.keyData = [  'userName', 'department', 'account',  'lastUpdatedOn', 'action'];
    }
     page: any;
      pageCountArray: any;
@@ -78,12 +78,12 @@ export class UserComponent implements OnInit {
       const initialState = {
         title: 'false',
       };
-  //     this.bsModalRef = this.modalService.show(DeviceProvisioningDialogComponent,  {initialState, class: 'gray modal-lg' });
+      this.bsModalRef = this.modalService.show(UserAddDialogComponent,  {initialState, class: 'gray modal-lg' });
   
-  //     this.bsModalRef.content.onClose.subscribe(result => {
-  //      this.getEventList();
-  //      console.log('results', result);
-  // });
+       this.bsModalRef.content.onClose.subscribe(result => {
+        this.getEventList();
+        console.log('results', result);
+   });
   }
   
   getData(data, key , index) {
@@ -106,7 +106,9 @@ export class UserComponent implements OnInit {
   
         `;
         return this.actionData;
-      } else {}
+      } else if (key == 'account'){
+        return data.account.name;
+      }
       if (data[key]) {
    // tslint:disable-next-line: triple-equals
         if ( isNaN(new Date(data[key]).getTime()  ) ) {
@@ -176,12 +178,12 @@ export class UserComponent implements OnInit {
   }
   getEventList() {
     this.service.getUser(this.page, this.size, this.sort).subscribe(res => {
-      alert(JSON.stringify(res));
-      this.pageInfo = res.page;
+       this.pageInfo = res.page;
   
       this.showpagi = true;
   
       this.displayList = res._embedded.users;
+      console.log(JSON.stringify(this.displayList))
   
     });
   }

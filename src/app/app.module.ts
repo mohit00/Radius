@@ -33,6 +33,8 @@ import { AddFieldDialogComponent } from './add-field-dialog/add-field-dialog.com
 import { AccountDialogComponent } from './Account/account/account-dialog/account-dialog.component'
 import {AccountService} from './Account/account.service';
 import { MigrateAccountComponent } from './migrate-account/migrate-account.component';
+import { RoleDialogComponent } from './role-dialog/role-dialog.component';
+import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.component';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -57,10 +59,10 @@ import { MigrateAccountComponent } from './migrate-account/migrate-account.compo
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent, MigrateAccountComponent
+    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent, MigrateAccountComponent, RoleDialogComponent, UserAddDialogComponent
   
   ],
-  entryComponents: [
+  entryComponents: [RoleDialogComponent,UserAddDialogComponent,
     DeviceDialogComponent,AccountDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
     EventDialogComponent, CommandDialogComponent, 
