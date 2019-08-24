@@ -86,7 +86,7 @@ export class DeviceProvisiongDetailComponent implements OnInit {
   });
      }
      migrate2Account(data){
-      alert(JSON.stringify(data))
+       
       const initialState = {
         title: 'false',
         dataDetail: data

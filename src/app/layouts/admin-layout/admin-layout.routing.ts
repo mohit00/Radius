@@ -34,7 +34,7 @@ export const AdminLayoutRoutes: Routes = [
         path: 'Command/ACK/Prototype',
         component:CommandACKTemplateComponent ,
       },{
-        path: 'Things/Template',
+        path: 'Template/Things',
         loadChildren: '../../device-template/device-template.module#DeviceTemplateModule'
       },{
         path:'Things',

@@ -23,7 +23,7 @@ export class DeviceTemplateDetailComponent implements OnInit {
          this.Service.freezeData(dataJson,this.eventId).subscribe(res => {
           this.Service.suceesAlertDialog('Device Template has been successfully Freezed.' );
 
-         this.route.navigate(['Things/Template']);
+         this.route.navigate(['Template/Things']);
         });
     }
     getDetailEvent() {

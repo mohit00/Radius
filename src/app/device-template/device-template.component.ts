@@ -181,9 +181,9 @@ detail(data) {
    if (this.showpagi) {
     let id =    this.service.getSplitId(data._links.self.href);
 
-    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' +id , 'Things/Template/detail');
+    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' +id , 'Template/Things/detail');
    } else {
-    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + data.id , 'Things/Template/detail');
+    this.service.setId(this.WebserModel.Sevice.BASE_URL + 'thingTemplates/' + data.id , 'Template/Things/detail');
 
   }
  }
@@ -192,9 +192,9 @@ edit(data) {
 if (this.showpagi) {
   let id =    this.service.getSplitId(data._links.self.href);
 
-  this.service.setId(id   , 'Things/Template');
+  this.service.setId(id   , 'Template/Things');
 } else {
-  this.service.setId( data.id  , 'Things/Template');
+  this.service.setId( data.id  , 'Template/Things');
 
 }
 

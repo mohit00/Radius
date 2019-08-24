@@ -54,7 +54,7 @@ export class AccountService {
           return localStorage.getItem('Id');
     }
     migrateThing( id1: any, id2: any, data: any): Observable < any > {
-alert('/thing-service/thing/' + id1 + '/moveThingToAccount/' + id2 )
+// alert('/thing-service/thing/' + id1 + '/moveThingToAccount/' + id2 )
       return this._http.post( '/thing-service/thing/' + id1 + '/moveThingToAccount/' + id2 , {} )
      .map(res => res as any)
      .catch(this.handleError);

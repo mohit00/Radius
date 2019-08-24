@@ -71,9 +71,9 @@ thingsTemplateDetail(){
  }
   status:any = false;
  createDevicePro() {
-   alert(JSON.stringify( this.selectedList));
-  if (this.selectedList.length > 0 ) {
-     this.Service.migrateThing(  this.dataDetail.templateDetailId,
+   console.log(JSON.stringify( this.Service.getSplitId(this.dataDetail._links.self.href)))
+   if (this.selectedList.length > 0 ) {
+     this.Service.migrateThing(  this.Service.getSplitId(this.dataDetail._links.self.href),
       this.selectedList[0].accountId,this.status ).subscribe(res => { 
        this.onClose.next(true);
        this._bsModalRef.hide();

@@ -30,7 +30,7 @@ export const ROUTES: RouteInfo[] = [
     },{
       path: '/Command/ACK/Prototype', title: 'COMMAND ACK  ',  icon:'fa fa-check',HeaderTitle:'COMMAND ACK PROTOTYPE'
     },{
-      path: '/Things/Template', title: 'THINGS TEMPLATE  ',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
+      path: '/Template/Things', title: 'THINGS TEMPLATE  ',  icon:'fa fa-th',HeaderTitle:'THINGS TEMPLATE'
     }] },
     { path: '/Things', title: 'THINGS',  icon:'fa fa-microchip', class: 'text-black',HeaderTitle:'THINGS PROVISIONING',child:[  ] },
     { path: '/Account', title: 'Account',  icon:'fa fa-cog', class: 'text-black' ,HeaderTitle:'Account',child:[ ]},
