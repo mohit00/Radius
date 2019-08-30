@@ -61,7 +61,7 @@ page: any;
   submitUpdate() { 
   }
   submitCreate() { 
-     let dataJson = {name:'',description:'',actions:[],notActions:[]};
+     let dataJson = {name:'',description:'',actions:[],notActions:[],roleId:''};
     for(var i =0 ;i<this.AccessServiceData.length;i++){
       if(this.AccessServiceData[i].name =="Things"){
         if( this.AccessServiceData[i].check == "true"){
@@ -112,6 +112,8 @@ page: any;
     
     }
     dataJson.name =  this.data.name
+    dataJson.roleId =  this.data.roleId
+
     dataJson.description =  this.data.description
      this.AuthService.createRole(dataJson).subscribe(res=>{
       this._bsModalRef.hide();

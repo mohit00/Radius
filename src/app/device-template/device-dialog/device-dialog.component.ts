@@ -81,7 +81,7 @@ export class DeviceDialogComponent implements OnInit {
   eventselectedList: any;
   attributeselectedList: any;
   commandselectedList: any;
-
+ 
   eventDetailList: any = [];
   attrDetailList: any = [];  commandDetailList: any = [];
   title: any;
@@ -203,9 +203,18 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     if (this.eventDetailList.length > 0) {
 
     } else {
-      for (let i = 0; i < 5; i++) {
-        this.eventDetailList.push(this.alldataevent[i]);
+      if(this.alldataevent.length<5){
+        for (let i = 0; i < this.alldataevent.length; i++) {
+       
+          this.eventDetailList.push(this.alldataevent[i]);
+        }
+      }else{
+        for (let i = 0; i < 5; i++) {
+       
+          this.eventDetailList.push(this.alldataevent[i]);
+        }
       }
+     
       if (this.alldataevent.length < 6 ) {
 
       } else {
@@ -223,9 +232,16 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     if (this.commandDetailList.length > 0) {
 
     } else {
-      for (let i = 0; i < 5; i++) {
-        this.commandDetailList.push(this.alldatacommand[i]);
+      if(this.alldatacommand.length < 5){
+        for (let i = 0; i < this.alldatacommand.length; i++) {
+          this.commandDetailList.push(this.alldatacommand[i]);
+        }
+      }else{
+        for (let i = 0; i < 5; i++) {
+          this.commandDetailList.push(this.alldatacommand[i]);
+        }
       }
+     
       if (this.alldatacommand.length < 6 ) {
 
       } else {
@@ -423,9 +439,18 @@ for (let i = 0 ; i < this.commandselectedList.length ; i ++) {
     if (this.attrDetailList.length > 0) {
 
     } else {
-      for (let i = 0; i < 5; i++) {
-        this.attrDetailList.push(this.alldataattr[i]);
-      }
+      
+        if(this.alldataattr.length < 5){
+          for (let i = 0; i < this.alldataattr.length ; i++) {
+            this.attrDetailList.push(this.alldataattr[i]);
+          }
+        }else{
+          for (let i = 0; i < 5; i++) {
+            this.attrDetailList.push(this.alldataattr[i]);
+          }
+        }
+      
+      
       if (this.alldataattr.length < 6 ) {
 
       } else {

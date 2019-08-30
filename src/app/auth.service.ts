@@ -364,7 +364,11 @@ export class AuthService {
         .map(res => res as any)
         .catch(this.handleError);
        } 
-        
+        assignUnassugnRole( data):Observable<any>{
+          alert(JSON.stringify(data))
+            return this._http.post(data,{} )       .map(res => res as any)
+            .catch(this.handleError);
+        }
      
        private handleError(error: Response) {
         console.log(error);

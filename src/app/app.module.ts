@@ -35,6 +35,7 @@ import {AccountService} from './Account/account.service';
 import { MigrateAccountComponent } from './migrate-account/migrate-account.component';
 import { RoleDialogComponent } from './role-dialog/role-dialog.component';
 import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.component';
+import { AssignDialogComponent } from './user/assign-dialog/assign-dialog.component';
 
 @NgModule({
   imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -59,14 +60,14 @@ import { UserAddDialogComponent } from './user-add-dialog/user-add-dialog.compon
     CommandDialogComponent,
     DeviceDialogComponent,
     SuccessDialogComponent,
-    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent, MigrateAccountComponent, RoleDialogComponent, UserAddDialogComponent
+    ArrtibuteSelectComponent,ChangeStatusComponent, MigrateDialogComponent, AddFieldDialogComponent, MigrateAccountComponent, RoleDialogComponent, UserAddDialogComponent, AssignDialogComponent
   
   ],
   entryComponents: [RoleDialogComponent,UserAddDialogComponent,
     DeviceDialogComponent,AccountDialogComponent,
     DeviceProvisioningDialogComponent, AttributeDialogComponent,
     EventDialogComponent, CommandDialogComponent, 
-    SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent,MigrateAccountComponent
+    SuccessDialogComponent,ChangeStatusComponent,MigrateDialogComponent, AddFieldDialogComponent,MigrateAccountComponent,AssignDialogComponent
   ],
   providers: [NewsletterService, AuthService, WebserModel,HttpClient, AccountService,
        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

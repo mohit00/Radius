@@ -95,8 +95,11 @@ export class AccountDialogComponent implements OnInit {
     }
     // this.data.parentAccount
     this.data.createdBy = 'admin';
-    this.data.tenantId = 'Radius-PF';
+    this.data.accountId = 'Radius-PF';
     this.data.status = 'ACTIVE';
+  }
+  if(this.data.parentAccount == '1'){
+    this.data.parentAccount = "";
   }
     this.data.userContacts = this.contactUser;
     console.log(JSON.stringify(this.data));

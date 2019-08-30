@@ -118,9 +118,16 @@ page: any;
     if (this.displayList.length > 0) {
 
     } else {
-      for (let i = 0; i < 5; i++) {
-        this.displayList.push(this.alldata[i]);
+      if(this.alldata.length < 5){
+        for (let i = 0; i < this.alldata.length; i++) {
+          this.displayList.push(this.alldata[i]);
+        }
+      }else{
+        for (let i = 0; i < 5; i++) {
+          this.displayList.push(this.alldata[i]);
+        }
       }
+     
       if (this.alldata.length < 6 ) {
 
       } else {

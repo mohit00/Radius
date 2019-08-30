@@ -204,10 +204,10 @@ export class UserComponent implements OnInit {
     this.getEventList();
       }
       detail(data: any) {
-        this.service.setId(data._links.self.href , 'Things/Detail');
+        this.service.setId(data._links.self.href , 'user/Detail');
       }
       edit(data ) {
-        this.service.setId(data._links.self.href   , 'Things');
+        this.service.setId(data._links.self.href   , 'user/management');
         const initialState = {
           title: 'true',
           id: this.service.getId
