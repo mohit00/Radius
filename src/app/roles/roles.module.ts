@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { RolesRoutingModule } from './roles-routing.module';
 import { RolesComponentComponent } from './roles-component/roles-component.component';
+import { RoleDetailComponent } from './role-detail/role-detail.component';
 
 @NgModule({
-  declarations: [RolesComponentComponent],
+  declarations: [RolesComponentComponent, RoleDetailComponent],
   imports: [
     CommonModule,
     RolesRoutingModule

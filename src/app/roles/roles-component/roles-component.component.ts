@@ -199,11 +199,11 @@ ngOnInit() {
   this.getEventList();
     }
     detail(data: any) {
-      this.service.setId(data._links.self.href , 'Things/Detail');
+      this.service.setId(data._links.self.href , 'Roles/Details');
     }
     
     edit(data ) {
-      this.service.setId(data._links.self.href   , 'Things');
+      this.service.setId(data._links.self.href   , 'Roles');
       const initialState = {
         title: 'true',
         id: this.service.getId
